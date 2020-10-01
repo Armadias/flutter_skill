@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';	
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
@@ -11,6 +13,55 @@ class EcranInscription extends StatefulWidget {
 
 class EcranInscriptionEtat extends State<EcranInscription> {
 
+  bool visible = false;
+
+  final emailController = TextEditingController();
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future userRegistration() async {
+
+    setState(() {
+      visible = true;
+    });
+
+    String email = emailController.text;
+    String userName = userNameController.text;
+    String password = passwordController.text;
+
+    var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
+    var data = {'email': email, 'userName': userName, 'password': password};
+    var response = await http.post(url, body: json.encode(data));
+    print(response);
+    var message = jsonDecode(response.body);
+
+    if(response.statusCode == 200){
+    setState(() {
+      visible = false;
+    });
+    }
+
+    showDialog(
+      context:context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                  MaterialPageRoute(builder: (context) => EcranAccueil()),
+          );
+                },
+            ),
+          ],
+        );
+      },
+    );
+  }
   Widget constructeurEmail(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +76,9 @@ class EcranInscriptionEtat extends State<EcranInscription> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            keyboardType: TextInputType.emailAddress,
+            controller: emailController,
+            autocorrect: true,
+            //keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Kufam',
@@ -61,7 +114,9 @@ class EcranInscriptionEtat extends State<EcranInscription> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            keyboardType: TextInputType.emailAddress,
+            controller: userNameController,
+            autocorrect: true,
+            //keyboardType: TextInputType.text,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Kufam',
@@ -96,6 +151,8 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         decoration: kBoxDecorationStyle,
         height: 60.0,
         child: TextField(
+          controller: passwordController,
+          autocorrect: true,
           obscureText: true,
           style: TextStyle(
             color: Colors.white,
@@ -154,13 +211,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () { 
-          print('inscription appuillé');
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => EcranAccueil()),
-          );
-        },
+        onPressed: userRegistration,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
@@ -238,3 +289,55 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     );
   }
 }
+/*class RegisterUser extends StatefulWidget {
+
+  RegisterUserState createState() => RegisterUserState();
+
+}
+
+class RegisterUserState extends State<RegisterUser> {
+  bool visible = false;
+
+  final emailController = TextEditingController();
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future userRegistration() async {
+
+    setState(() {
+      visible = true;
+    });
+
+    String email = emailController.text;
+    String userName = userNameController.text;
+    String password = passwordController.text;
+
+    var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
+    var data = {'email': email, 'userName': userName, 'password': password};
+    var response = await http.post(url, body: json.encode(data));
+    var message = jsonDecode(response.body);
+
+    if(response.statusCode == 200){
+    setState(() {
+      visible = false; 
+    });
+    }
+
+    showDialog(
+      context:context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+                child: new Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}*/
