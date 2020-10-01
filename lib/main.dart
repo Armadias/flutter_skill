@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skill_check/Ecran/ecranConnection.dart';
+import 'package:skill_check/Ecran/ecranChargement.dart';
 /// *******************************https://trello.com/b/eptS0fbm********************************/
 
 void main() => runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter App Projet',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange), 
-      home: EcranConnection(),
+      home: EcranChargement(),
     );
   }
 } 
