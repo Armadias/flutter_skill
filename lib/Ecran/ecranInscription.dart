@@ -15,8 +15,8 @@ class EcranInscriptionEtat extends State<EcranInscription> {
 
   bool visible = false;
 
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
-  final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
   Future userRegistration() async {
@@ -26,11 +26,11 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     });
 
     String email = emailController.text;
-    String userName = userNameController.text;
+    String name = nameController.text;
     String password = passwordController.text;
 
     var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
-    var data = {'email': email, 'userName': userName, 'password': password};
+    var data = {'name': name, 'email': email, 'password': password};
     var response = await http.post(url, body: json.encode(data));
     print(response);
     var message = jsonDecode(response.body);
@@ -50,11 +50,20 @@ class EcranInscriptionEtat extends State<EcranInscription> {
             FlatButton(
                 child: new Text("OK"),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                  MaterialPageRoute(builder: (context) => EcranAccueil()),
-          );
+                  if(message == "C'est bon tu est inscrit frérot ! Génial non !?"){
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                    MaterialPageRoute(builder: (context) => EcranAccueil()),
+                    );
+                  }else if(message == "Soit t'es déjà inscrit, soit quelqu\'un à déjà créé un compte avec cette adresse..."){
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                    MaterialPageRoute(builder: (context) => EcranInscription()),
+                    );
+                  }
+                  
                 },
             ),
           ],
@@ -62,6 +71,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
       },
     );
   }
+
   Widget constructeurEmail(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +124,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            controller: userNameController,
+            controller: nameController,
             autocorrect: true,
             //keyboardType: TextInputType.text,
             style: TextStyle(
@@ -172,7 +182,8 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         ),
       ),
       SizedBox(height: 20.0),
-      Text(
+      // en commentaire car c'est casse pieds pour le moment
+      /*Text(
         'Confirmation du mot de passe',
         style: kLabelStyle,
       ),
@@ -199,7 +210,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
           hintStyle: kHintTextStyle,
         ),
       ),
-    ),
+    ),*/
   ],
 );
                 
@@ -289,55 +300,3 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     );
   }
 }
-/*class RegisterUser extends StatefulWidget {
-
-  RegisterUserState createState() => RegisterUserState();
-
-}
-
-class RegisterUserState extends State<RegisterUser> {
-  bool visible = false;
-
-  final emailController = TextEditingController();
-  final userNameController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  Future userRegistration() async {
-
-    setState(() {
-      visible = true;
-    });
-
-    String email = emailController.text;
-    String userName = userNameController.text;
-    String password = passwordController.text;
-
-    var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
-    var data = {'email': email, 'userName': userName, 'password': password};
-    var response = await http.post(url, body: json.encode(data));
-    var message = jsonDecode(response.body);
-
-    if(response.statusCode == 200){
-    setState(() {
-      visible = false; 
-    });
-    }
-
-    showDialog(
-      context:context,
-      builder: (BuildContext context){
-        return AlertDialog(
-          title: new Text(message),
-          actions: <Widget>[
-            FlatButton(
-                child: new Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-            ),
-          ],
-        );
-      },
-    );
-  }
-}*/
