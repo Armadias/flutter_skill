@@ -29,6 +29,25 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     String name = nameController.text;
     String password = passwordController.text;
 
+    if (email.isEmpty | name.isEmpty |password.isEmpty)
+  {
+    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("une des entrées est vide, veuillez la remplir"),
+        actions: <Widget>[
+          FlatButton(
+           child: Text("Ok"),
+           onPressed: () { Navigator.of(context).pop(); },
+           ),
+        ],
+      );
+    },
+    );
+  }
+  else{
+
     var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
     var data = {'name': name, 'email': email, 'password': password};
     var response = await http.post(url, body: json.encode(data));
@@ -70,6 +89,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         );
       },
     );
+  }
   }
 
   Widget constructeurEmail(){

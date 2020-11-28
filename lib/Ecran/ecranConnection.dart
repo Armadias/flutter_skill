@@ -41,7 +41,24 @@ Future userLogin() async{
   var message = jsonDecode(response.body);
  
   // If the Response Message is Matched.
-  if(message == 'Login Matched')
+  if (email.isEmpty | password.isEmpty)
+  {
+    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text("une des entrées est vide, veuillez la remplir"),
+        actions: <Widget>[
+          FlatButton(
+           child: Text("Ok"),
+           onPressed: () { Navigator.of(context).pop(); },
+           ),
+        ],
+      );
+    },
+    );
+  }
+  else if(message == 'Login Matched')
   {
  
     // Hiding the CircularProgressIndicator.
@@ -54,7 +71,9 @@ Future userLogin() async{
         context,
         MaterialPageRoute(builder: (context) => EcranAccueil())
       );
-  }else{
+  }
+  else
+  {
  
     // If Email or Password did not Matched.
     // Hiding the CircularProgressIndicator.
@@ -70,11 +89,15 @@ Future userLogin() async{
         title: new Text(message),
         actions: <Widget>[
           FlatButton(
+           child: Text("NON"),
+           onPressed: () { Navigator.of(context).pop(); },
+           ),
+          FlatButton(
             child: new Text("OK"),
             onPressed: () {
             Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => new EcranConnection()),
+                        MaterialPageRoute(builder: (context) => new EcranInscription()),
                       );
             },
           ),
