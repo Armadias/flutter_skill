@@ -27,20 +27,6 @@ Future userLogin() async{
   // Getting value from Controller
   String email = emailController.text;
   String password = passwordController.text;
- 
-  // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
- 
-  // Store all data with Param Name.
-  var data = {'email': email, 'password' : password};
- 
-  // Starting Web API Call.
-  var response = await http.post(url, body: json.encode(data));
- 
-  // Getting Server response into variable.
-  var message = jsonDecode(response.body);
- 
-  // If the Response Message is Matched.
   if (email.isEmpty | password.isEmpty)
   {
     showDialog(
@@ -58,7 +44,21 @@ Future userLogin() async{
     },
     );
   }
-  else if(message == 'Login Matched')
+  else{
+  // SERVER LOGIN API URL
+  var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
+ 
+  // Store all data with Param Name.
+  var data = {'email': email, 'password' : password};
+ 
+  // Starting Web API Call.
+  var response = await http.post(url, body: json.encode(data));
+ 
+  // Getting Server response into variable.
+  var message = jsonDecode(response.body);
+ 
+  // If the Response Message is Matched.
+ if(message == 'Login Matched')
   {
  
     // Hiding the CircularProgressIndicator.
@@ -105,6 +105,7 @@ Future userLogin() async{
       );
     },
     );}
+  }
  
 }
 

@@ -272,7 +272,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         onPressed: () {
             Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => new EcranConnection()),
+                        SlideRightRoute(page : EcranConnection()),
                       );
             },
         padding: EdgeInsets.all(15.0),
@@ -353,4 +353,30 @@ class EcranInscriptionEtat extends State<EcranInscription> {
       ),
     );
   }
+}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget page;
+  SlideRightRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(-1, 0),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              ),
+        );
 }
