@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';	
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:skill_check/Ecran/ecranConnection.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
@@ -262,6 +263,37 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     );
   }
 
+    Widget constructeurBouttonRetrun(){
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+            Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => new EcranConnection()),
+                      );
+            },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        color: Colors.deepOrangeAccent,
+        child:Text(
+          'RETOUR',
+          style: TextStyle(
+            color: Colors.white70,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Kufam',
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
         return Scaffold(
@@ -311,6 +343,8 @@ class EcranInscriptionEtat extends State<EcranInscription> {
                     constructeurMDP(),
                     SizedBox(height: 20.0),
                     constructeurBoutton(),
+                    SizedBox(height: 20.0),
+                    constructeurBouttonRetrun(),
                 ],
               ),
             ),
