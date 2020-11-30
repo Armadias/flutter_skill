@@ -16,9 +16,9 @@ class EcranInscriptionEtat extends State<EcranInscription> {
 
   bool visible = false;
 
-  final nameController = TextEditingController();
+  final nomPrenomController = TextEditingController();
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final motDePasseController = TextEditingController();
 
   Future userRegistration() async {
 
@@ -26,11 +26,11 @@ class EcranInscriptionEtat extends State<EcranInscription> {
       visible = true;
     });
 
+    String nomPrenom = nomPrenomController.text;
     String email = emailController.text;
-    String name = nameController.text;
-    String password = passwordController.text;
+    String motDePasse = motDePasseController.text;
 
-    if (email.isEmpty | name.isEmpty |password.isEmpty)
+    if (email.isEmpty | nomPrenom.isEmpty |motDePasse.isEmpty)
   {
     showDialog(
     context: context,
@@ -50,7 +50,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
   else{
 
     var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
-    var data = {'name': name, 'email': email, 'password': password};
+    var data = {'nomPrenom': nomPrenom, 'email': email, 'motDePasse': motDePasse};
     var response = await http.post(url, body: json.encode(data));
     print(response);
     var message = jsonDecode(response.body);
@@ -145,7 +145,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            controller: nameController,
+            controller: nomPrenomController,
             autocorrect: true,
             //keyboardType: TextInputType.text,
             style: TextStyle(
@@ -182,7 +182,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         decoration: kBoxDecorationStyle,
         height: 60.0,
         child: TextField(
-          controller: passwordController,
+          controller: motDePasseController,
           autocorrect: true,
           obscureText: true,
           style: TextStyle(
