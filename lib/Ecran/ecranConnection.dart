@@ -18,7 +18,7 @@ class EcranConnection extends StatefulWidget {
 class EcranConnectionEtat extends State<EcranConnection>{
 
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final motDePasseController = TextEditingController();
 	
 Future userLogin() async{
  
@@ -29,8 +29,8 @@ Future userLogin() async{
  
   // Getting value from Controller
   String email = emailController.text;
-  String password = passwordController.text;
-  if (email.isEmpty | password.isEmpty)
+  String motDePasse = motDePasseController.text;
+  if (email.isEmpty | motDePasse.isEmpty)
   {
     showDialog(
     context: context,
@@ -52,7 +52,7 @@ Future userLogin() async{
   var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
  
   // Store all data with Param Name.
-  var data = {'email': email, 'password' : password};
+  var data = {'email': email, 'motDePasse' : motDePasse};
  
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
@@ -117,7 +117,7 @@ Future userLogin() async{
 
 /*Future<List> senddata() async {
   final response = await http.post("https://flagrant-amusements.000webhostapp.com/insertData.php", body: {
-    "password": password.text,
+    "motDePasse": motDePasse.text,
     "email": email.text,
   });
 }*/
@@ -171,7 +171,7 @@ Future userLogin() async{
                   decoration: kBoxDecorationStyle,
                   height: 60.0,
                   child: TextField(
-                    controller: passwordController,
+                    controller: motDePasseController,
                     obscureText: true,
                     style: TextStyle(
                       color: Colors.white,
