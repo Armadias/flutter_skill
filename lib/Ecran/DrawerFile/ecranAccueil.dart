@@ -9,8 +9,13 @@ import 'dart:convert';
 
 class EcranAccueil extends StatefulWidget {
   
-  final String mail;
-  EcranAccueil({Key key, @required this.mail}) : super(key: key);
+  final String id;
+  final String name;
+  final String email;
+  final String password;
+  final String status;
+
+  EcranAccueil({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key: key);
 
   @override
   EcranAccueilEtat createState() => EcranAccueilEtat();
@@ -33,7 +38,7 @@ class EcranAccueilEtat extends State<EcranAccueil> {
             style: kLabelStyle,
             ),
           ),
-          drawer: CustomDrawer(mail : widget.mail),
+          drawer: CustomDrawer(id : widget.id),
            body: Stack(children: <Widget>[
             Container(
               height: double.infinity,
@@ -52,26 +57,10 @@ class EcranAccueilEtat extends State<EcranAccueil> {
                 ),
               ),
               
-              child: Text(widget.mail),
+              child: Text(widget.id + " " + widget.name + " " + widget.email + " " + widget.password + " " + widget.status ),
             ),
           ],
         ),
       );
     }
-
-    Future getData() async{
-    var url = 'https://flagrant-amusements.000webhostapp.com/get.php';
-    http.Response response = await http.get(url);
-    var data = jsonDecode(response.body);
-    print(data.toString());
-
-    name = data['username'];
-    password = data[password];
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }    
 }

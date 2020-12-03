@@ -21,16 +21,32 @@
  
 	if(isset($check)){
 		
-		 echo json_encode($check);
+		 // Successfully Login Message.
+		 $onLoginSuccess = 'Login Matched';
+		 
+		 
+		 // Converting the message into JSON format.
+		 $SuccessMSG = json_encode($onLoginSuccess);
+		 //$SuccessMSG = json_encode($check);
+		 
+		 // Echo the message.
+		 echo $SuccessMSG ;
+		 //echo json_encode($check);
 	 
 	 }
 	 
 	 else{
 	 
-		echo json_encode(-1);
+		 // If Email and Password did not Matched.
+		$InvalidMSG = 'ERREUR DE CONNECTION \n voulez vous créér un compte?';
+		 
+		// Converting the message into JSON format.
+		$InvalidMSGJSon = json_encode($InvalidMSG);
+		 
+		// Echo the message.
+		 echo $InvalidMSGJSon ;
 	 
-     }
-     
+	 }
  
  mysqli_close($con);
 ?>

@@ -158,7 +158,7 @@ class EcranProfilEtat extends State<EcranProfil>{
                       print('login appuillé');
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EcranAccueil(mail : "")),
+                        MaterialPageRoute(builder: (context) => EcranAccueil(id : "2")),
                       );
                     },
                     padding: EdgeInsets.all(15.0),
@@ -229,7 +229,7 @@ class EcranProfilEtat extends State<EcranProfil>{
             style: kLabelStyle,
             ),
           ),
-      drawer: CustomDrawer(mail : ""),
+      drawer: CustomDrawer(id : "2"),
       body: Stack(children: <Widget>[
         Container(
           height: double.infinity,
