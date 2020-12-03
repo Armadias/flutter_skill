@@ -18,6 +18,7 @@ class CustomDrawer extends StatefulWidget{
 }
 
 class DrawerEtat extends State<CustomDrawer>{
+
   @override
   Widget build(BuildContext context) => new Drawer(
     child: ListView(
@@ -26,7 +27,13 @@ class DrawerEtat extends State<CustomDrawer>{
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: Colors.orange),
           accountName: Text(widget.name),
-          accountEmail: Text(widget.email),
+          accountEmail: Text(() 
+          {
+            if (widget.status == "0")
+              return widget.email + "\nÉleve";
+            else
+              return widget.email + "\n <b>fessor<\b>";
+          }()),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
             ? Colors.white
