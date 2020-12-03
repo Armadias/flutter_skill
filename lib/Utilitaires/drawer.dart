@@ -6,8 +6,12 @@ import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
 class CustomDrawer extends StatefulWidget{
   final String id;
+  final String name;
+  final String email;
+  final String password;
+  final String status;
 
-  CustomDrawer({Key key, @required this.id}) : super(key : key);
+  CustomDrawer({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key : key);
   @override
   DrawerEtat createState() => new DrawerEtat();
 
@@ -21,13 +25,13 @@ class DrawerEtat extends State<CustomDrawer>{
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: Colors.orange),
-          accountName: Text("accountname"),
-          accountEmail: Text(widget.id),
+          accountName: Text(widget.name),
+          accountEmail: Text(widget.email),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
             ? Colors.white
             : Colors.white,
-            child: Text("A",
+            child: Text(widget.name[0],
             style: TextStyle(fontSize: 40.0),
             ),
           ),

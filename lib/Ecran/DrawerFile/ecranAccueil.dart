@@ -38,7 +38,11 @@ class EcranAccueilEtat extends State<EcranAccueil> {
             style: kLabelStyle,
             ),
           ),
-          drawer: CustomDrawer(id : widget.id),
+          drawer: CustomDrawer(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status),
            body: Stack(children: <Widget>[
             Container(
               height: double.infinity,
