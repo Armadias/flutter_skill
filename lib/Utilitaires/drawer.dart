@@ -32,7 +32,7 @@ class DrawerEtat extends State<CustomDrawer>{
             if (widget.status == "0")
               return widget.email + "\nÉleve";
             else
-              return widget.email + "\n <b>fessor<\b>";
+              return widget.email + "\n fessor";
           }()),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
