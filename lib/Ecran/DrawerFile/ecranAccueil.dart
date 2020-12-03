@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class EcranAccueil extends StatefulWidget {
+  
+  final String mail;
+  EcranAccueil({Key key, @required this.mail}) : super(key: key);
+
   @override
   EcranAccueilEtat createState() => EcranAccueilEtat();
   }
@@ -17,6 +21,9 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 
   var name;
   var password;
+  //final String mail;
+
+  //EcranAccueilEtat({Key key, @required this.mail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class EcranAccueilEtat extends State<EcranAccueil> {
             style: kLabelStyle,
             ),
           ),
-          drawer: CustomDrawer(),
+          drawer: CustomDrawer(mail : widget.mail),
            body: Stack(children: <Widget>[
             Container(
               height: double.infinity,
@@ -45,7 +52,7 @@ class EcranAccueilEtat extends State<EcranAccueil> {
                 ),
               ),
               
-              child: Text('Accueuil'),
+              child: Text(widget.mail),
             ),
           ],
         ),

@@ -75,7 +75,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
-                    MaterialPageRoute(builder: (context) => EcranAccueil()),
+                    MaterialPageRoute(builder: (context) => EcranAccueil(mail : email)),
                     );
                   }else if(message == "Soit t'es déjà inscrit, soit quelqu\'un à déjà créé un compte avec cette adresse..."){
                     Navigator.of(context).pop();

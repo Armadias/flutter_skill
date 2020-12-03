@@ -30,6 +30,7 @@ Future userLogin() async{
   // Getting value from Controller
   String email = emailController.text;
   String motDePasse = motDePasseController.text;
+  String nomPrenom;
   if (email.isEmpty | motDePasse.isEmpty)
   {
     showDialog(
@@ -52,7 +53,7 @@ Future userLogin() async{
   var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
  
   // Store all data with Param Name.
-  var data = {'email': email, 'motDePasse' : motDePasse};
+  var data = {'email': email, 'motDePasse' : motDePasse, 'nomPrenom' : nomPrenom};
  
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
@@ -73,7 +74,7 @@ Future userLogin() async{
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EcranAccueil())
+        MaterialPageRoute(builder: (context) => EcranAccueil(mail : email))
       );
 
       
