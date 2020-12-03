@@ -4,23 +4,19 @@ import 'dart:convert';
 
 var url = "https://flagrant-amusements.000webhostapp.com/";
 
-Future get(var data, String action) async
+Future get(var data, String file) async
 {
 
-  var response = await http.post(url + "action.php", body: json.encode(data));
-
-  return response;
-  //OU
+  var response = await http.post(url + file, body: json.encode(data));
+  
   return jsonDecode(response.body);
 }
 
-Future set(var data) async
+Future set(var data, String file) async
 {
 
-  var response = await http.post(url + "set.php", body: json.encode(data));
+  var response = await http.post(url + file, body: json.encode(data));
 
-  return response;
-  //OU
   return jsonDecode(response.body);
 }
 

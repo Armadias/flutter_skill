@@ -20,3 +20,4 @@
  
  // Decoding the received JSON and store into $obj variable.
  $obj = json_decode($json,true);
+?>
