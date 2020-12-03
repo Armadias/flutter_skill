@@ -5,7 +5,9 @@ import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
 class CustomDrawer extends StatefulWidget{
-  CustomDrawer({Key key}) : super(key : key);
+  final String mail;
+
+  CustomDrawer({Key key, @required this.mail}) : super(key : key);
   @override
   DrawerEtat createState() => new DrawerEtat();
 
@@ -20,7 +22,7 @@ class DrawerEtat extends State<CustomDrawer>{
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: Colors.orange),
           accountName: Text("accountname"),
-          accountEmail: Text("account@"),
+          accountEmail: Text(widget.mail),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
             ? Colors.white
@@ -39,7 +41,7 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  EcranAccueil()
+                  EcranAccueil(mail : "gg")
                   ),
               );
                   },
