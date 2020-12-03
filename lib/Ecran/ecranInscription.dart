@@ -75,7 +75,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
-                    MaterialPageRoute(builder: (context) => EcranAccueil(id : "2")),
+                    MaterialPageRoute(builder: (context) => EcranConnection()),
                     );
                   }else{
                     Navigator.of(context).pop();
