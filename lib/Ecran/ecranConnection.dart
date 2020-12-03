@@ -1,11 +1,14 @@
 //import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/ecranInscription.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:flutter/foundation.dart';
 
 class EcranConnection extends StatefulWidget {
   @override
@@ -56,21 +59,24 @@ Future userLogin() async{
  
   // Getting Server response into variable.
   var message = jsonDecode(response.body);
- 
+
+//log('Blablou: $message');
   // If the Response Message is Matched.
- if(message == 'Login Matched')
+ if(message == "Login Matched")
   {
  
     // Hiding the CircularProgressIndicator.
       /*setState(() {
       visible = false; 
       });*/
- 
+  
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => EcranAccueil())
       );
+
+      
   }
   else
   {
