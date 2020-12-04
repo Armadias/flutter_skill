@@ -108,12 +108,21 @@ class EcranAccueilEtat extends State<EcranAccueil> {
   var response = await http.post(url, body: json.encode(data));
  
   // Getting Server response into variable.
-  var message = jsonDecode(response.body);
-  print(message);
+ List<dynamic> message = jsonDecode(response.body);
+
+  List<dynamic> noms = List<dynamic>();
 
   // If the Response Message is Matched.
- if(message != "-1")
+ if(message[0] != "-1")
   {
+
+    for (int i = 0; i < message.length; i++)
+    {
+      noms.add(message[i]["0"]);
+    }
+
+    print (noms);
+//jsonconverter(message[i]);
 
   print("ceci est un message de merde : ");
   String boop = "cacacacacacacacacacacaca";
@@ -143,4 +152,10 @@ class EcranAccueilEtat extends State<EcranAccueil> {
   }
  
 }
+
+/*String jsonconverter(Map<String, dynamic> json)
+{
+  return json["0"];
+}*/
+
 }
