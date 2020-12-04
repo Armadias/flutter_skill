@@ -7,6 +7,27 @@ import 'package:skill_check/Utilitaires/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
+class StudentData {
+  int studentId;
+  String studentName;
+  String studentMail;
+
+  StudentData({
+    this.studentId,
+    this.studentName,
+    this.studentMail
+  });
+
+  factory StudentData.fromJson(Map<String, dynamic> json){
+    return StudentData(
+      studentId: json['id'],
+      studentName: json['name'],
+      studentMail: json['email']
+    );
+  }
+}
+
 class EcranAccueil extends StatefulWidget {
   
   final String id;
@@ -21,14 +42,36 @@ class EcranAccueil extends StatefulWidget {
   EcranAccueilEtat createState() => EcranAccueilEtat();
   }
 
-
 class EcranAccueilEtat extends State<EcranAccueil> {
 
-  var name;
-  var password;
-  //final String mail;
+  final String apiURL = 'https://flagrant-amusements.000webhostapp.com/get_students.php';
+  //var name;
+  //var password;
+  //var utilisateurid = int.parse(name);
+  
 
   //EcranAccueilEtat({Key key, @required this.mail}) : super(key: key);
+
+  Future<List<StudentData>> fetchStudents() async {
+    
+    int utilisateurid = int.parse(widget.id);
+
+    var response = await http.get(apiURL);
+ 
+    if (response.statusCode == 200) {
+ 
+      final items = json.decode(response.body).cast<Map<String, dynamic>>();
+ 
+      List<StudentData> studentList = items.map<StudentData>((json) {
+        return StudentData.fromJson(json);
+      }).toList();
+ 
+      return studentList;
+      }
+     else {
+      throw Exception('Failed to load data from Server.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
