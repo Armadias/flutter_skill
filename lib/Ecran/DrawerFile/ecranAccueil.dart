@@ -69,6 +69,20 @@ class EcranAccueilEtat extends State<EcranAccueil> {
       );
     }
 
+    Widget constructeurListe(){
+    return ListView(
+      children: <Widget>[
+        for(int i = 0; i < row.size; i++){
+          ListTile(
+            title: Text(row[i].nomprenom),
+          ),
+       }
+      ]
+      //padding: EdgeInsets.symmetric(vertical: 25.0),
+
+    );
+    }
+
     Widget constructeurBoutton(){
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -108,21 +122,12 @@ class EcranAccueilEtat extends State<EcranAccueil> {
   var response = await http.post(url, body: json.encode(data));
  
   // Getting Server response into variable.
- List<dynamic> message = jsonDecode(response.body);
-
-  List<dynamic> noms = List<dynamic>();
+  var message = jsonDecode(response.body);
+  print(message);
 
   // If the Response Message is Matched.
- if(message[0] != "-1")
+ if(message != "-1")
   {
-
-    for (int i = 0; i < message.length; i++)
-    {
-      noms.add(message[i]["0"]);
-    }
-
-    print (noms);
-//jsonconverter(message[i]);
 
   print("ceci est un message de merde : ");
   String boop = "cacacacacacacacacacacaca";
@@ -152,10 +157,4 @@ class EcranAccueilEtat extends State<EcranAccueil> {
   }
  
 }
-
-/*String jsonconverter(Map<String, dynamic> json)
-{
-  return json["0"];
-}*/
-
 }
