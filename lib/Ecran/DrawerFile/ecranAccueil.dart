@@ -63,8 +63,84 @@ class EcranAccueilEtat extends State<EcranAccueil> {
               
               child: Text(widget.id + " " + widget.name + " " + widget.email + " " + widget.password + " " + widget.status ),
             ),
+            constructeurBoutton(),
           ],
         ),
       );
     }
+
+    Widget constructeurBoutton(){
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: test,
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        color: Colors.deepOrangeAccent,
+        child:Text(
+          'TEST',
+          style: TextStyle(
+            color: Colors.white70,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Kufam',
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future test() async{
+ 
+  int id = int.parse(widget.id);
+  // SERVER LOGIN API URL
+  var url = 'https://flagrant-amusements.000webhostapp.com/getListeUser.php';
+ 
+  // Store all data with Param Name.
+  var data = {'id' : id};
+ 
+  // Starting Web API Call.
+  var response = await http.post(url, body: json.encode(data));
+ 
+  // Getting Server response into variable.
+  var message = jsonDecode(response.body);
+  print(message);
+
+  // If the Response Message is Matched.
+ if(message != "-1")
+  {
+
+  print("ceci est un message de merde : ");
+  String boop = "cacacacacacacacacacacaca";
+
+         showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text(() 
+          {
+            return boop;
+          }()),
+        actions: <Widget>[
+          FlatButton(
+           child: Text("Ok"),
+           onPressed: () { Navigator.of(context).pop(); },
+           ),
+        ],
+      );
+    },
+    ); 
+  }
+  else
+  {
+ 
+    
+  }
+ 
+}
 }
