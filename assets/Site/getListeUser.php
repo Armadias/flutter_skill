@@ -7,19 +7,26 @@
  
  //Applying User Login query with email and password.
  //$loginQuery = "select professeur.*, eleve.* from professeur, eleve where email = '$email' and motDePasse = '$motDePasse' ";
- $loginQuery =" SELECT u.nomPrenom, u.id
+ $Query =" SELECT u.nomPrenom, u.id
                 FROM utilisateur u, utilisateur_has_utilisateur uhu
                 WHERE '$id' = uhu.utilisateur_id
                 AND u.id = uhu.utilisateur_id1";
- //$loginQuery2 = "select * from professeur where email = '$email' and motDePasse = '$motDePasse' ";
+
+$result = mysqli_query($con,$Query);
  
  // Executing SQL Query.
- $check = mysqli_fetch_array(mysqli_query($con,$loginQuery));
- //$check2 = mysqli_fetch_array(mysqli_query($con,$loginQuery2));
+ $row = mysqli_fetch_array($result);
  
-	if(isset($check)){
-		
-		 echo json_encode($check);
+	if(isset($row)){
+
+        $message = array();
+        
+        
+        do{
+            $message[] = $row;
+        }while ($row = mysqli_fetch_array($result));
+
+		 echo json_encode($message);
 	 
 	 }
 	 
