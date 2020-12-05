@@ -26,6 +26,7 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 
   var name;
   var password;
+  final List<dynamic> noms = ["Yoan Ameloot", "Martin Folliet", "Virgile Jacquet", "Rémi Matrod", "Nicolas Commandeur", "Un autre élève"];
   //final String mail;
 
   //EcranAccueilEtat({Key key, @required this.mail}) : super(key: key);
@@ -63,7 +64,10 @@ class EcranAccueilEtat extends State<EcranAccueil> {
               
               child: Text(widget.id + " " + widget.name + " " + widget.email + " " + widget.password + " " + widget.status ),
             ),
+            SizedBox(height: 40.0),
             constructeurBoutton(),
+            SizedBox(height: 40.0),
+            constructeurList(),
           ],
         ),
       );
@@ -94,6 +98,28 @@ class EcranAccueilEtat extends State<EcranAccueil> {
       ),
     );
   }
+
+  Widget constructeurList(){
+    return ListView.builder(
+      //itemCount: noms.length;
+      itemBuilder: (BuildContext context, int index){
+        return Container(
+          height: 50,
+          child : Center(
+            child: Text('${noms[index]}')
+          )
+        );
+      }
+  ); 
+  }
+
+  /*Widget constructeurDropdownButton(){
+    return DropdownButton(items: new List.generate(20, (int index){
+
+    }))
+
+    );
+  }*/
 
   Future test() async{
  
@@ -126,6 +152,20 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 
   print("ceci est un message de merde : ");
   String boop = "cacacacacacacacacacacaca";
+
+  ListView.builder(
+      //itemCount: noms.length;
+      itemBuilder: (BuildContext context, int index){
+        return Container(
+          height: 50,
+          child : Center(
+            child: Text('${noms[index]}')
+          )
+        );
+      }
+  ); 
+    
+
 
          showDialog(
     context: context,
