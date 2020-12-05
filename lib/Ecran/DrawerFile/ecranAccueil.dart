@@ -110,7 +110,7 @@ class EcranAccueilEtat extends State<EcranAccueil> {
   // Getting Server response into variable.
  List<dynamic> message = jsonDecode(response.body);
 
-  List<dynamic> noms = List<dynamic>();
+  List<Map<String, dynamic>> noms = List<Map<String, dynamic>>();
 
   // If the Response Message is Matched.
  if(message[0] != "-1")
