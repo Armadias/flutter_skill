@@ -1,6 +1,5 @@
 //import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/ecranInscription.dart';
@@ -10,7 +9,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:progress_dialog/progress_dialog.dart';
 
-import 'package:flutter/foundation.dart';
 
 class EcranConnection extends StatefulWidget {
   @override

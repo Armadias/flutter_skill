@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:skill_check/Ecran/DrawerFile/Loader.dart';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
@@ -52,7 +53,11 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  EcranAccueil(id : widget.id)
+                  EcranAccueil(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status),
                   ),
               );
                   },
@@ -67,7 +72,11 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  EcranProfil()
+                  EcranProfil(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status)
                   ),
               );
                   },
@@ -76,14 +85,25 @@ class DrawerEtat extends State<CustomDrawer>{
         //Infos Personnelles
         Card(
           child: ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Informations Personnelles'),
+            leading: Icon(Icons.lock_open),
+            title: Text(() 
+          {
+            if (widget.status == "0")
+              return "Liste de vos professeurs";
+            else
+              return "Liste de vos éleves";
+          }()),
             onTap: (){
-              /*Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EcranAccueil()
-                    ),
-                    );*/
-                    Navigator.pop(context);
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                  Loader(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status)
+                  ),
+              );
                   },
           ),
         ),

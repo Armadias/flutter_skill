@@ -35,6 +35,9 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 
   @override
   Widget build(BuildContext context) {
+
+    print(widget.id + widget.name + widget.email + widget.password + widget.status);
+
         return Scaffold(
           appBar: AppBar(
             title: Text('Accueil',
