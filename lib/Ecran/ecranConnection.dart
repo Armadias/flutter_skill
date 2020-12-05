@@ -84,7 +84,7 @@ Future userLogin() async{
       visible = false; 
       });*/
 
-  
+      await pr.hide();
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
         context,
@@ -101,7 +101,6 @@ Future userLogin() async{
   }
   else
   {
- 
     await pr.hide();
     // If Email or Password did not Matched.
     // Hiding the CircularProgressIndicator.
