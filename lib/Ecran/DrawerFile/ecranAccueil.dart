@@ -24,8 +24,11 @@ class EcranAccueil extends StatefulWidget {
 
 class EcranAccueilEtat extends State<EcranAccueil> {
 
+  List<dynamic> message = List<dynamic>();
+
   var name;
   var password;
+  final List<dynamic> noms = ["Yoan Ameloot", "Martin Folliet", "Virgile Jacquet", "Rémi Matrod", "Nicolas Commandeur", "Un autre élève"];
   //final String mail;
 
   //EcranAccueilEtat({Key key, @required this.mail}) : super(key: key);
@@ -63,7 +66,9 @@ class EcranAccueilEtat extends State<EcranAccueil> {
               
               child: Text(widget.id + " " + widget.name + " " + widget.email + " " + widget.password + " " + widget.status ),
             ),
+            SizedBox(height: 40.0),
             constructeurBoutton(),
+            SizedBox(height: 40.0),
           ],
         ),
       );
@@ -95,6 +100,28 @@ class EcranAccueilEtat extends State<EcranAccueil> {
     );
   }
 
+  Widget constructeurList(){
+    return ListView.builder(
+      //itemCount: noms.length;
+      itemBuilder: (BuildContext context, int index){
+        return Container(
+          height: 50,
+          child : Center(
+            child: Text('${message[index]["0"]}')
+          )
+        );
+      }
+  ); 
+  }
+
+  /*Widget constructeurDropdownButton(){
+    return DropdownButton(items: new List.generate(20, (int index){
+
+    }))
+
+    );
+  }*/
+
   Future test() async{
  
   int id = int.parse(widget.id);
@@ -125,7 +152,23 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 //jsonconverter(message[i]);
 
   print("ceci est un message de merde : ");
-  String boop = "cacacacacacacacacacacaca";
+  //window.location.reload();
+  setState(() {
+    
+  ListView.builder(
+      //itemCount: noms.length;
+      itemBuilder: (BuildContext context, int index){
+        return Container(
+          height: 50,
+          child : Center(
+            child: Text('${message[index]["0"]}')
+          )
+        );
+      }
+  ); 
+  });
+    
+
 
          showDialog(
     context: context,
@@ -133,7 +176,7 @@ class EcranAccueilEtat extends State<EcranAccueil> {
       return AlertDialog(
         title: new Text(() 
           {
-            return boop;
+             return "boop";
           }()),
         actions: <Widget>[
           FlatButton(
