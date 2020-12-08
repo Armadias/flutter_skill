@@ -44,16 +44,17 @@ class EcranAccueil extends StatefulWidget {
 
 class EcranAccueilEtat extends State<EcranAccueil> {
 
-  final String apiURL = 'https://flagrant-amusements.000webhostapp.com/get_students.php';
-  //var name;
-  //var password;
-  //var utilisateurid = int.parse(name);
-  
+  List<dynamic> message = List<dynamic>();
+
+  var name;
+  var password;
+  final List<dynamic> noms = ["Yoan Ameloot", "Martin Folliet", "Virgile Jacquet", "Rémi Matrod", "Nicolas Commandeur", "Un autre élève"];
+  //final String mail;
 
   //EcranAccueilEtat({Key key, @required this.mail}) : super(key: key);
 
   Future<List<StudentData>> fetchStudents() async {
-    
+    var apiURL = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
     int utilisateurid = int.parse(widget.id);
 
     var response = await http.get(apiURL);
@@ -75,6 +76,9 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 
   @override
   Widget build(BuildContext context) {
+
+    print(widget.id + widget.name + widget.email + widget.password + widget.status);
+
         return Scaffold(
           appBar: AppBar(
             title: Text('Accueil',
@@ -106,8 +110,139 @@ class EcranAccueilEtat extends State<EcranAccueil> {
               
               child: Text(widget.id + " " + widget.name + " " + widget.email + " " + widget.password + " " + widget.status ),
             ),
+            SizedBox(height: 40.0),
+            constructeurBoutton(),
+            SizedBox(height: 40.0),
           ],
         ),
       );
     }
+
+    Widget constructeurBoutton(){
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: test,
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        color: Colors.deepOrangeAccent,
+        child:Text(
+          'TEST',
+          style: TextStyle(
+            color: Colors.white70,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Kufam',
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget constructeurList(){
+    return ListView.builder(
+      //itemCount: noms.length;
+      itemBuilder: (BuildContext context, int index){
+        return Container(
+          height: 50,
+          child : Center(
+            child: Text('${message[index]["0"]}')
+          )
+        );
+      }
+  ); 
+  }
+
+  /*Widget constructeurDropdownButton(){
+    return DropdownButton(items: new List.generate(20, (int index){
+
+    }))
+
+    );
+  }*/
+
+  Future test() async{
+ 
+  int id = int.parse(widget.id);
+  // SERVER LOGIN API URL
+  var url = 'https://flagrant-amusements.000webhostapp.com/getListeUser.php';
+ 
+  // Store all data with Param Name.
+  var data = {'id' : id};
+ 
+  // Starting Web API Call.
+  var response = await http.post(url, body: json.encode(data));
+ 
+  // Getting Server response into variable.
+ List<dynamic> message = jsonDecode(response.body);
+
+  List<Map<String, dynamic>> noms = List<Map<String, dynamic>>();
+
+  // If the Response Message is Matched.
+ if(message[0] != "-1")
+  {
+
+    for (int i = 0; i < message.length; i++)
+    {
+      noms.add(message[i]["0"]);
+    }
+
+    print (noms);
+//jsonconverter(message[i]);
+
+  print("ceci est un message de merde : ");
+  //window.location.reload();
+  setState(() {
+    
+  ListView.builder(
+      //itemCount: noms.length;
+      itemBuilder: (BuildContext context, int index){
+        return Container(
+          height: 50,
+          child : Center(
+            child: Text('${message[index]["0"]}')
+          )
+        );
+      }
+  ); 
+  });
+    
+
+
+         showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: new Text(() 
+          {
+             return "boop";
+          }()),
+        actions: <Widget>[
+          FlatButton(
+           child: Text("Ok"),
+           onPressed: () { Navigator.of(context).pop(); },
+           ),
+        ],
+      );
+    },
+    ); 
+  }
+  else
+  {
+ 
+    
+  }
+ 
+}
+
+/*String jsonconverter(Map<String, dynamic> json)
+{
+  return json["0"];
+}*/
+
 }
