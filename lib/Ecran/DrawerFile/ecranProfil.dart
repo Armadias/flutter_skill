@@ -24,11 +24,7 @@ class EcranProfilEtat extends State<EcranProfil>{
             style: kDrawerTitle,
             ),
           ),
-          drawer: CustomDrawer(id : widget.profil["id"],
-                                name: widget.profil["nomPrenom"],
-                                email: widget.profil["email"],
-                                password: widget.profil["password"],
-                                status: widget.profil["status"],
+          drawer: CustomDrawer(
                                 statusString: widget.status,
                                 profil: widget.profil,
                                 ),
@@ -111,7 +107,7 @@ class EcranProfilEtat extends State<EcranProfil>{
                   ),
                   ),
                   ),
-                  Divider( thickness: 2.0),
+ 
                   ],
                 ),
               ),

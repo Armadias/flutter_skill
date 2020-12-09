@@ -6,13 +6,10 @@ import 'package:skill_check/Utilitaires/drawer.dart';
 class EcranListe extends StatefulWidget {
 
   final List<dynamic> message;
-  final String id;
-  final String name;
-  final String email;
-  final String password;
-  final String status;
+  final Map<String, dynamic> profil;
+  final String statusString;
 
-  EcranListe({Key key, @required this.id, this.name, this.email, this.password, this.status, this.message}) : super(key: key);
+  EcranListe({Key key, @required this.message, this.profil, this.statusString}) : super(key: key);
 
   @override
   EcranListeEtat createState() => EcranListeEtat();
@@ -32,11 +29,10 @@ class EcranListeEtat extends State<EcranListe>
             style: kLabelStyle,
             ),
           ),
-          drawer: CustomDrawer(id : widget.id,
-                                name: widget.name,
-                                email: widget.email,
-                                password: widget.password,
-                                status: widget.status),
+          drawer: CustomDrawer(
+            profil: widget.profil,
+            statusString: widget.statusString,
+          ),
            body: Stack(children: <Widget>[
             colorGradient,
             constructeurList(),
@@ -45,6 +41,7 @@ class EcranListeEtat extends State<EcranListe>
       );
   }
     Widget constructeurList(){
+      print(widget.message);
     return ListView.builder(
       itemCount: widget.message.length,
       itemBuilder: (BuildContext context, int index){

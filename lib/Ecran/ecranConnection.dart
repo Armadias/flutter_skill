@@ -85,11 +85,7 @@ Future userLogin() async{
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EcranAccueil(id : message["id"],
-                                                             name: message["nomPrenom"],
-                                                             email: message["email"],
-                                                             password: message["motDePasse"],
-                                                             status: message["status"],
+        MaterialPageRoute(builder: (context) => EcranAccueil(
                                                              statusString : status,
                                                              message: message,
                                                              )

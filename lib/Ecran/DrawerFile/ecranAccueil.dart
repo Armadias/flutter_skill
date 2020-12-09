@@ -4,17 +4,13 @@ import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
 
 class EcranAccueil extends StatefulWidget {
-  
-  final String id;
-  final String name;
-  final String email;
-  final String password;
-  final String status;
+
+
   final String statusString;
 
   final Map<String,dynamic> message;
 
-  EcranAccueil({Key key, @required this.id, this.name, this.email, this.password, this.status, this.statusString, this.message}) : super(key: key);
+  EcranAccueil({Key key, @required this.statusString, this.message}) : super(key: key);
 
   @override
   EcranAccueilEtat createState() => EcranAccueilEtat();
@@ -41,13 +37,10 @@ class EcranAccueilEtat extends State<EcranAccueil> {
             style: kDrawerTitle,
             ),
           ),
-          drawer: CustomDrawer(id : widget.id,
-                                name: widget.name,
-                                email: widget.email,
-                                password: widget.password,
-                                status: widget.status,
+          drawer: CustomDrawer(
                                 profil: widget.message,
-                                statusString: widget.statusString,),
+                                statusString: widget.statusString,
+                              ),
            body: Stack(children: <Widget>[
             colorGradient,
           ],

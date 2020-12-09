@@ -7,13 +7,10 @@ import 'dart:convert';
 
 class Loader extends StatefulWidget {
 
-  final String id;
-  final String name;
-  final String email;
-  final String password;
-  final String status;
+  final Map<String, dynamic> profil;
+  final String statusString;
 
-  Loader({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key: key);
+  Loader({Key key, @required this.profil, this.statusString}) : super(key: key);
 
   @override
   LoaderState createState() => LoaderState();
@@ -70,7 +67,7 @@ class LoaderState extends State<Loader>
                         ),
                         Text(() 
                       {
-                        if (widget.status == "0")
+                        if (widget.statusString == "Éleve")
                           return "Récupération de vos professeurs";
                         else
                           return "Récupération de vos éleves";
@@ -100,7 +97,7 @@ void initState()
 @protected
 Future fetch() async
 {
-  int id = int.parse(widget.id);
+  int id = int.parse(widget.profil["id"]);
   // SERVER LOGIN API URL
   var url = 'https://flagrant-amusements.000webhostapp.com/getListeUser.php';
 
@@ -110,16 +107,21 @@ Future fetch() async
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
 
+  var mess = jsonDecode(response.body);
+  
+  if (mess != -1)
   message = json.decode(response.body);
+
+  else
+
+  print(message);
+  Navigator.pop(context);
 
   Navigator.of(context).pushReplacement(MaterialPageRoute(
     builder: (BuildContext context) =>
     EcranListe(
-      id: widget.id,
-      name: widget.name,
-      email: widget.email,
-      password: widget.password,
-      status: widget.status,
+      profil : widget.profil,
+      statusString : widget.statusString,
       message : message)
   ),
 );

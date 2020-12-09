@@ -6,15 +6,11 @@ import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
 class CustomDrawer extends StatefulWidget{
-  final String id;
-  final String name;
-  final String email;
-  final String password;
-  final String status;
+
   final String statusString;
   final Map<String,dynamic> profil;
 
-  CustomDrawer({Key key, @required this.id, this.name, this.email, this.password, this.status, this.statusString, this.profil}) : super(key : key);
+  CustomDrawer({Key key, @required this.statusString, this.profil}) : super(key : key);
   @override
   DrawerEtat createState() => new DrawerEtat();
 
@@ -29,15 +25,17 @@ class DrawerEtat extends State<CustomDrawer>{
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: Colors.cyan),
-          accountName: Text(widget.name),
+          accountName: Text(widget.profil["nomPrenom"],
+          style: TextStyle(color: Colors.white)),
           accountEmail: Text( 
-         widget.profil["email"] + "\n" + widget.statusString
+         widget.profil["email"],
+         style: TextStyle(color: Colors.white)
               ),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
             ? Colors.white
             : Colors.white,
-            child: Text(widget.name[0],
+            child: Text(widget.profil["nomPrenom"][0],
             style: TextStyle(fontSize: 40.0),
             ),
           ),
@@ -51,15 +49,12 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  EcranAccueil(id : widget.id,
-                                name: widget.name,
-                                email: widget.email,
-                                password: widget.password,
-                                status: widget.status,
+                  EcranAccueil(
                                 statusString: widget.statusString,
-                                message: widget.profil),
-                  ),
-              );
+                                message: widget.profil
+                              ),
+                      ),
+                    );
                   },
           ),
         ),
@@ -87,7 +82,7 @@ class DrawerEtat extends State<CustomDrawer>{
             leading: Icon(Icons.lock_open),
             title: Text(() 
           {
-            if (widget.status == "0")
+            if (widget.statusString == "Éleves")
               return "Liste de vos professeurs";
             else
               return "Liste de vos éleves";
@@ -96,11 +91,10 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  Loader(id : widget.id,
-                                name: widget.name,
-                                email: widget.email,
-                                password: widget.password,
-                                status: widget.status)
+                  Loader(
+                    profil: widget.profil,
+                    statusString: widget.statusString
+                    )
                   ),
               );
                   },
