@@ -78,7 +78,7 @@ Future userLogin() async{
   {
 
     String status;
-    if (message["status"] == 1)
+    if (message["status"] == "1")
       status = "Professeur";
     else status = "Éleve";
       await pr.hide();
