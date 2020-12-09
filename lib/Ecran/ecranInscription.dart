@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:skill_check/Ecran/ecranConnection.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 
 class EcranInscription extends StatefulWidget {
   @override
