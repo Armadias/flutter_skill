@@ -111,6 +111,7 @@ class EcranProfilEtat extends State<EcranProfil>{
                   ],
                 ),
               ),
+              Divider(thickness: 2,),
               SizedBox(height : 60),
               constructeurModifProfil(),
               constructeurModifMDP(),

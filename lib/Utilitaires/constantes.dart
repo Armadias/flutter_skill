@@ -46,7 +46,7 @@ final colorGradient = Container(
                 Colors.cyan[300],
                 Colors.cyan[400],
                 Colors.cyan,
-                Colors.cyan[700],
+                Colors.cyan[600],
             ],
             ),
           ),
