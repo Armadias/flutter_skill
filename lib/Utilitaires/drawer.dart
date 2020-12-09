@@ -11,8 +11,10 @@ class CustomDrawer extends StatefulWidget{
   final String email;
   final String password;
   final String status;
+  final String statusString;
+  final Map<String,dynamic> profil;
 
-  CustomDrawer({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key : key);
+  CustomDrawer({Key key, @required this.id, this.name, this.email, this.password, this.status, this.statusString, this.profil}) : super(key : key);
   @override
   DrawerEtat createState() => new DrawerEtat();
 
@@ -26,15 +28,11 @@ class DrawerEtat extends State<CustomDrawer>{
       padding:EdgeInsets.zero,
       children: <Widget>[
         UserAccountsDrawerHeader(
-          decoration: BoxDecoration(color: Colors.orange),
+          decoration: BoxDecoration(color: Colors.cyan),
           accountName: Text(widget.name),
-          accountEmail: Text(() 
-          {
-            if (widget.status == "0")
-              return widget.email + "\nÉleve";
-            else
-              return widget.email + "\nProfesseur";
-          }()),
+          accountEmail: Text( 
+         widget.profil["email"] + "\n" + widget.statusString
+              ),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
             ? Colors.white
@@ -57,7 +55,9 @@ class DrawerEtat extends State<CustomDrawer>{
                                 name: widget.name,
                                 email: widget.email,
                                 password: widget.password,
-                                status: widget.status),
+                                status: widget.status,
+                                statusString: widget.statusString,
+                                message: widget.profil),
                   ),
               );
                   },
@@ -72,11 +72,10 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  EcranProfil(id : widget.id,
-                                name: widget.name,
-                                email: widget.email,
-                                password: widget.password,
-                                status: widget.status)
+                  EcranProfil(
+                                profil: widget.profil,
+                                status: widget.statusString,
+                              )
                   ),
               );
                   },

@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
 
-
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 class EcranAccueil extends StatefulWidget {
   
   final String id;
@@ -14,8 +10,11 @@ class EcranAccueil extends StatefulWidget {
   final String email;
   final String password;
   final String status;
+  final String statusString;
 
-  EcranAccueil({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key: key);
+  final Map<String,dynamic> message;
+
+  EcranAccueil({Key key, @required this.id, this.name, this.email, this.password, this.status, this.statusString, this.message}) : super(key: key);
 
   @override
   EcranAccueilEtat createState() => EcranAccueilEtat();
@@ -36,8 +35,6 @@ class EcranAccueilEtat extends State<EcranAccueil> {
   @override
   Widget build(BuildContext context) {
 
-    print(widget.id + widget.name + widget.email + widget.password + widget.status);
-
         return Scaffold(
           appBar: AppBar(
             title: Text('Accueil',
@@ -48,7 +45,9 @@ class EcranAccueilEtat extends State<EcranAccueil> {
                                 name: widget.name,
                                 email: widget.email,
                                 password: widget.password,
-                                status: widget.status),
+                                status: widget.status,
+                                profil: widget.message,
+                                statusString: widget.statusString,),
            body: Stack(children: <Widget>[
             colorGradient,
           ],

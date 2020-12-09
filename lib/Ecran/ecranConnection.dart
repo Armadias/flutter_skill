@@ -76,12 +76,11 @@ Future userLogin() async{
   // If the Response Message is Matched.
  if(message != "-1")
   {
- 
-    // Hiding the CircularProgressIndicator.
-      /*setState(() {
-      visible = false; 
-      });*/
 
+    String status;
+    if (message["status"] == 1)
+      status = "Professeur";
+    else status = "Éleve";
       await pr.hide();
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
@@ -90,7 +89,9 @@ Future userLogin() async{
                                                              name: message["nomPrenom"],
                                                              email: message["email"],
                                                              password: message["motDePasse"],
-                                                             status: message["status"]
+                                                             status: message["status"],
+                                                             statusString : status,
+                                                             message: message,
                                                              )
                                                           )
       );
