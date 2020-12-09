@@ -263,13 +263,13 @@ Future userLogin() async{
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        color: Colors.deepOrangeAccent,
+        color: Colors.cyan[900],
         child:Text(
           'CONNEXION',
           style: TextStyle(
-            color: Colors.white70,
+            color: Colors.white,
             letterSpacing: 1.5,
-            fontSize: 18.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'Kufam',
           ),
@@ -303,13 +303,13 @@ Future userLogin() async{
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    color: Colors.deepOrangeAccent,
+                    color: Colors.cyan[900],
                     child:Text(
                       'INSCRIPTION',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.white,
                         letterSpacing: 1.5,
-                        fontSize: 18.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Kufam',
                       ),
@@ -322,23 +322,7 @@ Future userLogin() async{
   Widget build(BuildContext context){
     return Scaffold(
       body: Stack(children: <Widget>[
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.red,
-                Colors.orange,
-                Colors.orangeAccent,
-                Colors.deepOrange,
-            ],
-            stops: [0.1,0.4,0.7,0.9],
-            ),
-          ),
-        ),
+        colorGradient,
         Container(
           height: double.infinity,
           child: SingleChildScrollView(

@@ -27,7 +27,7 @@ class EcranProfilEtat extends State<EcranProfil>{
                    children: <Widget>[
                   Text(
                     'Email',
-                    style: kLabelStyle,
+                    style: kDrawerTitle,
                   ),
                   SizedBox(height: 10.0),
                   Container(alignment: Alignment.centerLeft,
@@ -236,7 +236,7 @@ class EcranProfilEtat extends State<EcranProfil>{
     return Scaffold(
       appBar: AppBar(
             title: Text('Profil',
-            style: kLabelStyle,
+            style: kDrawerTitle,
             ),
           ),
       drawer: CustomDrawer(id : widget.id,
@@ -245,23 +245,7 @@ class EcranProfilEtat extends State<EcranProfil>{
                                 password: widget.password,
                                 status: widget.status),
       body: Stack(children: <Widget>[
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.red,
-                Colors.orange,
-                Colors.orangeAccent,
-                Colors.deepOrange,
-            ],
-            stops: [0.1,0.4,0.7,0.9],
-            ),
-          ),
-        ),
+        colorGradient,
         Container(
           height: double.infinity,
           child: SingleChildScrollView(

@@ -38,23 +38,7 @@ class EcranListeEtat extends State<EcranListe>
                                 password: widget.password,
                                 status: widget.status),
            body: Stack(children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.red,
-                    Colors.orange,
-                    Colors.orangeAccent,
-                    Colors.deepOrange,
-                ],
-                stops: [0.1,0.4,0.7,0.9],
-                ),
-              ),
-            ),
+            colorGradient,
             constructeurList(),
           ],
         ),

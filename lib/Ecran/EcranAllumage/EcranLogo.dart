@@ -65,19 +65,10 @@ class EcranLogoEtat extends State<EcranLogo>
 
   void onStart() async{
     await Future.delayed(Duration(milliseconds: 3600));
-    Navigator.of(context).push(
-      new PageRouteBuilder(
-        pageBuilder: (context, animation , secondaryAnimation ) => EcranConnection(),
-        transitionsBuilder: (context, Animation<double> animation, secondaryAnimation , child)
-      {
-        return FadeTransition(
-          opacity: animation,
-          child : child
-        );
-      }
-      ),
-
-    );
+          Navigator.push(
+            context,
+          MaterialPageRoute(builder: (context) => EcranConnection()),
+          );
   }
 
 }
