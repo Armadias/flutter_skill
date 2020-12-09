@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
+import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 
 class EcranListe extends StatefulWidget {
 
@@ -64,13 +65,26 @@ class EcranListeEtat extends State<EcranListe>
     return ListView.builder(
       itemCount: widget.message.length,
       itemBuilder: (BuildContext context, int index){
-        return Container(
-          height: 50,
-          child : Center(
-            child: Text('${widget.message[index]["0"]}')
+        return GestureDetector(
+          onTap: (){
+            print("ca marche !!");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EcranAccueil(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status)),
+            );
+          },
+          child: new Container(
+            height: 50,
+            child : Center(
+              child: Text('${widget.message[index]["0"]}')
+            )
           )
         );
       }
-  ); 
-  }
+    ); 
+    }
 }

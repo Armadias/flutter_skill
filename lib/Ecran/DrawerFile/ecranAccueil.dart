@@ -55,7 +55,7 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 
   Future<List<StudentData>> fetchStudents() async {
     var apiURL = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
-    int utilisateurid = int.parse(widget.id);
+    //int utilisateurid = int.parse(widget.id);
 
     var response = await http.get(apiURL);
  
