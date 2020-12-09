@@ -62,7 +62,7 @@ class EcranListeEtat extends State<EcranListe>
                   child : InkWell(
                     splashColor: Colors.cyan,
                     onTap: () {
-
+                      print("apuillé");
                     },
                     child : Container(
                       width: double.infinity,
@@ -80,16 +80,10 @@ class EcranListeEtat extends State<EcranListe>
                     ),
                   ),
                 ) 
-            ) ,
+              ),
+            ),
           ),
-        ),
         );
-        /*return Container(
-          height: 50,
-          child : Center(
-            child: Text('${widget.message[index]["0"]}')
-          )
-        );*/
       }
   ); 
   }
