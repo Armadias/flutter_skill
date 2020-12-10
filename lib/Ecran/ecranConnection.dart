@@ -1,6 +1,5 @@
 //import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/ecranInscription.dart';
@@ -8,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter/foundation.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
 
 class EcranConnection extends StatefulWidget {
   @override
@@ -49,6 +49,18 @@ Future userLogin() async{
     );
   }
   else{
+    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+    pr.style(
+  message: 'Connection en cours...',
+  borderRadius: 20.0,
+  backgroundColor: Colors.white,
+  progressWidget: CircularProgressIndicator(),
+  elevation: 50.0,
+  insetAnimCurve: Curves.easeInOut,
+  messageTextStyle: TextStyle(
+     color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
+  );
+  await pr.show();
   // SERVER LOGIN API URL
   var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
  
@@ -61,24 +73,21 @@ Future userLogin() async{
   // Getting Server response into variable.
   var message = jsonDecode(response.body);
 
-//log('Blablou: $message');
   // If the Response Message is Matched.
- if(message != -1)
+ if(message != "-1")
   {
- 
-    // Hiding the CircularProgressIndicator.
-      /*setState(() {
-      visible = false; 
-      });*/
-  
+
+    String status;
+    if (message["status"] == "1")
+      status = "Professeur";
+    else status = "Éleve";
+      await pr.hide();
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EcranAccueil(id : message["id"],
-                                                             name: message["nomPrenom"],
-                                                             email: message["email"],
-                                                             password: message["motDePasse"],
-                                                             status: message["status"]
+        MaterialPageRoute(builder: (context) => EcranAccueil(
+                                                             statusString : status,
+                                                             message: message,
                                                              )
                                                           )
       );
@@ -87,7 +96,7 @@ Future userLogin() async{
   }
   else
   {
- 
+    await pr.hide();
     // If Email or Password did not Matched.
     // Hiding the CircularProgressIndicator.
     /*setState(() {
@@ -108,6 +117,7 @@ Future userLogin() async{
           FlatButton(
             child: new Text("NON"),
             onPressed: () {
+            Navigator.of(context).pop();
             Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => new EcranInscription()),
@@ -250,13 +260,13 @@ Future userLogin() async{
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        color: Colors.deepOrangeAccent,
+        color: Colors.cyan[900],
         child:Text(
           'CONNEXION',
           style: TextStyle(
-            color: Colors.white70,
+            color: Colors.white,
             letterSpacing: 1.5,
-            fontSize: 18.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'Kufam',
           ),
@@ -290,13 +300,13 @@ Future userLogin() async{
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    color: Colors.deepOrangeAccent,
+                    color: Colors.cyan[900],
                     child:Text(
                       'INSCRIPTION',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.white,
                         letterSpacing: 1.5,
-                        fontSize: 18.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Kufam',
                       ),
@@ -309,23 +319,7 @@ Future userLogin() async{
   Widget build(BuildContext context){
     return Scaffold(
       body: Stack(children: <Widget>[
-        Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.red,
-                Colors.orange,
-                Colors.orangeAccent,
-                Colors.deepOrange,
-            ],
-            stops: [0.1,0.4,0.7,0.9],
-            ),
-          ),
-        ),
+        colorGradient,
         Container(
           height: double.infinity,
           child: SingleChildScrollView(

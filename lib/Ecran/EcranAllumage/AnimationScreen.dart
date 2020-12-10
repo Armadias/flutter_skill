@@ -51,7 +51,7 @@ class _AnimationScreenState extends State<AnimationScreen> with SingleTickerProv
           height: double.infinity,
           child: CustomPaint(
             painter: HolePainter(
-              color: Colors.orange,
+              color: Colors.cyan[700],
               holeSize: _animation.holeSize.value * size.width
             )
           )

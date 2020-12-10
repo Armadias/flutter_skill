@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:skill_check/Ecran/ecranConnection.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 
 class EcranInscription extends StatefulWidget {
   @override
@@ -73,10 +72,10 @@ class EcranInscriptionEtat extends State<EcranInscription> {
                 onPressed: () {
                   if(message == "C'est bon tu est inscrit frérot ! Génial non !?"){
                     Navigator.of(context).pop();
-                    Navigator.push(
+                    /*Navigator.push(
                       context,
                     MaterialPageRoute(builder: (context) => EcranAccueil(id : "2")),
-                    );
+                    );*/
                   }else{
                     Navigator.of(context).pop();
                     Navigator.push(
@@ -249,13 +248,13 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        color: Colors.deepOrangeAccent,
+        color: Colors.cyan[900],
         child:Text(
           'INSCRIPTION',
           style: TextStyle(
-            color: Colors.white70,
+            color: Colors.white,
             letterSpacing: 1.5,
-            fontSize: 18.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'Kufam',
           ),
@@ -280,13 +279,13 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        color: Colors.deepOrangeAccent,
+        color: Colors.cyan[900],
         child:Text(
           'RETOUR',
           style: TextStyle(
-            color: Colors.white70,
+            color: Colors.white,
             letterSpacing: 1.5,
-            fontSize: 18.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'Kufam',
           ),
@@ -299,23 +298,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
   Widget build(BuildContext context) {
         return Scaffold(
           body: Stack(children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.red,
-                    Colors.orange,
-                    Colors.orangeAccent,
-                    Colors.deepOrange,
-                ],
-                stops: [0.1,0.4,0.7,0.9],
-                ),
-              ),
-            ),
+            colorGradient,
             Container(
               height: double.infinity,
               child: SingleChildScrollView(
