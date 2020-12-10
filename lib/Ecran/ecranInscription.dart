@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';	
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Ecran/ecranConnection.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
@@ -60,21 +61,29 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     });
     }
 
-
+    String text;
+    if (message != '-1')
+    {
+      text = "Inscription Réussie!";
+    }
+    else text = "Erreur lors de l'inscription";
     showDialog(
       context:context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: new Text(message),
+          title: new Text(text),
           actions: <Widget>[
             FlatButton(
                 child: new Text("OK"),
                 onPressed: () {
-                  if(message == "C'est bon tu est inscrit frérot ! Génial non !?"){
+                  if(message != "-1"){
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
-                    MaterialPageRoute(builder: (context) => EcranConnection()),
+                    MaterialPageRoute(builder: (context) => EcranProfil(
+                      status: "Eleve",
+                      profil: message,
+                    )),
                     );
                   }else{
                     Navigator.of(context).pop();

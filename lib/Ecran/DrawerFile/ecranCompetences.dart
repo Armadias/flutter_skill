@@ -31,15 +31,13 @@ class EcranCompetencesEtat extends State<EcranCompetences> {
   @override
     Widget build(BuildContext context)
   {
-    print(widget.message.length);
-    print(widget.message);
     return Scaffold(
           appBar: AppBar(
             title: Text('Compétences de l\'élève',
             style: kLabelStyle,
             ),
             leading: new IconButton(
-              icon: new Icon(Icons.assignment_return), 
+              icon: new Icon(Icons.arrow_back), 
               onPressed:() => Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
                   EcranListe(

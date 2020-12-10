@@ -16,10 +16,17 @@ class CustomDrawer extends StatefulWidget{
 }
 
 class DrawerEtat extends State<CustomDrawer>{
-
+  bool estEleve;
   
   @override
-  Widget build(BuildContext context) => new Drawer(
+  Widget build(BuildContext context) {
+    if (widget.statusString == "Éleve")
+    {
+      estEleve = true;
+    }
+    else
+      estEleve = false;
+    return new Drawer(
     child: ListView(
       padding:EdgeInsets.zero,
       children: <Widget>[
@@ -41,9 +48,8 @@ class DrawerEtat extends State<CustomDrawer>{
           ),
         ),
         //Profil
-        Visibility(
 
-          child : Card(
+          Card(
             child: ListTile(
               leading: Icon(Icons.account_circle),
               title: Text('Profil'),
@@ -59,67 +65,83 @@ class DrawerEtat extends State<CustomDrawer>{
               },
             ),
           ),
-          visible: true,
-        ),
-        //Infos Personnelles
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.list),
-            title: Text(() 
-          {
-            if (widget.statusString == "Éleves")
-              return "Liste de vos professeurs";
-            else
-              return "Liste de vos éleves";
-          }()),
-            onTap: (){
-              if (!widget.isInListe){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                    Loader(
-                      profil: widget.profil,
-                      statusString: widget.statusString
-                      )
-                    ),
-                  );
-              }
-              else
-              Navigator.pop(context);
-                  },
+        //Liste Eleve/ prof
+        Visibility(
+          visible: estEleve,
+          child : Card(
+            child: ListTile(
+              leading: Icon(Icons.list),
+              title: Text('Liste de vos Professeurs'),
+              onTap: (){
+                if (!widget.isInListe){
+                  Navigator.of(context).pop();
+                }
+                else
+                Navigator.pop(context);
+                    },
+            ),
+          ),
+          replacement:
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.list),
+              title: Text('Liste de vos éleves'),
+              onTap: (){
+                if (!widget.isInListe){
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                      Loader(
+                        profil: widget.profil,
+                        statusString: widget.statusString
+                        )
+                      ),
+                    );
+                }
+                else
+                Navigator.pop(context);
+                    },
+            ),
           ),
         ),
         //Badges
-        Card(
+        Visibility(
+          visible: false,
+        child : Card(
           child: ListTile(
             leading: Icon(Icons.stars),
             title: Text('Badges'),
             onTap: (){
-              /*Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EcranAccueil()
-                    ),
-                    );*/
                     Navigator.pop(context);
                   },
           ),
+        ),
         ),
         //Progression
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.assessment),
-            title: Text('Progression'),
-            onTap: (){
-              /*Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EcranAccueil()
-                    ),
-                    );*/
-                    Navigator.pop(context);
-                  },
+        Visibility(
+          visible: estEleve,
+          child : Card(
+            child: ListTile(
+              leading: Icon(Icons.book_rounded),
+              title: Text('Vos Cours'),
+              onTap: (){
+                      Navigator.pop(context);
+                    },
+            ),
           ),
-        ),
-      ],
-    ),  
-  );
-
+          replacement: Card(
+            child: ListTile(
+              leading: Icon(Icons.bookmarks),
+              title: Text('Ajouter Vos Compétences'),
+              onTap: (){
+                      Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),  
+    );
+  }
   
 }
 
