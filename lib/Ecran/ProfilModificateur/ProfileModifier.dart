@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
@@ -225,23 +226,48 @@ class ProfilModifierEtat extends State<ProfileModifier>
       constructeurDialogue("Nom et Prenom");
 
     else{
+      final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+      pr.style(
+      message: 'Modifications en cours...',
+      borderRadius: 20.0,
+      backgroundColor: Colors.white,
+      progressWidget: CircularProgressIndicator(),
+      elevation: 50.0,
+      insetAnimCurve: Curves.easeInOut,
+      messageTextStyle: TextStyle(
+        color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600
+        )
+      );
+    await pr.show();
     var url = 'https://flagrant-amusements.000webhostapp.com/modifyer.php';
- 
-    var data = {'email': email, 'nomPrenom' : name, 'id' : int.parse(widget.profil['id'])};
 
-    print (data);
+    int id = int.parse(widget.profil['id']);
+    var data = {'email': email, 'nomPrenom' : name, 'id' : id};
   
     var response = await http.post(url, body: json.encode(data));
-
-    print(response);
   
     // Getting Server response into variable.
-    var message = jsonDecode(response.body);
+    var message;
+    message = jsonDecode(response.body);
 
-    print(message);
+    await pr.hide;
 
-    if (message != "existe")
-    if(message != "-1")
+    if (message == "1")
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("cet Email est déjà existant"),
+            actions: <Widget>[
+              FlatButton(
+              child: Text("Ok"),
+              onPressed: () { Navigator.of(context).pop(); },
+              ),
+            ],
+          );
+        },
+      );
+    else if(message != "-1")
       {
         Navigator.push(
         context,
@@ -251,8 +277,22 @@ class ProfilModifierEtat extends State<ProfileModifier>
                                                              )
                                                           )
       );        
-      }
-    else print("RIP");
+    }
+    else
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Une erreur est survenue lors de la communication."),
+            actions: <Widget>[
+              FlatButton(
+              child: Text("Ok"),
+              onPressed: () { Navigator.of(context).pop(); },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 }

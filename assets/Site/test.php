@@ -14,26 +14,20 @@
 
  $QueryUpdate = "UPDATE utilisateur SET nomPrenom = '$nomPrenom' , email = '$email' where id = '$id'";
 
- $QueryExist = "SELECT email FROM utilisateur WHERE email='$email'";
+ $QueryExist = "SELECT * FROM utilisateur WHERE email='$email'";
  
  // Executing SQL Query.
-$check1 = mysqli_fetch_array(mysqli_query($con,$QueryExist));
+//mysqli_fetch_array(mysqli_query($con,$QueryExist));
  
-if(isset($check1) && $check1["email"] != $email){
-  echo json_encode('existe');
-}
+	//if(!isset($check1)){
 
-else{
 mysqli_query($con,$QueryUpdate);
 
 $check = mysqli_fetch_array(mysqli_query($con,$QuerySelect));
 
     if (isset($check))
-      echo json_encode($check);
-    else
-      echo json_encode('-1');
-    
-}
+            echo json_encode($check);
+		
      
  
  mysqli_close($con);

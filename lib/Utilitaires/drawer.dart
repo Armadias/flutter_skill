@@ -41,28 +41,25 @@ class DrawerEtat extends State<CustomDrawer>{
           ),
         ),
         //Profil
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Profil'),
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                  EcranProfil(
-                                profil: widget.profil,
-                                status: widget.statusString,
-                              )
-              ));
-             /* Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                  EcranProfil(
-                                profil: widget.profil,
-                                status: widget.statusString,
-                              )
-                  ),
-              );*/
-                  },
+        Visibility(
+
+          child : Card(
+            child: ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Profil'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                    EcranProfil(
+                                  profil: widget.profil,
+                                  status: widget.statusString,
+                                )
+                  )
+                );
+              },
+            ),
           ),
+          visible: true,
         ),
         //Infos Personnelles
         Card(
