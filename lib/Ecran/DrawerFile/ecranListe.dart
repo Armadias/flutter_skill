@@ -3,7 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranCompetences.dart';
+import 'package:skill_check/Ecran/DrawerFile/LoaderCompetences.dart';
 
 class EcranListe extends StatefulWidget {
 
@@ -65,7 +65,7 @@ class EcranListeEtat extends State<EcranListe>
                     onTap: () {
                       Navigator.push(
                         context,
-                          MaterialPageRoute(builder: (context) => EcranCompetences(
+                          MaterialPageRoute(builder: (context) => LoaderCompetences(
                             profil: widget.profil,
                             statusString: widget.statusString,
                             idEleve: 1)),
