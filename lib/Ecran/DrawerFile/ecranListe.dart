@@ -69,7 +69,7 @@ class EcranListeEtat extends State<EcranListe>
                             profil: widget.profil,
                             statusString: widget.statusString,
                             listEleve : widget.message,
-                            idEleve: 3)),
+                            idEleve: int.parse(widget.message[index]["id"]))),
             );
                     },
                     child : Container(
