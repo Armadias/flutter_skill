@@ -5,6 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 
 class EcranProfil extends StatefulWidget {
+
+  final String id;
+  final String name;
+  final String email;
+  final String password;
+  final String status;
+
+  EcranProfil({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key : key);
+
   @override
   EcranProfilEtat createState() => EcranProfilEtat();
   }
@@ -158,7 +167,7 @@ class EcranProfilEtat extends State<EcranProfil>{
                       print('login appuillé');
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EcranAccueil(mail : "")),
+                        MaterialPageRoute(builder: (context) => EcranAccueil(id : "2")),
                       );
                     },
                     padding: EdgeInsets.all(15.0),
@@ -223,13 +232,18 @@ class EcranProfilEtat extends State<EcranProfil>{
 
   @override
   Widget build(BuildContext context){
+    print(widget.id + widget.name + widget.email + widget.password + widget.status);
     return Scaffold(
       appBar: AppBar(
             title: Text('Profil',
             style: kLabelStyle,
             ),
           ),
-      drawer: CustomDrawer(mail : ""),
+      drawer: CustomDrawer(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status),
       body: Stack(children: <Widget>[
         Container(
           height: double.infinity,

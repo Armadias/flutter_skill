@@ -8,80 +8,32 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
-class StudentData {
-  int studentId;
-  String studentName;
-  String studentMail;
-
-  StudentData({
-    this.studentId,
-    this.studentName,
-    this.studentMail
-  });
-
-  factory StudentData.fromJson(Map<String, dynamic> json){
-    return StudentData(
-      studentId: json['id'],
-      studentName: json['name'],
-      studentMail: json['email']
-    );
-  }
-}
-
-class EcranAccueil extends StatefulWidget {
+class EcranCompetences extends StatefulWidget {
   
   final String id;
   final String name;
   final String email;
   final String password;
   final String status;
+  final int idEleve;
 
-  EcranAccueil({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key: key);
+  EcranCompetences({Key key, @required this.id, this.name, this.email, this.password, this.status, this.idEleve}) : super(key: key);
 
   @override
-  EcranAccueilEtat createState() => EcranAccueilEtat();
+  EcranCompetencesEtat createState() => EcranCompetencesEtat();
   }
 
-class EcranAccueilEtat extends State<EcranAccueil> {
+class EcranCompetencesEtat extends State<EcranCompetences> {
 
   List<dynamic> message = List<dynamic>();
-
-  var name;
-  var password;
-  final List<dynamic> noms = ["Yoan Ameloot", "Martin Folliet", "Virgile Jacquet", "Rémi Matrod", "Nicolas Commandeur", "Un autre élève"];
-  //final String mail;
-
-  //EcranAccueilEtat({Key key, @required this.mail}) : super(key: key);
-
-  Future<List<StudentData>> fetchStudents() async {
-    var apiURL = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
-    //int utilisateurid = int.parse(widget.id);
-
-    var response = await http.get(apiURL);
- 
-    if (response.statusCode == 200) {
- 
-      final items = json.decode(response.body).cast<Map<String, dynamic>>();
- 
-      List<StudentData> studentList = items.map<StudentData>((json) {
-        return StudentData.fromJson(json);
-      }).toList();
- 
-      return studentList;
-      }
-     else {
-      throw Exception('Failed to load data from Server.');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
 
-    print(widget.id + widget.name + widget.email + widget.password + widget.status);
-
+        print("saucisson" + widget.id + widget.name);
         return Scaffold(
           appBar: AppBar(
-            title: Text('Accueil',
+            title: Text('Compétences de l\'élève',
             style: kLabelStyle,
             ),
           ),
@@ -108,10 +60,11 @@ class EcranAccueilEtat extends State<EcranAccueil> {
                 ),
               ),
               
-              child: Text(widget.id + " " + widget.name + " " + widget.email + " " + widget.password + " " + widget.status ),
+              child: Text("oscour !"),
+              //child: Text(widget.id + " " + widget.name + " " + widget.email + " " + widget.password + " " + widget.status ),
             ),
             SizedBox(height: 40.0),
-            constructeurBoutton(),
+            constructeurList(),
             SizedBox(height: 40.0),
           ],
         ),
@@ -168,12 +121,12 @@ class EcranAccueilEtat extends State<EcranAccueil> {
 
   Future test() async{
  
-  int id = int.parse(widget.id);
+  int idEleve = widget.idEleve;
   // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/getListeUser.php';
+  var url = 'https://flagrant-amusements.000webhostapp.com/getCompetencesEleve.php';
  
   // Store all data with Param Name.
-  var data = {'id' : id};
+  var data = {'idEleve' : idEleve};
  
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
@@ -190,12 +143,13 @@ class EcranAccueilEtat extends State<EcranAccueil> {
     for (int i = 0; i < message.length; i++)
     {
       noms.add(message[i]["0"]);
+      print(noms);
     }
 
     print (noms);
 //jsonconverter(message[i]);
 
-  print("ceci est un message de merde : ");
+  print("ceci est un test : ");
   //window.location.reload();
   setState(() {
     
@@ -240,9 +194,5 @@ class EcranAccueilEtat extends State<EcranAccueil> {
  
 }
 
-/*String jsonconverter(Map<String, dynamic> json)
-{
-  return json["0"];
-}*/
 
 }

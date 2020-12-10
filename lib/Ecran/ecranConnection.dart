@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:progress_dialog/progress_dialog.dart';
+
+
 class EcranConnection extends StatefulWidget {
   @override
   EcranConnectionEtat createState() => EcranConnectionEtat();
@@ -46,6 +49,18 @@ Future userLogin() async{
     );
   }
   else{
+    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+    pr.style(
+  message: 'Connection en cours...',
+  borderRadius: 20.0,
+  backgroundColor: Colors.white,
+  progressWidget: CircularProgressIndicator(),
+  elevation: 50.0,
+  insetAnimCurve: Curves.easeInOut,
+  messageTextStyle: TextStyle(
+     color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
+  );
+  await pr.show();
   // SERVER LOGIN API URL
   var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
  
@@ -57,25 +72,34 @@ Future userLogin() async{
  
   // Getting Server response into variable.
   var message = jsonDecode(response.body);
- 
+
   // If the Response Message is Matched.
- if(message == 'Login Matched')
+ if(message != "-1")
   {
  
     // Hiding the CircularProgressIndicator.
       /*setState(() {
       visible = false; 
       });*/
- 
+
+      await pr.hide();
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EcranAccueil(mail : email))
+        MaterialPageRoute(builder: (context) => EcranAccueil(id : message["id"],
+                                                             name: message["nomPrenom"],
+                                                             email: message["email"],
+                                                             password: message["motDePasse"],
+                                                             status: message["status"]
+                                                             )
+                                                          )
       );
+
+      
   }
   else
   {
- 
+    await pr.hide();
     // If Email or Password did not Matched.
     // Hiding the CircularProgressIndicator.
     /*setState(() {
@@ -87,15 +111,16 @@ Future userLogin() async{
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: new Text(message),
+        title: new Text("ERREUR DE CONNECTION\n avez-vous un compte?"),
         actions: <Widget>[
           FlatButton(
-           child: Text("NON"),
+           child: Text("OUI"),
            onPressed: () { Navigator.of(context).pop(); },
            ),
           FlatButton(
-            child: new Text("OK"),
+            child: new Text("NON"),
             onPressed: () {
+            Navigator.of(context).pop();
             Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => new EcranInscription()),

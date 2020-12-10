@@ -61,6 +61,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     });
     }
 
+
     showDialog(
       context:context,
       builder: (BuildContext context){
@@ -74,7 +75,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
-                    MaterialPageRoute(builder: (context) => EcranAccueil(mail : email)),
+                    MaterialPageRoute(builder: (context) => EcranConnection()),
                     );
                   }else{
                     Navigator.of(context).pop();

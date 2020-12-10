@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:skill_check/Ecran/DrawerFile/Loader.dart';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
 class CustomDrawer extends StatefulWidget{
-  final String mail;
+  final String id;
+  final String name;
+  final String email;
+  final String password;
+  final String status;
 
-  CustomDrawer({Key key, @required this.mail}) : super(key : key);
+  CustomDrawer({Key key, @required this.id, this.name, this.email, this.password, this.status}) : super(key : key);
   @override
   DrawerEtat createState() => new DrawerEtat();
 
 }
 
 class DrawerEtat extends State<CustomDrawer>{
+
+  
   @override
   Widget build(BuildContext context) => new Drawer(
     child: ListView(
@@ -21,13 +28,19 @@ class DrawerEtat extends State<CustomDrawer>{
       children: <Widget>[
         UserAccountsDrawerHeader(
           decoration: BoxDecoration(color: Colors.orange),
-          accountName: Text("accountname"),
-          accountEmail: Text(widget.mail),
+          accountName: Text(widget.name),
+          accountEmail: Text(() 
+          {
+            if (widget.status == "0")
+              return widget.email + "\nÉleve";
+            else
+              return widget.email + "\nProfesseur";
+          }()),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
             ? Colors.white
             : Colors.white,
-            child: Text("A",
+            child: Text(widget.name[0],
             style: TextStyle(fontSize: 40.0),
             ),
           ),
@@ -41,7 +54,11 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  EcranAccueil(mail : "gg")
+                  EcranAccueil(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status),
                   ),
               );
                   },
@@ -56,7 +73,11 @@ class DrawerEtat extends State<CustomDrawer>{
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                  EcranProfil()
+                  EcranProfil(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status)
                   ),
               );
                   },
@@ -65,14 +86,25 @@ class DrawerEtat extends State<CustomDrawer>{
         //Infos Personnelles
         Card(
           child: ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Informations Personnelles'),
+            leading: Icon(Icons.lock_open),
+            title: Text(() 
+          {
+            if (widget.status == "0")
+              return "Liste de vos professeurs";
+            else
+              return "Liste de vos éleves";
+          }()),
             onTap: (){
-              /*Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EcranAccueil()
-                    ),
-                    );*/
-                    Navigator.pop(context);
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                  Loader(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status)
+                  ),
+              );
                   },
           ),
         ),
