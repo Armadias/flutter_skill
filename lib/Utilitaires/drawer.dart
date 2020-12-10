@@ -83,6 +83,7 @@ class DrawerEtat extends State<CustomDrawer>{
             leading: Icon(Icons.lock_open),
             title: Text(() 
           {
+            print(widget.profil);
             if (widget.statusString == "Éleves")
               return "Liste de vos professeurs";
             else

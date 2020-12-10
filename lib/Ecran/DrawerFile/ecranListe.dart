@@ -11,7 +11,7 @@ class EcranListe extends StatefulWidget {
   final Map<String, dynamic> profil;
   final String statusString;
 
-  EcranListe({Key key, @required this.message, this.profil, this.statusString}) : super(key: key);
+  EcranListe({Key key, this.message, @required  this.profil, this.statusString}) : super(key: key);
 
   @override
   EcranListeEtat createState() => EcranListeEtat();

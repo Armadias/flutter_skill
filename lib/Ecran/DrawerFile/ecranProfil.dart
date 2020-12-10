@@ -17,7 +17,6 @@ class EcranProfilEtat extends State<EcranProfil>{
 
   @override
   Widget build(BuildContext context){
-    print(widget.status);
     return Scaffold(
       appBar: AppBar(
             title: Text('Profil',
