@@ -250,7 +250,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
     var message;
     message = jsonDecode(response.body);
 
-    await pr.hide;
+    await pr.hide();
 
     if (message == "1")
       showDialog(
