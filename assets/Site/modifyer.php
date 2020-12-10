@@ -3,7 +3,6 @@
  include 'connectionDb.php';
  
  $email = $obj['email'];
- 
 
  $nomPrenom = $obj['nomPrenom'];
 
@@ -21,15 +20,15 @@
 
     if(isset($check)){
         
-        $loginQuery = "select * from utilisateur where id = '$id'";
+        $newQuery = "select * from utilisateur where id = '$id'";
 
-        $check = mysqli_fetch_array(mysqli_query($con,$loginQuery));
+        $check = mysqli_fetch_array(mysqli_query($con,$newQuery));
 
         if(isset($check))
-         echo json_encode($check);
+          echo json_encode($check);
         
          else
-         echo json_encode(-1);
+          echo json_encode(-1);
 	 
 	 }
 	 

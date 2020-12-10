@@ -227,7 +227,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
     else{
     var url = 'https://flagrant-amusements.000webhostapp.com/modifyer.php';
  
-    var data = {'email': email, 'nomPrenom' : name, 'id' : widget.profil['id']};
+    var data = {'email': email, 'nomPrenom' : name, 'id' : int.parse(widget.profil['id'])};
 
     print (data);
   
@@ -240,7 +240,6 @@ class ProfilModifierEtat extends State<ProfileModifier>
 
     print(message);
 
-    // If the Response Message is Matched.
     if (message != "existe")
     if(message != "-1")
       {
