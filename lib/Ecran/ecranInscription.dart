@@ -118,7 +118,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
           child: TextField(
             controller: emailController,
             autocorrect: true,
-            //keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Kufam',
@@ -156,7 +156,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
           child: TextField(
             controller: nomPrenomController,
             autocorrect: true,
-            //keyboardType: TextInputType.text,
+            keyboardType: TextInputType.text,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Kufam',

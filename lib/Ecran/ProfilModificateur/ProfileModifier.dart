@@ -40,7 +40,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
     return Scaffold(
       appBar: AppBar(
             title: Text(
-            'Profil',
+            'Modification du profil',
             style: kDrawerTitle,
             ),
           ),

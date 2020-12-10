@@ -7,32 +7,25 @@ import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
 
-class ProfileModifier extends StatefulWidget
+class ModifMdp extends StatefulWidget
 {
 
   final Map<String, dynamic> profil;
   final String status;
 
-  ProfileModifier({Key key, @required this.profil, this.status }) : super(key: key);
+  ModifMdp({Key key, @required this.profil, this.status }) : super(key: key);
 
   @override
-  ProfilModifierEtat createState() => ProfilModifierEtat();
+  ModifMdpEtat createState() => ModifMdpEtat();
 }
 
-class ProfilModifierEtat extends State<ProfileModifier>
+class ModifMdpEtat extends State<ModifMdp>
 {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController;
+  final TextEditingController mdpActuelControlleur = TextEditingController();
+  final TextEditingController mdpNouveauControlleur = TextEditingController();
+  final TextEditingController mdpConfirmationControlleur = TextEditingController();
 
   bool valide;
-    @override
- 
-  void initState() {
-    super.initState();
-    
-    emailController = TextEditingController(text: widget.profil["email"]);
-    nameController = TextEditingController(text: widget.profil["nomPrenom"]);
-  }
 
   @override
   Widget build(BuildContext context)
@@ -40,7 +33,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
     return Scaffold(
       appBar: AppBar(
             title: Text(
-            'Profil',
+            'Modification du mot de passe',
             style: kDrawerTitle,
             ),
           ),
@@ -49,12 +42,14 @@ class ProfilModifierEtat extends State<ProfileModifier>
               colorGradient,
               ListView(
             children: <Widget>[
-              SizedBox(height : 20),
-              constructeurIcone(),
-              SizedBox(height : 50),
-              constructeurEmail(),
-              SizedBox(height: 30,),
-              constructeurNomPrenom(),
+              SizedBox(height : 100),
+              constructeurMdpActuel(),
+              SizedBox(height : 25),
+              Divider(thickness: 2,),
+              SizedBox(height : 25),
+              constructeurMdPNouveau(),
+              SizedBox(height: 40,),
+              constructeurMdpConfirmation(),
               SizedBox(height : 30),
               bouttonModifierCompte(),
             ],
@@ -66,14 +61,14 @@ class ProfilModifierEtat extends State<ProfileModifier>
           )         
     );
   }
-    Widget constructeurEmail(){
+    Widget constructeurMdpActuel(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(left : 11),
           child : Text(
-          'Email',
+          'Mot de passe actuel',
           style: kLabelStyle,
           ),
         ),
@@ -83,8 +78,8 @@ class ProfilModifierEtat extends State<ProfileModifier>
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
+            controller:mdpActuelControlleur,
+            obscureText: true,
             style: TextStyle(
               color: Colors.white,
                fontFamily: 'Kufam',
@@ -94,51 +89,10 @@ class ProfilModifierEtat extends State<ProfileModifier>
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(top: 18.0),
                 prefixIcon: Icon(
-                  Icons.email, 
+                  Icons.lock, 
                   color: Colors.white,
                 ),
-                hintText: 'Entrez votre adresse ici',
-                hintStyle: kHintTextStyle,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget constructeurNomPrenom()
-  {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(left : 11),
-          child : Text(
-          'Nom Prénom',
-          style: kLabelStyle,
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left : 10, right : 10),
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            controller:nameController,
-            keyboardType: TextInputType.name,
-            style: TextStyle(
-              color: Colors.white,
-               fontFamily: 'Kufam',
-               fontSize: 13.0
-               ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 18.0),
-                prefixIcon: Icon(
-                  Icons.account_box, 
-                  color: Colors.white,
-                ),
-                hintText: 'Entrez votre nom et votre prénom ici',
+                hintText: 'Entrez votre mot de passe actuel ici',
                 hintStyle: kHintTextStyle,
                 //errorText: valide ? "votre entrée est vide" : null
             ),
@@ -148,21 +102,83 @@ class ProfilModifierEtat extends State<ProfileModifier>
     );
   }
 
-  Widget constructeurIcone()
+  Widget constructeurMdPNouveau()
   {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          CircleAvatar(
-            backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
-            ? Colors.white70
-            : Colors.white70,
-            minRadius: 60,
-            child: CircleAvatar(
-              minRadius: 50,
-              backgroundColor: Colors.white,
-              child : Text(widget.profil["nomPrenom"][0],
-              style: TextStyle(fontSize: 60.0),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left : 11),
+          child : Text(
+          'Nouveau mot de passe',
+          style: kLabelStyle,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left : 10, right : 10),
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller:mdpNouveauControlleur,
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.white,
+               fontFamily: 'Kufam',
+               fontSize: 13.0
+               ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(top: 18.0),
+                prefixIcon: Icon(
+                  Icons.lock, 
+                  color: Colors.white,
+                ),
+                hintText: 'Entrez votre nouveau mot de passe ici',
+                hintStyle: kHintTextStyle,
+                //errorText: valide ? "votre entrée est vide" : null
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget constructeurMdpConfirmation()
+  {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left : 11),
+          child : Text(
+          'Confirmation du mot de passe',
+          style: kLabelStyle,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left : 10, right : 10),
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller:mdpConfirmationControlleur,
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.white,
+               fontFamily: 'Kufam',
+               fontSize: 13.0
+               ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(top: 18.0),
+                prefixIcon: Icon(
+                  Icons.lock, 
+                  color: Colors.white,
+                ),
+                hintText: 'Confirmez votre mot de passe ici',
+                hintStyle: kHintTextStyle,
+                //errorText: valide ? "votre entrée est vide" : null
             ),
           ),
         ),
@@ -196,13 +212,13 @@ class ProfilModifierEtat extends State<ProfileModifier>
     );
   }
 
-  void constructeurDialogue(String text)
+  void constructeurDialogue()
   {
     showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: new Text("l'entrée " + text + " est vide, veuillez la remplir"),
+        title: new Text("vos champs sont vide, veuillez les remplir"),
         actions: <Widget>[
           FlatButton(
            child: Text("Ok"),
@@ -215,16 +231,46 @@ class ProfilModifierEtat extends State<ProfileModifier>
   }
   Future modifier() async
   {
-    String email = emailController.text;
-    String name = nameController.text;
+    String mdpActuel = mdpActuelControlleur.text;
+    String mdpNouveau = mdpNouveauControlleur.text;
+    String mdpConfirmation = mdpConfirmationControlleur.text;
 
-    if (email.isEmpty && name.isEmpty)
-      constructeurDialogue("Email et votre Nom et Prenom");
-    else if (email.isEmpty)
-      constructeurDialogue("Email");
-    else if (name.isEmpty)
-      constructeurDialogue("Nom et Prenom");
-
+    if (mdpActuel.isEmpty | mdpNouveau.isEmpty | mdpConfirmation.isEmpty)
+      constructeurDialogue();
+    else if(widget.profil["motDePasse"] != mdpActuel)
+    {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("votre mot de passe actuel est erroné"),
+            actions: <Widget>[
+              FlatButton(
+              child: Text("Ok"),
+              onPressed: () { Navigator.of(context).pop(); },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    else if(mdpNouveau != mdpConfirmation)
+    {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("votre nouveau mot de passe n'est pas confirmé"),
+            actions: <Widget>[
+              FlatButton(
+              child: Text("Ok"),
+              onPressed: () { Navigator.of(context).pop(); },
+              ),
+            ],
+          );
+        },
+      );
+    }
     else{
       final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
       pr.style(
@@ -239,10 +285,10 @@ class ProfilModifierEtat extends State<ProfileModifier>
         )
       );
     await pr.show();
-    var url = 'https://flagrant-amusements.000webhostapp.com/modifyer.php';
+    var url = 'https://flagrant-amusements.000webhostapp.com/modifyerpass.php';
 
     int id = int.parse(widget.profil['id']);
-    var data = {'email': email, 'nomPrenom' : name, 'id' : id};
+    var data = {'motDePasse': mdpNouveau, 'id' : id};
   
     var response = await http.post(url, body: json.encode(data));
   
@@ -252,38 +298,40 @@ class ProfilModifierEtat extends State<ProfileModifier>
 
     await pr.hide();
 
-    if (message == "1")
-      showDialog(
+    if(message != "-1")
+      {
+        showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("cet Email est déjà existant"),
+            title: new Text("Mot de passe changé!"),
             actions: <Widget>[
               FlatButton(
               child: Text("Ok"),
-              onPressed: () { Navigator.of(context).pop(); },
+              onPressed: () 
+              { 
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => EcranProfil(
+                                                             status : widget.status,
+                                                             profil: message,
+                      )
+                    )
+                  );      
+                },
               ),
             ],
           );
         },
       );
-    else if(message != "-1")
-      {
-        Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => EcranProfil(
-                                                             status : widget.status,
-                                                             profil: message,
-                                                             )
-                                                          )
-      );        
+  
     }
     else
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Une erreur est survenue lors de la communication."),
+            title: new Text("Une erreur est survenue lors de la communication avec le serveur."),
             actions: <Widget>[
               FlatButton(
               child: Text("Ok"),

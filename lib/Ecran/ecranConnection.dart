@@ -131,13 +131,6 @@ Future userLogin() async{
   }
  
 }
-
-/*Future<List> senddata() async {
-  final response = await http.post("https://flagrant-amusements.000webhostapp.com/insertData.php", body: {
-    "motDePasse": motDePasse.text,
-    "email": email.text,
-  });
-}*/
   bool rappel = false;
   
   Widget constructeurEmail(){

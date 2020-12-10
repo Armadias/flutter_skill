@@ -1,3 +1,4 @@
+import 'package:skill_check/Ecran/ProfilModificateur/ModifMdp.dart';
 import 'package:skill_check/Ecran/ProfilModificateur/ProfileModifier.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +139,13 @@ class EcranProfilEtat extends State<EcranProfil>{
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-            //Navigator.pop(context);
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) => 
+              ModifMdp(
+                profil : widget.profil,
+                status: widget.status
+              )) );
             },
         padding: EdgeInsets.all(15.0),
         color: Colors.cyan[900],

@@ -16,11 +16,26 @@
 
  $QueryExist = "SELECT email FROM utilisateur WHERE email='$email'";
  
- // Executing SQL Query.
-$check1 = mysqli_fetch_array(mysqli_query($con,$QueryExist));
+ $QueryUsActuel = "SELECT email FROM utilisateur WHERE id='$id'";
  
-if(isset($check1) && $check1["email"] != $email){
-  echo json_encode('existe');
+ $check1 = mysqli_fetch_array(mysqli_query($con,$QueryExist));
+ $emailAct = mysqli_fetch_array(mysqli_query($con,$QueryUsActuel));
+
+
+if(isset($check1)){
+    if ($check1["email"] != $emailAct["email"])
+        echo json_encode('1');
+    else
+    {
+        mysqli_query($con,$QueryUpdate);
+
+        $check = mysqli_fetch_array(mysqli_query($con,$QuerySelect));
+
+        if (isset($check))
+            echo json_encode($check);
+        else
+            echo json_encode('-1');
+    }
 }
 
 else{
