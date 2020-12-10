@@ -1,3 +1,4 @@
+import 'package:skill_check/Ecran/ProfilModificateur/ProfileModifier.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
@@ -19,14 +20,16 @@ class EcranProfilEtat extends State<EcranProfil>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-            title: Text('Profil',
+            title: Text(
+            'Profil',
             style: kDrawerTitle,
             ),
           ),
           drawer: CustomDrawer(
-                                statusString: widget.status,
-                                profil: widget.profil,
-                                ),
+            statusString: widget.status,
+            profil: widget.profil,
+            isInListe: false,
+            ),
           body: ListView(
             children: <Widget>[
               Container(
@@ -160,7 +163,13 @@ class EcranProfilEtat extends State<EcranProfil>{
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-            //Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) => 
+              ProfileModifier(
+                profil : widget.profil,
+                status: widget.status
+              )) );
             },
         padding: EdgeInsets.all(15.0),
         color: Colors.cyan[900],
