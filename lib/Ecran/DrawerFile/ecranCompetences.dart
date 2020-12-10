@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:skill_check/Ecran/DrawerFile/ecranListe.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
@@ -12,11 +13,12 @@ import 'dart:convert';
 class EcranCompetences extends StatefulWidget {
   
   final int idEleve;
+  final List<dynamic> listEleve;
   final List<dynamic> message;
   final Map<String, dynamic> profil;
   final String statusString;
 
-  EcranCompetences({Key key, @required this.idEleve, this.message, this.profil, this.statusString}) : super(key: key);
+  EcranCompetences({Key key, @required this.idEleve, this.message, this.profil, this.statusString, this.listEleve}) : super(key: key);
 
   @override
   EcranCompetencesEtat createState() => EcranCompetencesEtat();
@@ -29,16 +31,25 @@ class EcranCompetencesEtat extends State<EcranCompetences> {
   @override
     Widget build(BuildContext context)
   {
+    print(widget.message.length);
     print(widget.message);
     return Scaffold(
           appBar: AppBar(
             title: Text('Compétences de l\'élève',
             style: kLabelStyle,
             ),
-          ),
-          drawer: CustomDrawer(
-            profil: widget.profil,
-            statusString: widget.statusString,
+            leading: new IconButton(
+              icon: new Icon(Icons.assignment_return), 
+              onPressed:() => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                  EcranListe(
+                                statusString: widget.statusString,
+                                profil: widget.profil,
+                                message: widget.listEleve,
+                    ),
+                  ),
+                )
+              ),
           ),
            body: Stack(
              children: <Widget>[

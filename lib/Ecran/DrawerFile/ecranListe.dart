@@ -68,7 +68,8 @@ class EcranListeEtat extends State<EcranListe>
                           MaterialPageRoute(builder: (context) => LoaderCompetences(
                             profil: widget.profil,
                             statusString: widget.statusString,
-                            idEleve: 1)),
+                            listEleve : widget.message,
+                            idEleve: 3)),
             );
                     },
                     child : Container(

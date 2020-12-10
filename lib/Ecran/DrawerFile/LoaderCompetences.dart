@@ -11,7 +11,9 @@ class LoaderCompetences extends StatefulWidget {
   final String statusString;
   final int idEleve;
 
-  LoaderCompetences({Key key, @required this.profil, this.statusString, this.idEleve}) : super(key: key);
+  final List<dynamic> listEleve;
+
+  LoaderCompetences({Key key, @required this.profil, this.statusString, this.idEleve, this.listEleve}) : super(key: key);
 
   @override
   LoaderCompetencesState createState() => LoaderCompetencesState();
@@ -124,7 +126,8 @@ Future fetch() async
       idEleve : 1,
       message : message,
       profil : widget.profil,
-      statusString : widget.statusString)
+      statusString : widget.statusString,
+      listEleve: widget.listEleve,)
   ),
 );
 }
