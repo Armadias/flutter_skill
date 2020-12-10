@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:skill_check/Ecran/DrawerFile/Loader.dart';
-
-import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
 class CustomDrawer extends StatefulWidget{
 
   final String statusString;
   final Map<String,dynamic> profil;
+  final bool isInListe;
 
-  CustomDrawer({Key key, @required this.statusString, this.profil}) : super(key : key);
+  CustomDrawer({Key key, this.isInListe, @required this.statusString, this.profil}) : super(key : key);
   @override
   DrawerEtat createState() => new DrawerEtat();
 
@@ -41,64 +40,51 @@ class DrawerEtat extends State<CustomDrawer>{
             ),
           ),
         ),
-        //Acceuil
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Acceuil'),
-            onTap: (){
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                  EcranAccueil(
-                                statusString: widget.statusString,
-                                message: widget.profil
-                              ),
-                      ),
-                    );
-                  },
-          ),
-        ),
         //Profil
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.lock_open),
-            title: Text('Profil'),
-            onTap: (){
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                  EcranProfil(
-                                profil: widget.profil,
-                                status: widget.statusString,
-                              )
-                  ),
-              );
-                  },
+        Visibility(
+
+          child : Card(
+            child: ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Profil'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                    EcranProfil(
+                                  profil: widget.profil,
+                                  status: widget.statusString,
+                                )
+                  )
+                );
+              },
+            ),
           ),
+          visible: true,
         ),
         //Infos Personnelles
         Card(
           child: ListTile(
-            leading: Icon(Icons.lock_open),
+            leading: Icon(Icons.list),
             title: Text(() 
           {
-            print(widget.profil);
             if (widget.statusString == "Éleves")
               return "Liste de vos professeurs";
             else
               return "Liste de vos éleves";
           }()),
             onTap: (){
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                  Loader(
-                    profil: widget.profil,
-                    statusString: widget.statusString
-                    )
-                  ),
-              );
+              if (!widget.isInListe){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                    Loader(
+                      profil: widget.profil,
+                      statusString: widget.statusString
+                      )
+                    ),
+                  );
+              }
+              else
+              Navigator.pop(context);
                   },
           ),
         ),
