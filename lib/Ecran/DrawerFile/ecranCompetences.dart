@@ -119,7 +119,7 @@ class EcranCompetencesEtat extends State<EcranCompetences> {
                       height: MediaQuery.of(context).size.height/  7,
                       child : Center(
                         child : Text(
-                          '${" " + widget.message[index]["nomCours"] + " " + widget.message[index]["descriptionCours"] + " " + widget.message[index]["descriptionCompetence"] + " " + widget.message[index]["valideEleve"] + " " + widget.message[index]["valideProf"] + " "}',
+                          '${widget.message[index]["nomCours"] + " " + widget.message[index]["descriptionCours"] + " " + widget.message[index]["descriptionCompetence"] + " " + widget.message[index]["valideEleve"] + " " + widget.message[index]["valideProf"] + " "}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.cyan[900],
