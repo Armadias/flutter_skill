@@ -72,10 +72,10 @@ class EcranInscriptionEtat extends State<EcranInscription> {
                 onPressed: () {
                   if(message == "C'est bon tu est inscrit frérot ! Génial non !?"){
                     Navigator.of(context).pop();
-                    /*Navigator.push(
+                    Navigator.push(
                       context,
-                    MaterialPageRoute(builder: (context) => EcranAccueil(id : "2")),
-                    );*/
+                    MaterialPageRoute(builder: (context) => EcranConnection()),
+                    );
                   }else{
                     Navigator.of(context).pop();
                     Navigator.push(

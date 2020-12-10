@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
+import 'package:skill_check/Ecran/DrawerFile/ecranCompetences.dart';
 
 class EcranListe extends StatefulWidget {
 
@@ -62,7 +63,13 @@ class EcranListeEtat extends State<EcranListe>
                   child : InkWell(
                     splashColor: Colors.cyan,
                     onTap: () {
-                      print("apuillé");
+                      Navigator.push(
+                        context,
+                          MaterialPageRoute(builder: (context) => EcranCompetences(
+                            profil: widget.profil,
+                            statusString: widget.statusString,
+                            idEleve: 1)),
+            );
                     },
                     child : Container(
                       width: double.infinity,
@@ -83,8 +90,29 @@ class EcranListeEtat extends State<EcranListe>
               ),
             ),
           ),
+/*
+        return GestureDetector(
+          onTap: (){
+            print("ca marche !!");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EcranCompetences(id : widget.id,
+                                name: widget.name,
+                                email: widget.email,
+                                password: widget.password,
+                                status: widget.status,
+                                idEleve: 1)),
+            );
+          },
+          child: new Container(
+            height: 50,
+            child : Center(
+              child: Text('${widget.message[index]["0"]}')
+            )
+          )
+*/
         );
       }
-  ); 
-  }
+    ); 
+    }
 }

@@ -5,10 +5,8 @@ import 'package:skill_check/Utilitaires/drawer.dart';
 
 class EcranAccueil extends StatefulWidget {
 
-
-  final String statusString;
-
   final Map<String,dynamic> message;
+  final String statusString;
 
   EcranAccueil({Key key, @required this.statusString, this.message}) : super(key: key);
 
@@ -16,18 +14,33 @@ class EcranAccueil extends StatefulWidget {
   EcranAccueilEtat createState() => EcranAccueilEtat();
   }
 
-
 class EcranAccueilEtat extends State<EcranAccueil> {
 
-  List<dynamic> message = List<dynamic>();
-
-  var name;
-  var password;
-  final List<dynamic> noms = ["Yoan Ameloot", "Martin Folliet", "Virgile Jacquet", "Rémi Matrod", "Nicolas Commandeur", "Un autre élève"];
   //final String mail;
 
   //EcranAccueilEtat({Key key, @required this.mail}) : super(key: key);
 
+ /* Future<List<StudentData>> fetchStudents() async {
+    var apiURL = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
+    //int utilisateurid = int.parse(widget.id);
+
+    var response = await http.get(apiURL);
+ 
+    if (response.statusCode == 200) {
+ 
+      final items = json.decode(response.body).cast<Map<String, dynamic>>();
+ 
+      List<StudentData> studentList = items.map<StudentData>((json) {
+        return StudentData.fromJson(json);
+      }).toList();
+ 
+      return studentList;
+      }
+     else {
+      throw Exception('Failed to load data from Server.');
+    }
+  }
+*/
   @override
   Widget build(BuildContext context) {
 
