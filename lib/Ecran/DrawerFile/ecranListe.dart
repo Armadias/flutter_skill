@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
+import 'package:skill_check/Ecran/DrawerFile/ecranCompetences.dart';
 
 class EcranListe extends StatefulWidget {
 
@@ -70,11 +70,12 @@ class EcranListeEtat extends State<EcranListe>
             print("ca marche !!");
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EcranAccueil(id : widget.id,
+              MaterialPageRoute(builder: (context) => EcranCompetences(id : widget.id,
                                 name: widget.name,
                                 email: widget.email,
                                 password: widget.password,
-                                status: widget.status)),
+                                status: widget.status,
+                                idEleve: 1)),
             );
           },
           child: new Container(
