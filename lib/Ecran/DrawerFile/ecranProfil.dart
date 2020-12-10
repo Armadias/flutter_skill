@@ -47,6 +47,11 @@ class EcranProfilEtat extends State<EcranProfil>{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                        Container(
+                          child: SingleChildScrollView(
+                            physics: NeverScrollableScrollPhysics(),
+                          ),
+                        ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
