@@ -3,11 +3,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranListe.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
-import 'package:skill_check/Utilitaires/drawer.dart';
-
-
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 class EcranCompetences extends StatefulWidget {

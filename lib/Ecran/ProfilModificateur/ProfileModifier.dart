@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -25,6 +24,8 @@ class ProfilModifierEtat extends State<ProfileModifier>
   TextEditingController nameController;
 
   bool valide;
+
+
     @override
  
   void initState() {
@@ -51,6 +52,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
             children: <Widget>[
               SizedBox(height : 20),
               constructeurIcone(),
+              constructeurIconeBoutton(),
               SizedBox(height : 50),
               constructeurEmail(),
               SizedBox(height: 30,),
@@ -66,6 +68,61 @@ class ProfilModifierEtat extends State<ProfileModifier>
           )         
     );
   }
+
+    Widget constructeurIconeBoutton()
+    {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+            width: MediaQuery. of(context). size. width / 2,
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+              elevation: 5.0,
+              onPressed: () {
+                //choixImage();
+                  },
+              padding: EdgeInsets.all(15.0),
+              color: Colors.cyan[900],
+              child:Text(
+                'Uploader',
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.5,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Kufam',
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+            width: MediaQuery. of(context). size. width / 2,
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+              elevation: 5.0,
+              onPressed: () {
+                //choixImage();
+                  },
+              padding: EdgeInsets.all(15.0),
+              color: Colors.cyan[900],
+              child:Text(
+                'Uploader',
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.5,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Kufam',
+                ),
+              ),
+            ),
+          )
+        ]
+      );
+    }
     Widget constructeurEmail(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

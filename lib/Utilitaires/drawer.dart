@@ -17,35 +17,59 @@ class CustomDrawer extends StatefulWidget{
 
 class DrawerEtat extends State<CustomDrawer>{
   bool estEleve;
-  
+  bool aImage = false;
+
   @override
   Widget build(BuildContext context) {
     if (widget.statusString == "Éleve")
-    {
       estEleve = true;
-    }
     else
       estEleve = false;
+
+    /*if (widget.profil["image"] == null)
+      aImage = false;
+      else
+      aImage = true;*/
     return new Drawer(
     child: ListView(
       padding:EdgeInsets.zero,
       children: <Widget>[
-        UserAccountsDrawerHeader(
-          decoration: BoxDecoration(color: Colors.cyan),
-          accountName: Text(widget.profil["nomPrenom"],
-          style: TextStyle(color: Colors.white)),
-          accountEmail: Text( 
-         widget.profil["email"],
-         style: TextStyle(color: Colors.white)
+        Visibility(
+          visible: !aImage,
+          child: UserAccountsDrawerHeader(
+            decoration: BoxDecoration(color: Colors.cyan),
+            accountName: Text(widget.profil["nomPrenom"],
+            style: TextStyle(color: Colors.white)),
+            accountEmail: Text( 
+          widget.profil["email"],
+          style: TextStyle(color: Colors.white)
+                ),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+              ? Colors.white
+              : Colors.white,
+              child: Text(widget.profil["nomPrenom"][0],
+              style: TextStyle(fontSize: 40.0),
               ),
-          currentAccountPicture: CircleAvatar(
-            backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
-            ? Colors.white
-            : Colors.white,
-            child: Text(widget.profil["nomPrenom"][0],
-            style: TextStyle(fontSize: 40.0),
             ),
           ),
+          replacement: UserAccountsDrawerHeader(
+            decoration: BoxDecoration(color: Colors.cyan),
+            accountName: Text(widget.profil["nomPrenom"],
+            style: TextStyle(color: Colors.white)),
+            accountEmail: Text( 
+              widget.profil["email"],
+              style: TextStyle(color: Colors.white)
+                ),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+              ? Colors.white
+              : Colors.white,
+              child: Text(widget.profil["nomPrenom"][0],
+              style: TextStyle(fontSize: 40.0),
+              ),
+            ),
+          ), 
         ),
         //Profil
 
