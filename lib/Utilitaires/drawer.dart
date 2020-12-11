@@ -34,6 +34,7 @@ class DrawerEtat extends State<CustomDrawer>{
       aImage = false;
       else
       aImage = true;
+    print(aImage);
     return new Drawer(
     child: ListView(
       padding:EdgeInsets.zero,
