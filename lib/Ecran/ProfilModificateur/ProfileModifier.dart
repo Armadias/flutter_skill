@@ -1,11 +1,13 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
 
 class ProfileModifier extends StatefulWidget
 {
@@ -25,6 +27,10 @@ class ProfilModifierEtat extends State<ProfileModifier>
   TextEditingController nameController;
 
   bool valide;
+  bool aImage = false;
+
+  File _image;
+  final selection = ImagePicker();
     @override
  
   void initState() {
@@ -40,7 +46,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
     return Scaffold(
       appBar: AppBar(
             title: Text(
-            'Profil',
+            'Modification du profil',
             style: kDrawerTitle,
             ),
           ),
@@ -51,6 +57,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
             children: <Widget>[
               SizedBox(height : 20),
               constructeurIcone(),
+              constructeurIconeBoutton(),
               SizedBox(height : 50),
               constructeurEmail(),
               SizedBox(height: 30,),
@@ -66,6 +73,61 @@ class ProfilModifierEtat extends State<ProfileModifier>
           )         
     );
   }
+
+    Widget constructeurIconeBoutton()
+    {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+            width: MediaQuery. of(context). size. width / 2,
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+              elevation: 5.0,
+              onPressed: () {
+                uploaderImage();
+                  },
+              padding: EdgeInsets.all(15.0),
+              color: Colors.cyan[900],
+              child:Text(
+                'Uploader',
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.5,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Kufam',
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+            width: MediaQuery. of(context). size. width / 2,
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+              elevation: 5.0,
+              onPressed: () {
+                choixImage();
+                  },
+              padding: EdgeInsets.all(15.0),
+              color: Colors.cyan[900],
+              child:Text(
+                'Choisir',
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.5,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Kufam',
+                ),
+              ),
+            ),
+          )
+        ]
+      );
+    }
     Widget constructeurEmail(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +202,6 @@ class ProfilModifierEtat extends State<ProfileModifier>
                 ),
                 hintText: 'Entrez votre nom et votre prénom ici',
                 hintStyle: kHintTextStyle,
-                //errorText: valide ? "votre entrée est vide" : null
             ),
           ),
         ),
@@ -153,20 +214,33 @@ class ProfilModifierEtat extends State<ProfileModifier>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          CircleAvatar(
-            backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
-            ? Colors.white70
-            : Colors.white70,
-            minRadius: 60,
+          Visibility(
+            visible: !aImage,
             child: CircleAvatar(
-              minRadius: 50,
-              backgroundColor: Colors.white,
-              child : Text(widget.profil["nomPrenom"][0],
-              style: TextStyle(fontSize: 60.0),
+              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+              ? Colors.white70
+              : Colors.white70,
+              minRadius: 60,
+              child: CircleAvatar(
+                minRadius: 50,
+                backgroundColor: Colors.white,
+                child : Text(widget.profil["nomPrenom"][0],
+                style: TextStyle(fontSize: 60.0),
+              ),
             ),
           ),
-        ),
-      ],
+            replacement: CircleAvatar(
+              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+              ? Colors.white70
+              : Colors.white70,
+              minRadius: 60,
+              child: CircleAvatar(
+                minRadius: 50,
+                backgroundImage: _image == null? null :new FileImage(_image),
+              ),
+            ),
+          ),
+        ],
     );
   }
 
@@ -213,6 +287,80 @@ class ProfilModifierEtat extends State<ProfileModifier>
     },
     );
   }
+
+  Future choixImage() async
+  {
+    var imageChoisie = await selection.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(imageChoisie.path);      
+    });
+      String dir = path.dirname(_image.path);
+      String newPath = path.join(dir, widget.profil['id'] + ".jpg");
+      _image = await File(imageChoisie.path).copy(newPath);
+
+      _image == null? aImage = false : aImage = true;
+  }
+
+  Future uploaderImage() async
+  {
+    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+      pr.style(
+      message: 'Modifications en cours...',
+      borderRadius: 20.0,
+      backgroundColor: Colors.white,
+      progressWidget: CircularProgressIndicator(),
+      elevation: 50.0,
+      insetAnimCurve: Curves.easeInOut,
+      messageTextStyle: TextStyle(
+        color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600
+        )
+      );
+        await pr.show();
+        var url = 'https://flagrant-amusements.000webhostapp.com/imageUploader.php';
+
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        request.fields['id'] = widget.profil["id"];
+
+        var img = await http.MultipartFile.fromPath("image", _image.path);
+        request.files.add(img);
+
+        var response = await request.send();
+        await pr.hide();
+        if (response.statusCode == 200)
+        {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Image chargée!"),
+                actions: <Widget>[
+                  FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () { Navigator.of(context).pop(); },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+        else showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("erreur de chargement d'image"),
+                actions: <Widget>[
+                  FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () { Navigator.of(context).pop(); },
+                  ),
+                ],
+              );
+            },
+          );
+  }
+  
   Future modifier() async
   {
     String email = emailController.text;

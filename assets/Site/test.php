@@ -1,34 +1,53 @@
 <?php
- 
- include 'connectionDb.php';
- 
- // Getting User email from JSON $obj array and store into $email.
- $email = $obj['email'];
- 
- // Getting Password from JSON $obj array and store into $password. 
- $nomPrenom = $obj['nomPrenom'];
+include 'connectionDb.php';
 
- $id = $obj['id'];
+// Getting user name from $obj object.
+$nomPrenom = $obj['nomPrenom'];
+
+// Getting email from $obj object.
+$email = $obj['email'];
  
- $QuerySelect = "select * from utilisateur where id = '$id'";
+// Getting Password from $obj object.
+$motDePasse = $obj['motDePasse'];
 
- $QueryUpdate = "UPDATE utilisateur SET nomPrenom = '$nomPrenom' , email = '$email' where id = '$id'";
+//$status = 'eleve';
 
- $QueryExist = "SELECT * FROM utilisateur WHERE email='$email'";
+// Checking whether Email is Already Exist or Not in MySQL Table.
+$CheckSQL = "SELECT * FROM utilisateur WHERE email='$email'";
+$InsertQuery = "INSERT INTO utilisateur (nomPrenom,email,motDePasse, status) VALUES ('$nomPrenom','$email','$motDePasse', 0)";
+$SelectQuery = "SELECT * FROM utilisateur WHERE email = '$email'";
+
+// Executing Email Check MySQL Query.
+$check = mysqli_fetch_array(mysqli_query($con,$CheckSQL));
+
+
+if(isset($check)){
+	 
+	echo json_encode('-1');
+	 
+  }
+ else{
  
- // Executing SQL Query.
-//mysqli_fetch_array(mysqli_query($con,$QueryExist));
- 
-	//if(!isset($check1)){
-
-mysqli_query($con,$QueryUpdate);
-
-$check = mysqli_fetch_array(mysqli_query($con,$QuerySelect));
-
-    if (isset($check))
-            echo json_encode($check);
-		
-     
- 
+	 
+	 
+	 if(mysqli_query($con,$InsertQuery)){
+	 
+		 // If the record inserted successfully then show the message.
+		 
+        // Converting the message into JSON format.
+        
+        $connect =  mysqli_fetch_array(mysqli_query($con,$SelectQuery));
+		 
+		// Echo the message.
+		 echo json_encode($connect) ;
+	 
+	 }
+	 else{
+	 
+		echo json_encode('-1');
+	 
+	 }
+ }
  mysqli_close($con);
+ 
 ?>

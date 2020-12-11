@@ -126,7 +126,7 @@ Future fetch() async
   }
   Navigator.pop(context);
 
-  Navigator.of(context).pushReplacement(MaterialPageRoute(
+  Navigator.of(context).push(MaterialPageRoute(
     builder: (BuildContext context) =>
     EcranListe(
       profil : widget.profil,
