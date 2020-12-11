@@ -28,6 +28,21 @@ class EcranCompetencesEtat extends State<EcranCompetences> {
 
   List<dynamic> message = List<dynamic>();
 
+
+Future valideComp(int competencesIdcompetences, int utilisateurId) async {
+  // SERVER LOGIN API URL
+  var url = 'https://flagrant-amusements.000webhostapp.com/valideCompProf.php';
+ 
+  // Store all data with Param Name.
+  var data = {'idComp': competencesIdcompetences, 'id' : utilisateurId};
+ 
+  // Starting Web API Call.
+  var response = await http.post(url, body: json.encode(data));
+ 
+  // Getting Server response into variable.
+  var message = jsonDecode(response.body);
+}
+
   @override
     Widget build(BuildContext context)
   {
@@ -105,15 +120,28 @@ class EcranCompetencesEtat extends State<EcranCompetences> {
                   elevation: 10.0,
                   child : InkWell(
                     splashColor: Colors.cyan,
-            //         onTap: () {
-            //           Navigator.push(
-            //             context,
-            //               MaterialPageRoute(builder: (context) => LoaderCompetences(
-            //                 profil: widget.profil,
-            //                 statusString: widget.statusString,
-            //                 idEleve: 1)),
-            // );
-            //         },
+                    onTap: (){
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: new Text("Voulez-vous valider cette compétence à l'élève ?"),
+                              actions: <Widget>[
+                                FlatButton(
+                                child: Text("Oui"),
+                                onPressed: () { print("descr " + widget.message[index]["1"] + " id " + widget.message[index]["0"]); 
+                                                valideComp(int.parse(widget.message[index]["1"]), int.parse(widget.message[index]["0"])); 
+                                                Navigator.of(context).pop(); }, 
+                                ),
+                                FlatButton(
+                                child: Text("Non"),
+                                onPressed: () { Navigator.of(context).pop(); },
+                                )
+                              ],
+                            );
+                          },
+                          );
+                    },
                     child : Container(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height/  7,
