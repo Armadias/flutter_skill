@@ -3,6 +3,7 @@ import 'package:skill_check/Ecran/ProfilModificateur/ProfileModifier.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
+import 'dart:math';
 
 class EcranProfil extends StatefulWidget {
 
@@ -16,9 +17,13 @@ class EcranProfil extends StatefulWidget {
   }
 
 class EcranProfilEtat extends State<EcranProfil>{
+  bool aImage;
 
   @override
   Widget build(BuildContext context){
+    var random = new Random();
+    String r = random.nextInt(100).toString();
+    widget.profil["image"] == null? aImage = false : aImage = true; 
     return Scaffold(
       appBar: AppBar(
             title: Text(
@@ -58,18 +63,33 @@ class EcranProfilEtat extends State<EcranProfil>{
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      CircleAvatar(
-                        backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
-                        ? Colors.white70
-                        : Colors.white70,
-                        minRadius: 60,
-                        child: CircleAvatar(
-                          minRadius: 50,
-                          backgroundColor: Colors.white,
-                         child : Text(widget.profil["nomPrenom"][0],
-                         style: TextStyle(fontSize: 60.0),
+                      Visibility (
+                        visible: !aImage,
+                        child:CircleAvatar(
+                          backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+                          ? Colors.white70
+                          : Colors.white70,
+                          minRadius: 60,
+                          child: CircleAvatar(
+                            minRadius: 50,
+                            backgroundColor: Colors.white,
+                          child : Text(widget.profil["nomPrenom"][0],
+                          style: TextStyle(fontSize: 60.0),
+                            ),
                           ),
                         ),
+                        replacement: CircleAvatar(
+                          backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+                          ? Colors.white70
+                          : Colors.white70,
+                          minRadius: 60,
+                          child: CircleAvatar(
+                            minRadius: 50,
+                            backgroundImage: NetworkImage(
+                              "https://flagrant-amusements.000webhostapp.com/image/" + widget.profil["image"] + "?v=" + r,
+                            ),
+                          ),
+                        ), 
                       ),
                     ],
                   ),

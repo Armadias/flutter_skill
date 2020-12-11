@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:skill_check/Ecran/DrawerFile/Loader.dart';
@@ -21,15 +23,17 @@ class DrawerEtat extends State<CustomDrawer>{
 
   @override
   Widget build(BuildContext context) {
+    var random = new Random();
+    String r = random.nextInt(100).toString();
     if (widget.statusString == "Éleve")
       estEleve = true;
     else
       estEleve = false;
 
-    /*if (widget.profil["image"] == null)
+    if (widget.profil["image"] == null)
       aImage = false;
       else
-      aImage = true;*/
+      aImage = true;
     return new Drawer(
     child: ListView(
       padding:EdgeInsets.zero,
@@ -62,15 +66,12 @@ class DrawerEtat extends State<CustomDrawer>{
               style: TextStyle(color: Colors.white)
                 ),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
-              ? Colors.white
-              : Colors.white,
-              child: Text(widget.profil["nomPrenom"][0],
-              style: TextStyle(fontSize: 40.0),
+              backgroundImage:  NetworkImage(
+              "https://flagrant-amusements.000webhostapp.com/image/" + widget.profil["image"] + "?v=" + r,
+                ),
               ),
             ),
           ), 
-        ),
         //Profil
 
           Card(
