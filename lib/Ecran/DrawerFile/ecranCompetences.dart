@@ -1,13 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranListe.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
-import 'package:skill_check/Utilitaires/drawer.dart';
-
-
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 class EcranCompetences extends StatefulWidget {
@@ -46,15 +44,13 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
   @override
     Widget build(BuildContext context)
   {
-    print(widget.message.length);
-    print(widget.message);
     return Scaffold(
           appBar: AppBar(
             title: Text('Compétences de l\'élève',
             style: kLabelStyle,
             ),
             leading: new IconButton(
-              icon: new Icon(Icons.assignment_return), 
+              icon: new Icon(Icons.arrow_back), 
               onPressed:() => Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) =>
                   EcranListe(

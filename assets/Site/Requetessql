@@ -1,6 +1,0 @@
-SELECT * FROM competences c WHERE 1 = cours_idcours -> choppe les compétences en fonctions du cours
-
-SELECT * FROM cours --> récupère le cours pour l'afficher comme une liste
-
-SELECT uhc.*, c.* FROM utilisateur_has_competences uhc, competences c, utilisateur i WHERE i.id = uhc.utilisateur_id AND c.idcompetences = uhc.competences_idcompetences --> récupère les compétences et la table uhc en fonction de l'id de l'utillisateur (pas encore testé, la table est vide)
- 

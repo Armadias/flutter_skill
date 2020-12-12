@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'dart:math';
 
-class EcranProfil extends StatefulWidget {
+class EcranMartin extends StatefulWidget {
 
   final Map<String, dynamic> profil;
   final String status;
 
-  EcranProfil({Key key, @required this.profil, this.status}) : super(key : key);
+  EcranMartin({Key key, @required this.profil, this.status}) : super(key : key);
 
   @override
-  EcranProfilEtat createState() => EcranProfilEtat();
+  EcranMartinEtat createState() => EcranMartinEtat();
   }
 
-class EcranProfilEtat extends State<EcranProfil>{
+class EcranMartinEtat extends State<EcranMartin>{
   bool aImage;
 
   @override
@@ -27,7 +27,7 @@ class EcranProfilEtat extends State<EcranProfil>{
     return Scaffold(
       appBar: AppBar(
             title: Text(
-            'Profil',
+            'POUR MARTIN',
             style: kDrawerTitle,
             ),
           ),

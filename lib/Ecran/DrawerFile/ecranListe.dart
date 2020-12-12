@@ -24,7 +24,6 @@ class EcranListeEtat extends State<EcranListe>
   @override 
   Widget build(BuildContext context)
   {
-    print(widget.message);
     return Scaffold(
           appBar: AppBar(
             title: Text('Liste',
@@ -34,6 +33,7 @@ class EcranListeEtat extends State<EcranListe>
           drawer: CustomDrawer(
             profil: widget.profil,
             statusString: widget.statusString,
+            isInListe: true,
           ),
            body: Stack(
              children: <Widget>[

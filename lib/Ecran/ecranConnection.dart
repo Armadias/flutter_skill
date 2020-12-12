@@ -1,7 +1,7 @@
 //import 'dart:async';
 import 'dart:convert';
 
-import 'package:skill_check/Ecran/DrawerFile/ecranAccueil.dart';
+import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Ecran/ecranInscription.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
@@ -85,10 +85,10 @@ Future userLogin() async{
     // Navigate to Profile Screen & Sending Email to Next Screen.
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EcranAccueil(
-                                                             statusString : status,
-                                                             message: message,
-                                                             )
+        MaterialPageRoute(builder: (context) => EcranProfil(
+                                                             status : status,
+                                                             profil: message,
+                                                            )
                                                           )
       );
 
@@ -131,13 +131,6 @@ Future userLogin() async{
   }
  
 }
-
-/*Future<List> senddata() async {
-  final response = await http.post("https://flagrant-amusements.000webhostapp.com/insertData.php", body: {
-    "motDePasse": motDePasse.text,
-    "email": email.text,
-  });
-}*/
   bool rappel = false;
   
   Widget constructeurEmail(){

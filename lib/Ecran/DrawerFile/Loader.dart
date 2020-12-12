@@ -5,6 +5,8 @@ import 'package:skill_check/Ecran/DrawerFile/ecranListe.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
+
 class Loader extends StatefulWidget {
 
   final Map<String, dynamic> profil;
@@ -110,14 +112,21 @@ Future fetch() async
   var mess = jsonDecode(response.body);
   
   if (mess != -1)
-  message = json.decode(response.body);
-
+    message = json.decode(response.body);
   else
-
-  print(message);
+  {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    builder: (BuildContext context) =>
+    EcranProfil(
+      profil : widget.profil,
+      status : widget.statusString,
+    )
+  ),
+);
+  }
   Navigator.pop(context);
 
-  Navigator.of(context).pushReplacement(MaterialPageRoute(
+  Navigator.of(context).push(MaterialPageRoute(
     builder: (BuildContext context) =>
     EcranListe(
       profil : widget.profil,
