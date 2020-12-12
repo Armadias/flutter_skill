@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranCompetences.dart';
+import 'package:skill_check/Ecran/DrawerFile/ecranCompetencesProf.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
