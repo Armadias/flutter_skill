@@ -26,16 +26,10 @@ class DrawerEtat extends State<CustomDrawer>{
   Widget build(BuildContext context) {
     var random = new Random();
     String r = random.nextInt(100).toString();
-    if (widget.statusString == "Éleve")
-      estEleve = true;
-    else
-      estEleve = false;
 
-    if (widget.profil["image"] == "-1")
-      aImage = false;
-      else
-      aImage = true;
-    print(aImage);
+    widget.profil["status"] == "0"? estEleve = true : estEleve = false;
+    widget.profil["image"] == "-1"? aImage = false : aImage = true;
+
     return new Drawer(
     child: ListView(
       padding:EdgeInsets.zero,
@@ -144,39 +138,7 @@ class DrawerEtat extends State<CustomDrawer>{
         ),
         ),
         //Progression
-        Visibility(
-          visible: estEleve,
-          child : Card(
-            child: ListTile(
-              leading: Icon(Icons.book_rounded),
-              title: Text('Vos Cours'),
-              onTap: (){
-                      Navigator.pop(context);
-                    },
-            ),
-          ),
-          replacement: Card(
-            child: ListTile(
-              leading: Icon(Icons.bookmarks),
-              title: Text('Ajouter Vos Compétences'),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                      EcranCoursEleve(
-                        profil: widget.profil,
-                        statusString: widget.statusString
-                        )
-                      ),
-                    );
-                Navigator.pop(context);
-                },
-              ),
-            ),
-          ),
         ],
       ),  
     );
   }
-  
-}
-
