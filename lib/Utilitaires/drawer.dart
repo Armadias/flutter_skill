@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:skill_check/Ecran/DrawerFile/Loader.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
+import 'package:skill_check/Ecran/DrawerFile/ecranPourMartin.dart';
 
 class CustomDrawer extends StatefulWidget{
 
@@ -74,7 +75,22 @@ class DrawerEtat extends State<CustomDrawer>{
             ),
           ), 
         //Profil
-
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('POUR MARTIN'),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                    EcranMartin(
+                                  profil: widget.profil,
+                                  status: widget.statusString,
+                                )
+                  )
+                );
+              },
+            ),
+          ),
           Card(
             child: ListTile(
               leading: Icon(Icons.account_circle),
@@ -147,7 +163,7 @@ class DrawerEtat extends State<CustomDrawer>{
           visible: estEleve,
           child : Card(
             child: ListTile(
-              leading: Icon(Icons.book_rounded),
+              leading: Icon(Icons.stars),
               title: Text('Vos Cours'),
               onTap: (){
                       Navigator.pop(context);
@@ -156,7 +172,7 @@ class DrawerEtat extends State<CustomDrawer>{
           ),
           replacement: Card(
             child: ListTile(
-              leading: Icon(Icons.bookmarks),
+              leading: Icon(Icons.stars),
               title: Text('Ajouter Vos Compétences'),
               onTap: (){
                       Navigator.pop(context);
