@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:skill_check/Ecran/DrawerFile/EcranCoursEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranPourMartin.dart';
 
 class CustomDrawer extends StatefulWidget{
 
@@ -83,6 +82,7 @@ class DrawerEtat extends State<CustomDrawer>{
                                 )
                   )
                 );
+                Navigator.pop(context);
               },
             ),
           ),
