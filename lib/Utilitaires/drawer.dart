@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:skill_check/Ecran/DrawerFile/EcranCoursEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
@@ -30,7 +31,7 @@ class DrawerEtat extends State<CustomDrawer>{
     else
       estEleve = false;
 
-    if (widget.profil["image"] == null)
+    if (widget.profil["image"] == "-1")
       aImage = false;
       else
       aImage = true;
@@ -159,7 +160,15 @@ class DrawerEtat extends State<CustomDrawer>{
               leading: Icon(Icons.bookmarks),
               title: Text('Ajouter Vos Compétences'),
               onTap: (){
-                      Navigator.pop(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                      EcranCoursEleve(
+                        profil: widget.profil,
+                        statusString: widget.statusString
+                        )
+                      ),
+                    );
+                Navigator.pop(context);
                 },
               ),
             ),
