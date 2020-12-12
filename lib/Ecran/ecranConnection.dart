@@ -142,7 +142,8 @@ Future userLogin() async{
                       style: kLabelStyle,
                     ),
                   SizedBox(height: 10.0),
-                  Container(alignment: Alignment.centerLeft,
+                  Container(
+                  alignment: Alignment.centerLeft,
                   decoration: kBoxDecorationStyle,
                   height: 60.0,
                   child: TextField(

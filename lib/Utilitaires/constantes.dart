@@ -35,6 +35,12 @@ final kBoxDecorationStyle = BoxDecoration(
   ],
 );
 
+final klistItem = TextStyle(
+  color: Colors.white,
+  fontFamily: 'Kufam',
+  fontSize: 14,
+);
+
 final colorGradient = Container(
           height: double.infinity,
           width: double.infinity,

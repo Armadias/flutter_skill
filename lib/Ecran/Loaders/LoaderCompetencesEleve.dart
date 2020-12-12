@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranListe.dart';
+
+import 'package:skill_check/Utilitaires/Competences.dart';
+import 'package:skill_check/Ecran/DrawerFile/EcranCoursEleve.dart';
+
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
-
-class Loader extends StatefulWidget {
+class LoaderCompetencesEleve extends StatefulWidget {
 
   final Map<String, dynamic> profil;
-  final String statusString;
+  final String status;
 
-  Loader({Key key, @required this.profil, this.statusString}) : super(key: key);
+  LoaderCompetencesEleve({Key key, @required this.profil, this.status}) : super(key: key);
 
   @override
-  LoaderState createState() => LoaderState();
+  LoaderCompetencesState createState() => LoaderCompetencesState();
   }
 
 
-class LoaderState extends State<Loader> 
+class LoaderCompetencesState extends State<LoaderCompetencesEleve> 
 {
   List<dynamic> message;
 
@@ -35,6 +36,8 @@ class LoaderState extends State<Loader>
           children: <Widget>[
             new Container(
               decoration:  BoxDecoration(color: Colors.white),
+            ),
+            new Container(
             ),
             new Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -67,10 +70,10 @@ class LoaderState extends State<Loader>
                         ),
                         Text(() 
                       {
-                        if (widget.statusString == "Éleve")
+                        if (widget.status == "Éleve")
                           return "Récupération de vos professeurs";
                         else
-                          return "Récupération de vos éleves";
+                          return "Récupération des compétences de l'élève...";
                       }()),
                     ],
                   ),
@@ -97,40 +100,65 @@ void initState()
 @protected
 Future fetch() async
 {
-  int id = int.parse(widget.profil["id"]);
+  int eleve = int.parse(widget.profil["id"]);
   // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/getListeUser.php';
+  var url = 'https://flagrant-amusements.000webhostapp.com/getCompetencesEleve.php';
 
   // Store all data with Param Name.
-  var data = {'id' : id};
+  var data = {'id' : eleve};
 
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
 
   var mess = jsonDecode(response.body);
-  
+
   if (mess != -1)
-    message = json.decode(response.body);
-  else
   {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    message = json.decode(response.body);
+    print(message);
+    List<Cours> coursList = new List<Cours>();
+    int indexe;
+    int nbCours = 0;
+
+    for (int i = 0; i < message.length; i++)
+    {
+      indexe = -1;
+      for (int j = 0; j < coursList.length; j++)
+      {
+        if (coursList[j].nom == message[i]["nomCours"])
+        {
+          indexe = j;
+          break;
+        }
+
+      }
+      print(indexe);
+
+      if (indexe != -1)
+      {
+        Competences competence = new Competences(message[i]["descriptionCompetence"], int.parse(message[i]["valideEleve"]), int.parse(message[i]["valideProf"]), int.parse(message[i]["1"]));
+        coursList[indexe].comp.add(competence);
+      }
+      else
+      {
+        Cours cours = new Cours(message[i]["nomCours"], message[i]["descriptionCours"]);
+        coursList.add(cours);
+        Competences competence = new Competences(message[i]["descriptionCompetence"], int.parse(message[i]["valideEleve"]), int.parse(message[i]["valideProf"]), int.parse(message[i]["1"]));
+        coursList[nbCours].comp.add(competence);
+        nbCours ++;
+      }
+    }
+
+
+  Navigator.of(context).pushReplacement(MaterialPageRoute(
     builder: (BuildContext context) =>
-    EcranProfil(
+    EcranCoursEleve(
+      cours : coursList,
       profil : widget.profil,
-      status : widget.statusString,
+      status : widget.status,
     )
   ),
 );
-  }
-  Navigator.pop(context);
-
-  Navigator.of(context).push(MaterialPageRoute(
-    builder: (BuildContext context) =>
-    EcranListe(
-      profil : widget.profil,
-      statusString : widget.statusString,
-      message : message)
-  ),
-);
 }
+  }
 }

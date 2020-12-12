@@ -117,7 +117,6 @@ Future fetch() async
 
   else
 
-  print(message);
   Navigator.pop(context);
 
   Navigator.of(context).pushReplacement(MaterialPageRoute(

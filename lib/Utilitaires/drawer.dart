@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:skill_check/Ecran/DrawerFile/EcranCoursEleve.dart';
+import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
@@ -11,8 +11,9 @@ class CustomDrawer extends StatefulWidget{
   final String statusString;
   final Map<String,dynamic> profil;
   final bool isInListe;
+  final bool isInCours;
 
-  CustomDrawer({Key key, this.isInListe, @required this.statusString, this.profil}) : super(key : key);
+  CustomDrawer({Key key, this.isInCours,this.isInListe, @required this.statusString, this.profil}) : super(key : key);
   @override
   DrawerEtat createState() => new DrawerEtat();
 
@@ -155,14 +156,16 @@ class DrawerEtat extends State<CustomDrawer>{
         leading: Icon(Icons.book),
         title: Text('Vos Cours'),
         onTap: (){
+          if (!widget.isInListe){
           Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) =>
-              EcranCoursEleve(
+              LoaderCompetencesEleve(
                 profil: widget.profil,
                 status: widget.statusString,
               ),
             ),
           );
+          }else Navigator.pop(context);
         },
       ),
     );

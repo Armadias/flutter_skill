@@ -36,9 +36,6 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
  
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
- 
-  // Getting Server response into variable.
-  var message = jsonDecode(response.body);
 }
 
   @override
