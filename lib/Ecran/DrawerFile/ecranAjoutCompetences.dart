@@ -1,13 +1,9 @@
 //import 'dart:async';
 import 'dart:convert';
 
-import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
-import 'package:skill_check/Ecran/ecranInscription.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:progress_dialog/progress_dialog.dart';
 
 
 class EcranAjoutCompetences extends StatefulWidget {
@@ -17,128 +13,42 @@ class EcranAjoutCompetences extends StatefulWidget {
 
 class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
 
-  final emailController = TextEditingController();
-  final motDePasseController = TextEditingController();
-	
-Future userLogin() async{
- 
-  // Showing CircularProgressIndicator.
-  /*setState(() {
-  visible = true ; 
-  });*/
- 
-  // Getting value from Controller
-  String email = emailController.text;
-  String motDePasse = motDePasseController.text;
-  String nomPrenom;
-  if (email.isEmpty | motDePasse.isEmpty)
-  {
-    showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("une des entrées est vide, veuillez la remplir"),
-        actions: <Widget>[
-          FlatButton(
-           child: Text("Ok"),
-           onPressed: () { Navigator.of(context).pop(); },
-           ),
-        ],
-      );
-    },
-    );
-  }
-  else{
-    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-    pr.style(
-  message: 'Connection en cours...',
-  borderRadius: 20.0,
-  backgroundColor: Colors.white,
-  progressWidget: CircularProgressIndicator(),
-  elevation: 50.0,
-  insetAnimCurve: Curves.easeInOut,
-  messageTextStyle: TextStyle(
-     color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
-  );
-  await pr.show();
-  // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
- 
-  // Store all data with Param Name.
-  var data = {'email': email, 'motDePasse' : motDePasse, 'nomPrenom' : nomPrenom};
- 
-  // Starting Web API Call.
-  var response = await http.post(url, body: json.encode(data));
- 
-  // Getting Server response into variable.
-  var message = jsonDecode(response.body);
+  bool visible = false;
 
-  // If the Response Message is Matched.
- if(message != "-1")
-  {
+  final coursController = TextEditingController();
+  final descriptionController = TextEditingController();
+	final nomCompetenceController = TextEditingController();
 
-    String status;
-    if (message["status"] == "1")
-      status = "Professeur";
-    else status = "Éleve";
-      await pr.hide();
-    // Navigate to Profile Screen & Sending Email to Next Screen.
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => EcranProfil(
-                                                             status : status,
-                                                             profil: message,
-                                                            )
-                                                          )
-      );
+  Future ajoutCompetence() async {
+    setState(() {
+      visible = true;
+    });
 
-      
+    String nomCours = coursController.text;
+    String descrCompetence = descriptionController.text;
+    String nomCompetence = nomCompetenceController.text;
+
+    var url = 'https://flagrant-amusements.000webhostapp.com/ajouteCompetence.php';
+    var data = {'nomCours': nomCours, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
+    var response = await http.post(url, body: json.encode(data));
+    print(response);
+    //var message = jsonDecode(response.body);
+
+    if(response.statusCode == 200){
+    setState(() {
+      visible = false;
+    });
+    }
   }
-  else
-  {
-    await pr.hide();
-    // If Email or Password did not Matched.
-    // Hiding the CircularProgressIndicator.
-    /*setState(() {
-      visible = false; 
-      });*/
- 
-    // Showing Alert Dialog with Response JSON Message.
-    showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("ERREUR DE CONNECTION\n avez-vous un compte?"),
-        actions: <Widget>[
-          FlatButton(
-           child: Text("OUI"),
-           onPressed: () { Navigator.of(context).pop(); },
-           ),
-          FlatButton(
-            child: new Text("NON"),
-            onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => new EcranInscription()),
-                      );
-            },
-          ),
-        ],
-      );
-    },
-    );}
-  }
- 
-}
+
   bool rappel = false;
   
-  Widget constructeurEmail(){
+  Widget constructeurCours(){
     return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                    children: <Widget>[
                     Text(
-                      'Email',
+                      'Nom du Cours',
                       style: kLabelStyle,
                     ),
                   SizedBox(height: 10.0),
@@ -146,7 +56,7 @@ Future userLogin() async{
                   decoration: kBoxDecorationStyle,
                   height: 60.0,
                   child: TextField(
-                    controller:emailController,
+                    controller:coursController,
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(
                       color: Colors.white,
@@ -156,10 +66,10 @@ Future userLogin() async{
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.only(top: 18.0),
                       prefixIcon: Icon(
-                        Icons.email, 
+                        Icons.adjust, 
                         color: Colors.white,
                       ),
-                      hintText: 'Entrez votre adresse ici',
+                      hintText: 'Entrez le nom de cours ici',
                       hintStyle: kHintTextStyle,
                     ),
                     ),
@@ -168,21 +78,21 @@ Future userLogin() async{
                 );
   }
 
-  Widget constructeurMDP(){
+    Widget constructeurNomCompetence(){
     return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                    children: <Widget>[
-                  Text(
-                    'Mot de passe',
-                    style: kLabelStyle,
-                  ),
+                    Text(
+                      'Nom de la compétence',
+                      style: kLabelStyle,
+                    ),
                   SizedBox(height: 10.0),
                   Container(alignment: Alignment.centerLeft,
                   decoration: kBoxDecorationStyle,
                   height: 60.0,
                   child: TextField(
-                    controller: motDePasseController,
-                    obscureText: true,
+                    controller:nomCompetenceController,
+                    keyboardType: TextInputType.emailAddress,
                     style: TextStyle(
                       color: Colors.white,
                        fontFamily: 'Kufam',
@@ -191,10 +101,10 @@ Future userLogin() async{
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.only(top: 18.0),
                       prefixIcon: Icon(
-                        Icons.lock, 
+                        Icons.adjust, 
                         color: Colors.white,
                       ),
-                      hintText: 'Entrez votre mot de passe ici',
+                      hintText: 'Entrez le nom de cours ici',
                       hintStyle: kHintTextStyle,
                     ),
                     ),
@@ -203,59 +113,51 @@ Future userLogin() async{
                 );
   }
 
-  Widget constructeurMDPOublie(){
-    return  Container(
-                  alignment: Alignment.centerRight,
-                  child: FlatButton(onPressed: () => print('Mot de passe oublié appuillé'),
-                  padding: EdgeInsets.only(right: 0.0),
-                  child: Text(
-                    'Mot de passe oublié?',
+  Widget constructeurDescription(){
+    return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                   children: <Widget>[
+                  Text(
+                    'Description de la compétence',
                     style: kLabelStyle,
+                  ),
+                  SizedBox(height: 10.0),
+                  Container(//alignment: Alignment.topLeft,
+                  decoration: kBoxDecorationStyle,
+                  height: 225.0,
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    controller: descriptionController,
+                    //obscureText: true,
+                    style: TextStyle(
+                      color: Colors.white,
+                       fontFamily: 'Kufam',
+                        fontSize: 13.0),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.all(20.0),
+                    ),
                     ),
                   ),
-                  );
-  }
-
-  Widget constructeurRappel(){
-    return Container(
-                  child: Row(
-                    children: <Widget>[
-                      Theme(
-                        data: ThemeData(unselectedWidgetColor: Colors.white),
-                        child: Checkbox(
-                          value: rappel,
-                          checkColor: Colors.green,
-                          activeColor: Colors.white,
-                          onChanged: (value){
-                            setState(() {
-                              rappel = value;
-                            });
-                          },
-                        ),
-                      ),
-                       Text(
-                          'Rappel',
-                          style: kLabelStyle,
-                      ),
-                    ],
-                  ),
+                 ],
                 );
   }
 
-  Widget constructeurBouttonConnexion(){
+  Widget constructeurBouttonCreation(){
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: userLogin,
+       onPressed: ajoutCompetence,
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
         color: Colors.cyan[900],
         child:Text(
-          'CONNEXION',
+          'Créer',
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.5,
@@ -266,46 +168,6 @@ Future userLogin() async{
         ),
       ),
     );
-  }
-
-  Widget constructeurMessage(){
-    return Container(
-                  child: Text(
-                    'Pas de compte?',
-                    style: kLabelStyle,
-                  ),
-                );
-  }
-  
-  Widget constructeurBoutonCreeCompte() {
-    return Container(
-                  //padding: EdgeInsets.symmetric(vertical: 2.0),
-                  width: double.infinity,
-                  child: RaisedButton(
-                    elevation: 5.0,
-                    onPressed: () {
-                        Navigator.push(
-                        context,
-                        SlideRightRoute(page : EcranInscription()),
-                      );
-                    },
-                    padding: EdgeInsets.all(15.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    color: Colors.cyan[900],
-                    child:Text(
-                      'INSCRIPTION',
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1.5,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Kufam',
-                      ),
-                    ),
-                  ),
-                );
   }
 
   @override
@@ -325,34 +187,22 @@ Future userLogin() async{
               mainAxisAlignment: MainAxisAlignment.center, 
               children: <Widget>[
                 Text(
-                  'Perfectatorminal',
+                  'Ajout de Compétence',
                   style: TextStyle(
                     color :Colors.white,
                     fontFamily: 'Kufam', 
                     fontSize: 30.0, 
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-                SizedBox(height : 17.0),
-                Text(
-                  'Connexion',
-                  style: TextStyle(
-                    color :Colors.white,
-                    fontFamily: 'Kufam', 
-                    fontSize: 25.0, 
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                ),                
                 SizedBox(height: 10.0),
-                constructeurEmail(),
+                constructeurCours(),
+                SizedBox(height: 10.0),
+                constructeurNomCompetence(),
                 SizedBox(height: 30.0),
-                constructeurMDP(),
-                constructeurMDPOublie(),
-                constructeurRappel(),
-                constructeurBouttonConnexion(),
+                constructeurDescription(),
+                constructeurBouttonCreation(),
                 SizedBox(height: 30.0),
-                constructeurMessage(),
-                constructeurBoutonCreeCompte(),
               ],
             ),
           ),

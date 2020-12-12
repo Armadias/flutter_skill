@@ -196,7 +196,11 @@ class DrawerEtat extends State<CustomDrawer>{
         leading: Icon(Icons.stars),
         title: Text('Ajouter Vos Compétences'),
         onTap: (){
-          Navigator.pop(context);
+          Navigator.push(
+            context,
+              MaterialPageRoute(builder: (context) => EcranAjoutCompetences()
+              )
+          );  
         },
       ),
     );
