@@ -26,7 +26,7 @@ class EcranListeEtat extends State<EcranListe>
   {
     return Scaffold(
           appBar: AppBar(
-            title: Text('Liste',
+            title: Text('Liste de vos éleves',
             style: kLabelStyle,
             ),
           ),
@@ -44,8 +44,6 @@ class EcranListeEtat extends State<EcranListe>
       );
   }
     Widget constructeurList(){
-      //if (widget.message.length > ) 15
-
     return ListView.builder(
       itemCount: widget.message.length,
       itemBuilder: (BuildContext context, int index){
@@ -69,7 +67,9 @@ class EcranListeEtat extends State<EcranListe>
                             profil: widget.profil,
                             statusString: widget.statusString,
                             listEleve : widget.message,
-                            idEleve: int.parse(widget.message[index]["id"]))),
+                            idEleve: int.parse(widget.message[index]["id"]),
+                            eleve : widget.message[index]["nomPrenom"],
+                            )),
             );
                     },
                     child : Container(
@@ -91,27 +91,6 @@ class EcranListeEtat extends State<EcranListe>
               ),
             ),
           ),
-/*
-        return GestureDetector(
-          onTap: (){
-            print("ca marche !!");
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => EcranCompetences(id : widget.id,
-                                name: widget.name,
-                                email: widget.email,
-                                password: widget.password,
-                                status: widget.status,
-                                idEleve: 1)),
-            );
-          },
-          child: new Container(
-            height: 50,
-            child : Center(
-              child: Text('${widget.message[index]["0"]}')
-            )
-          )
-*/
         );
       }
     ); 
