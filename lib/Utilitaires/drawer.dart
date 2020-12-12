@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:skill_check/Ecran/DrawerFile/Loader.dart';
+import 'package:skill_check/Ecran/DrawerFile/EcranCoursEleve.dart';
+import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
-import 'package:skill_check/Ecran/DrawerFile/ecranPourMartin.dart';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranAjoutCompetences.dart';
 
@@ -28,16 +28,10 @@ class DrawerEtat extends State<CustomDrawer>{
   Widget build(BuildContext context) {
     var random = new Random();
     String r = random.nextInt(100).toString();
-    if (widget.statusString == "Éleve")
-      estEleve = true;
-    else
-      estEleve = false;
 
-    if (widget.profil["image"] == null)
-      aImage = false;
-      else
-      aImage = true;
-    print(aImage);
+    widget.profil["status"] == "0"? estEleve = true : estEleve = false;
+    widget.profil["image"] == "-1"? aImage = false : aImage = true;
+
     return new Drawer(
     child: ListView(
       padding:EdgeInsets.zero,
@@ -80,22 +74,6 @@ class DrawerEtat extends State<CustomDrawer>{
           Card(
             child: ListTile(
               leading: Icon(Icons.account_circle),
-              title: Text('POUR MARTIN'),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                    EcranMartin(
-                                  profil: widget.profil,
-                                  status: widget.statusString,
-                                )
-                  )
-                );
-              },
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.account_circle),
               title: Text('Profil'),
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
@@ -106,6 +84,7 @@ class DrawerEtat extends State<CustomDrawer>{
                                 )
                   )
                 );
+                Navigator.pop(context);
               },
             ),
           ),
@@ -182,33 +161,44 @@ class DrawerEtat extends State<CustomDrawer>{
         //Progression
         Visibility(
           visible: estEleve,
-          child : Card(
-            child: ListTile(
-              leading: Icon(Icons.stars),
-              title: Text('Vos Cours'),
-              onTap: (){
-                      Navigator.pop(context);
-                    },
-            ),
-          ),
-          replacement: Card(
-            child: ListTile(
-              leading: Icon(Icons.stars),
-              title: Text('Ajouter Vos Compétences'),
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EcranAjoutCompetences()
-                    )
-                );
-              },
-              ),
-            ),
+          child : contructeurCoursEleve(),
+          replacement: constructeurCoursProf()
           ),
         ],
       ),  
     );
   }
-  
-}
 
+  Widget contructeurCoursEleve()
+  {
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.book),
+        title: Text('Vos Cours'),
+        onTap: (){
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) =>
+              EcranCoursEleve(
+                profil: widget.profil,
+                status: widget.statusString,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget constructeurCoursProf()
+  {
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.stars),
+        title: Text('Ajouter Vos Compétences'),
+        onTap: (){
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+}

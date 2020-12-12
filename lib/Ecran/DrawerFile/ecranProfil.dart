@@ -23,7 +23,7 @@ class EcranProfilEtat extends State<EcranProfil>{
   Widget build(BuildContext context){
     var random = new Random();
     String r = random.nextInt(100).toString();
-    widget.profil["image"] == null? aImage = false : aImage = true; 
+    widget.profil["image"] == "-1"? aImage = false : aImage = true; 
     return Scaffold(
       appBar: AppBar(
             title: Text(

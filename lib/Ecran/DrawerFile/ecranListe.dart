@@ -3,7 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
-import 'package:skill_check/Ecran/DrawerFile/LoaderCompetences.dart';
+import 'package:skill_check/Ecran/Loaders/LoaderCompetences.dart';
 
 class EcranListe extends StatefulWidget {
 
