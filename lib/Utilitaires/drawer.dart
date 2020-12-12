@@ -6,6 +6,8 @@ import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 
+import 'package:skill_check/Ecran/DrawerFile/ecranAjoutCompetences.dart';
+
 class CustomDrawer extends StatefulWidget{
 
   final String statusString;
@@ -85,7 +87,7 @@ class DrawerEtat extends State<CustomDrawer>{
                 ));
               },
             ),
-          ), 
+          ),
         //Liste Eleve/ prof
         Visibility(
           visible: estEleve,
@@ -124,6 +126,24 @@ class DrawerEtat extends State<CustomDrawer>{
             ),
           ),
         ),
+/*
+          Visibility(
+          visible: false,
+          child : Card(
+            child: ListTile(
+              leading: Icon(Icons.list),
+              title: Text('Ajouter une compétence'),
+              onTap: (){
+                if (!widget.isInListe){
+                  Navigator.of(context).pop();
+                }
+                else
+                Navigator.pop(context);
+                    },
+            ),
+          ),
+          ),*/
+
         //Badges
         Visibility(
           visible: false,
@@ -174,10 +194,14 @@ class DrawerEtat extends State<CustomDrawer>{
   {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.book_rounded),
+        leading: Icon(Icons.stars),
         title: Text('Ajouter Vos Compétences'),
         onTap: (){
-          Navigator.pop(context);
+          Navigator.push(
+            context,
+              MaterialPageRoute(builder: (context) => EcranAjoutCompetences()
+              )
+          );  
         },
       ),
     );
