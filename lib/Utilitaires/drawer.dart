@@ -73,22 +73,6 @@ class DrawerEtat extends State<CustomDrawer>{
           Card(
             child: ListTile(
               leading: Icon(Icons.account_circle),
-              title: Text('POUR MARTIN'),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                    EcranMartin(
-                                  profil: widget.profil,
-                                  status: widget.statusString,
-                                )
-                  )
-                );
-              },
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.account_circle),
               title: Text('Profil'),
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
@@ -156,27 +140,44 @@ class DrawerEtat extends State<CustomDrawer>{
         //Progression
         Visibility(
           visible: estEleve,
-          child : Card(
-            child: ListTile(
-              leading: Icon(Icons.stars),
-              title: Text('Vos Cours'),
-              onTap: (){
-                      Navigator.pop(context);
-                    },
-            ),
-          ),
-          replacement: Card(
-            child: ListTile(
-              leading: Icon(Icons.stars),
-              title: Text('Ajouter Vos Compétences'),
-              onTap: (){
-                      Navigator.pop(context);
-                },
-              ),
-            ),
+          child : contructeurCoursEleve(),
+          replacement: constructeurCoursProf()
           ),
         ],
       ),  
+    );
+  }
+
+  Widget contructeurCoursEleve()
+  {
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.book),
+        title: Text('Vos Cours'),
+        onTap: (){
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) =>
+              EcranCoursEleve(
+                profil: widget.profil,
+                status: widget.statusString,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget constructeurCoursProf()
+  {
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.book_rounded),
+        title: Text('Ajouter Vos Compétences'),
+        onTap: (){
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 }

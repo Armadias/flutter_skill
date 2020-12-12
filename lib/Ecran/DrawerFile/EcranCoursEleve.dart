@@ -8,9 +8,9 @@ class EcranCoursEleve extends StatefulWidget {
 
   final List<dynamic> message;
   final Map<String, dynamic> profil;
-  final String statusString;
+  final String status;
 
-  EcranCoursEleve({Key key, this.message, @required  this.profil, this.statusString}) : super(key: key);
+  EcranCoursEleve({Key key, this.message, @required  this.profil, this.status}) : super(key: key);
 
   @override
   EcranCoursEleveEtat createState() => EcranCoursEleveEtat();
