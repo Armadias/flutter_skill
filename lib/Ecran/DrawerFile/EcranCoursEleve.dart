@@ -131,7 +131,7 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
  
   // Store all data with Param Name.
 
-  print(valide);
+  
 
   var data = {'idComp': id, 'id' : int.parse(widget.profil["id"]), 'valide' : valide, 'status' : widget.profil["status"]};
  

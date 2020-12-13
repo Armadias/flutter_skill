@@ -34,7 +34,9 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
   var data = {'idComp': competencesIdcompetences, 'id' : utilisateurId};
  
   // Starting Web API Call.
-  var response = await http.post(url, body: json.encode(data));
+  await http.post(url, body: json.encode(data));
+
+  
 }
 
   @override 
@@ -160,7 +162,6 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
 
   var data = {'idComp': id, 'id' : widget.idEleve, 'valide' : valide, 'status' : widget.profil["status"]};
 
-  print(data);
  
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));

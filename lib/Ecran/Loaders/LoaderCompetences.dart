@@ -120,8 +120,6 @@ var mess = jsonDecode(response.body);
     List<Cours> coursList = new List<Cours>();
     int indexe;
     int nbCours = 0;
-
-    print(message);
     
 
     for (int i = 0; i < message.length; i++)

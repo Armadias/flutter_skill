@@ -52,7 +52,6 @@ class EcranInscriptionEtat extends State<EcranInscription> {
     var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
     var data = {'nomPrenom': nomPrenom, 'email': email, 'motDePasse': motDePasse};
     var response = await http.post(url, body: json.encode(data));
-    print(response);
     var message = jsonDecode(response.body);
 
     if(response.statusCode == 200){
@@ -208,35 +207,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
         ),
       ),
       SizedBox(height: 20.0),
-      // en commentaire car c'est casse pieds pour le moment
-      /*Text(
-        'Confirmation du mot de passe',
-        style: kLabelStyle,
-      ),
-      SizedBox(height: 10.0),
-        Container(
-        alignment: Alignment.centerLeft,
-        decoration: kBoxDecorationStyle,
-        height: 60.0,
-        child: TextField(
-          obscureText: true,
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'Kufam',
-            fontSize: 13.0
-          ),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.only(top: 18.0),
-          prefixIcon: Icon(
-            Icons.lock, 
-            color: Colors.white,
-          ),
-          hintText: 'Confirmez votre mot de passe ici',
-          hintStyle: kHintTextStyle,
-        ),
-      ),
-    ),*/
+
   ],
 );
                 

@@ -23,10 +23,6 @@ class EcranConnectionEtat extends State<EcranConnection>{
 	
 Future userLogin() async{
  
-  // Showing CircularProgressIndicator.
-  /*setState(() {
-  visible = true ; 
-  });*/
  
   // Getting value from Controller
   String email = emailController.text;
@@ -76,7 +72,6 @@ Future userLogin() async{
 
   await pr.hide();
   // If the Response Message is Matched.
-  print(message);
  if(message != "-1")
   {
 

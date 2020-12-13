@@ -75,11 +75,9 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
     }
     else{
     await pr.show();
-    print(firstValue);
     var url = 'https://flagrant-amusements.000webhostapp.com/ajouteCompetence.php';
     var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
     var response = await http.post(url, body: json.encode(data));
-    print(response);
     var message = jsonDecode(response.body);
 
     pr.hide();

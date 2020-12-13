@@ -8,8 +8,6 @@ import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListeProf.dart';
 
-import 'package:skill_check/Ecran/DrawerFile/ecranAjoutCompetences.dart';
-
 class CustomDrawer extends StatefulWidget{
 
   final String statusString;
@@ -200,26 +198,3 @@ class DrawerEtat extends State<CustomDrawer>{
     );
   }
 }
-
-/*Card(
-            child: ListTile(
-              leading: Icon(Icons.list),
-              title: Text('Liste de vos Professeurs'),
-              onTap: (){
-                if (!widget.isInListe){
-                  print("coucou");
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                      LoaderProf(
-                        profil: widget.profil,
-                        statusString: widget.statusString,)
-                      )
-                  );
-                  Navigator.of(context).pop();
-                }
-                else
-                Navigator.pop(context);
-                    },
-            ),
-          ),*/

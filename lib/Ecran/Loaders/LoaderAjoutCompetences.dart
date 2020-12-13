@@ -109,7 +109,6 @@ Future fetch() async
 
 var mess = jsonDecode(response.body);
 
-      print("AAAAAAAAAAAAAAAAAAAAA");
     List<String> coursList = new List<String>();
   if (mess != -1) 
   {
@@ -122,7 +121,6 @@ var mess = jsonDecode(response.body);
       }
   }
 
-  print(coursList);
   Navigator.pop(context);
   Navigator.push(
     context, 
