@@ -117,7 +117,6 @@ var mess = jsonDecode(response.body);
   if (mess != -1)
   {
     message = json.decode(response.body);
-    print(message);
     List<Cours> coursList = new List<Cours>();
     int indexe;
     int nbCours = 0;
@@ -134,7 +133,6 @@ var mess = jsonDecode(response.body);
         }
 
       }
-      print(indexe);
 
       if (indexe != -1)
       {

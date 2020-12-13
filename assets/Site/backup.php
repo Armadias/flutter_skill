@@ -1,52 +1,40 @@
 <?php
  
  include 'connectionDb.php';
+
+ $id = $obj['id'];
  
- // Getting User email from JSON $obj array and store into $email.
- $email = $obj['email'];
- 
- // Getting Password from JSON $obj array and store into $password.
- $motDePasse = $obj['motDePasse'];
- 
- $nomPrenom = $obj['nomPrenom'];
  
  //Applying User Login query with email and password.
  //$loginQuery = "select professeur.*, eleve.* from professeur, eleve where email = '$email' and motDePasse = '$motDePasse' ";
- $loginQuery = "select * from utilisateur where email = '$email' and motDePasse = '$motDePasse'";
- //$loginQuery2 = "select * from professeur where email = '$email' and motDePasse = '$motDePasse' ";
+ $Query ="SELECT u.nomPrenom, u.id 
+ FROM utilisateur u, utilisateur_has_utilisateur uhu 
+ WHERE $id = uhu.utilisateur_id1 AND u.id = uhu.utilisateur_id";
+
+$result = mysqli_query($con,$Query);
  
  // Executing SQL Query.
- $check = mysqli_fetch_array(mysqli_query($con,$loginQuery));
- //$check2 = mysqli_fetch_array(mysqli_query($con,$loginQuery2));
+ $row = mysqli_fetch_array($result);
  
-	if(isset($check)){
-		
-		 // Successfully Login Message.
-		 $onLoginSuccess = 'Login Matched';
-		 
-		 
-		 // Converting the message into JSON format.
-		 $SuccessMSG = json_encode($onLoginSuccess);
-		 //$SuccessMSG = json_encode($check);
-		 
-		 // Echo the message.
-		 echo $SuccessMSG ;
-		 //echo json_encode($check);
+	if(isset($row)){
+
+        $message = array();
+        
+        
+        do{
+            $message[] = $row;
+        }while ($row = mysqli_fetch_array($result));
+
+		 echo json_encode($message);
 	 
 	 }
 	 
 	 else{
 	 
-		 // If Email and Password did not Matched.
-		$InvalidMSG = 'ERREUR DE CONNECTION \n voulez vous créér un compte?';
-		 
-		// Converting the message into JSON format.
-		$InvalidMSGJSon = json_encode($InvalidMSG);
-		 
-		// Echo the message.
-		 echo $InvalidMSGJSon ;
+		echo json_encode(-1);
 	 
-	 }
+     }
+     
  
  mysqli_close($con);
 ?>

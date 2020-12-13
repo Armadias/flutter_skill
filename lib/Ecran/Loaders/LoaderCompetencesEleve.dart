@@ -109,7 +109,6 @@ Future fetch() async
   if (mess != -1)
   {
     message = json.decode(response.body);
-    print(message);
     List<Cours> coursList = new List<Cours>();
     int indexe;
     int nbCours = 0;
@@ -126,7 +125,6 @@ Future fetch() async
         }
 
       }
-      print(indexe);
 
       if (indexe != -1)
       {

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:skill_check/Ecran/EcranAllumage/AnimationScreen.dart';
 import 'package:skill_check/Ecran/EcranAllumage/EcranLogo.dart';
 /// *******************************https://trello.com/b/eptS0fbm********************************/
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_)
+  {
+  runApp(MyApp());
+  });
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -23,6 +30,7 @@ class EcranStart extends StatefulWidget {
   @override
   _EcranStartState createState() => _EcranStartState();
 }
+
 
 class _EcranStartState extends State<EcranStart> {
   @override

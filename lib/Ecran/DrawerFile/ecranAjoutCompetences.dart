@@ -4,9 +4,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
+import 'package:skill_check/Utilitaires/drawer.dart';
 
 
 class EcranAjoutCompetences extends StatefulWidget {
+  final Map<String, dynamic> profil;
+  final String statusString;
+
+  EcranAjoutCompetences({Key key, @required  this.profil, this.statusString}) : super(key: key);
+
   @override
   EcranAjoutCompetencesEtat createState() => EcranAjoutCompetencesEtat();
   }
@@ -173,6 +179,17 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Liste de vos professeurs',
+        style: kLabelStyle,
+        ),
+      ),
+      drawer: CustomDrawer(
+        statusString: widget.statusString,
+        profil: widget.profil,
+        isInCours: false,
+        isInListe: false,
+        ),
       body: Stack(children: <Widget>[
         colorGradient,
         Container(
@@ -181,7 +198,7 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
             physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(
               horizontal: 40.0,
-              vertical: 120.0,
+              vertical: 80.0,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center, 
@@ -191,7 +208,7 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
                   style: TextStyle(
                     color :Colors.white,
                     fontFamily: 'Kufam', 
-                    fontSize: 30.0, 
+                    fontSize: 26.0, 
                     fontWeight: FontWeight.bold,
                   ),
                 ),                

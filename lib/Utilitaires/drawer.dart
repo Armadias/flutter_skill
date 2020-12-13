@@ -95,21 +95,19 @@ class DrawerEtat extends State<CustomDrawer>{
           visible: estEleve,
           child : Card(
             child : ListTile(
-              leading : Icon(Icons.list),
-              title: Text("liste de vos professeurs"),
-              onTap: () {
-                if(!widget.isInListe)
-                {
-                  Navigator.of(context).push(MaterialPageRoute
+              leading: Icon(Icons.list),
+              title: Text("Liste de vos professeur"),
+              onTap: (){
+                if (!widget.isInListe){
+                  Navigator.of(context).pushReplacement(MaterialPageRoute
                   (builder: (BuildContext context) =>
                   LoaderProf(
                     profil: widget.profil,
                     statusString: widget.statusString,
-                  )));
-                  Navigator.pop(context);
+                  )
+                  )
+                  );
                 }
-                else
-                Navigator.pop(context);
               },
               )
           ),
@@ -120,7 +118,7 @@ class DrawerEtat extends State<CustomDrawer>{
               title: Text('Liste de vos éleves'),
               onTap: (){
                 if (!widget.isInListe){
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (BuildContext context) =>
                       Loader(
                         profil: widget.profil,
@@ -135,24 +133,6 @@ class DrawerEtat extends State<CustomDrawer>{
             ),
           ),
         ),
-/*
-          Visibility(
-          visible: false,
-          child : Card(
-            child: ListTile(
-              leading: Icon(Icons.list),
-              title: Text('Ajouter une compétence'),
-              onTap: (){
-                if (!widget.isInListe){
-                  Navigator.of(context).pop();
-                }
-                else
-                Navigator.pop(context);
-                    },
-            ),
-          ),
-          ),*/
-
         //Badges
         Visibility(
           visible: false,
@@ -185,7 +165,7 @@ class DrawerEtat extends State<CustomDrawer>{
         title: Text('Vos Cours'),
         onTap: (){
           if (!widget.isInCours){
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (BuildContext context) =>
               LoaderCompetencesEleve(
                 profil: widget.profil,
@@ -206,9 +186,12 @@ class DrawerEtat extends State<CustomDrawer>{
         leading: Icon(Icons.stars),
         title: Text('Ajouter Vos Compétences'),
         onTap: (){
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-              MaterialPageRoute(builder: (context) => EcranAjoutCompetences()
+              MaterialPageRoute(builder: (context) => EcranAjoutCompetences(
+                statusString: widget.statusString,
+                profil: widget.profil,
+              )
               )
           );  
         },
