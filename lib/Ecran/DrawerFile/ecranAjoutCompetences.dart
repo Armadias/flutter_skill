@@ -32,7 +32,41 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
     var data = {'nomCours': nomCours, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
     var response = await http.post(url, body: json.encode(data));
     print(response);
-    //var message = jsonDecode(response.body);
+    var message = jsonDecode(response.body);
+
+    if(message == '-1'){
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Erreur, la compétence doit déjà exister..."),
+          actions: <Widget>[
+            FlatButton(
+            child: Text("OK"),
+            onPressed: () { Navigator.of(context).pop(); },
+            ),
+          ],
+        );
+      },
+      );
+    }
+    else{
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("La compétence à été créée \nElle a aussi été ajoutée à tous les élèves du cours"),
+          actions: <Widget>[
+            FlatButton(
+            child: Text("OK"),
+            onPressed: () { Navigator.of(context).pop(); },
+            ),
+          ],
+        );
+      },
+      );  
+    }
+
 
     if(response.statusCode == 200){
     setState(() {
