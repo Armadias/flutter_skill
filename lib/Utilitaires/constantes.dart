@@ -11,6 +11,12 @@ final kLabelStyle = TextStyle(
   fontFamily: 'Kufam',
 );
 
+final ktitlelist = TextStyle(
+  color: Colors.cyan[50],
+  fontWeight: FontWeight.bold,
+  fontFamily: 'Kufam',
+); 
+
 final kOptionStyle = TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.bold,

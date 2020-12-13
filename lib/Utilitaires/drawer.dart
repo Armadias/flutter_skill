@@ -184,7 +184,7 @@ class DrawerEtat extends State<CustomDrawer>{
   {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.stars),
+        leading: Icon(Icons.publish_outlined),
         title: Text('Ajouter Vos Compétences'),
         onTap: (){
           Navigator.pushReplacement(

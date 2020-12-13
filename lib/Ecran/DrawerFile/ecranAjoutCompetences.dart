@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:skill_check/Utilitaires/drawer.dart';
@@ -37,20 +38,51 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
 	final nomCompetenceController = TextEditingController();
 
   Future ajoutCompetence() async {
+    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+    pr.style(
+  message: 'ajout de la compétence en cours...',
+  borderRadius: 20.0,
+  backgroundColor: Colors.white,
+  progressWidget: CircularProgressIndicator(),
+  elevation: 50.0,
+  insetAnimCurve: Curves.easeInOut,
+  messageTextStyle: TextStyle(
+     color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
+  );
     setState(() {
       visible = true;
     });
 
-    String nomCours = coursController.text;
     String descrCompetence = descriptionController.text;
     String nomCompetence = nomCompetenceController.text;
-    
+
+    if (descrCompetence.isEmpty | nomCompetence.isEmpty)
+    {
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Erreur, vos champs sont vides..."),
+          actions: <Widget>[
+            FlatButton(
+            child: Text("OK"),
+            onPressed: () { Navigator.of(context).pop(); },
+            ),
+          ],
+        );
+      },
+      );
+    }
+    else{
+    await pr.show();
     print(firstValue);
     var url = 'https://flagrant-amusements.000webhostapp.com/ajouteCompetence.php';
     var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
     var response = await http.post(url, body: json.encode(data));
     print(response);
     var message = jsonDecode(response.body);
+
+    pr.hide();
 
     if(message == '-1'){
       showDialog(
@@ -89,6 +121,8 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
     setState(() {
       visible = false;
     });
+    }
+
     }
   }
 
@@ -144,7 +178,7 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
                         Icons.adjust, 
                         color: Colors.white,
                       ),
-                      hintText: 'Entrez le nom de cours ici',
+                      hintText: 'Entrez le nom de la compétence ici',
                       hintStyle: kHintTextStyle,
                     ),
                     ),

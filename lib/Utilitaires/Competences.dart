@@ -11,14 +11,16 @@ class Cours
 class Competences
 {
   String description;
+  String nom;
 
   bool validiteE;
   bool validiteP;
 
   int id;
 
-  Competences(String description, int validiteEI, int validitePI, int id)
+  Competences(String description, int validiteEI, int validitePI, int id, String nom)
   {
+    this.nom = nom;
     this.description = description;
     this.id = id;
     

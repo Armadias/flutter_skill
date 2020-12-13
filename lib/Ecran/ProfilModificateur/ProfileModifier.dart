@@ -304,6 +304,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
 
   Future uploaderImage() async
   {
+    if (_image!= null){
     final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
       pr.style(
       message: 'Modifications en cours...',
@@ -360,6 +361,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
             },
           );
   }
+}
   
   Future modifier() async
   {

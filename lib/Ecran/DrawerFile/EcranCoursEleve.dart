@@ -106,6 +106,10 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
                 sendData(widget.cours[i].comp[index].id, widget.cours[i].comp[index].validiteE);
             },
             title: new Text(
+              widget.cours[i].comp[index].nom,
+              style: ktitlelist,
+            ),
+            subtitle: new Text(
               widget.cours[i].comp[index].description,
               style: klistItem,
             ),

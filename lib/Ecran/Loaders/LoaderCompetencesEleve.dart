@@ -128,14 +128,14 @@ Future fetch() async
 
       if (indexe != -1)
       {
-        Competences competence = new Competences(message[i]["descriptionCompetence"], int.parse(message[i]["valideEleve"]), int.parse(message[i]["valideProf"]), int.parse(message[i]["1"]));
+        Competences competence = new Competences(message[i]["descriptionCompetence"], int.parse(message[i]["valideEleve"]), int.parse(message[i]["valideProf"]), int.parse(message[i]["1"]), message[i]["nom"]);
         coursList[indexe].comp.add(competence);
       }
       else
       {
         Cours cours = new Cours(message[i]["nomCours"], message[i]["descriptionCours"]);
         coursList.add(cours);
-        Competences competence = new Competences(message[i]["descriptionCompetence"], int.parse(message[i]["valideEleve"]), int.parse(message[i]["valideProf"]), int.parse(message[i]["1"]));
+        Competences competence = new Competences(message[i]["descriptionCompetence"], int.parse(message[i]["valideEleve"]), int.parse(message[i]["valideProf"]), int.parse(message[i]["1"]), message[i]["nom"]);
         coursList[nbCours].comp.add(competence);
         nbCours ++;
       }

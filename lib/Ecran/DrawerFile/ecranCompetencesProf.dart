@@ -130,6 +130,10 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
 
             },
             title: new Text(
+              widget.cours[i].comp[index].nom,
+              style: ktitlelist,
+            ),
+            subtitle: new Text(
               widget.cours[i].comp[index].description,
               style: klistItem,
             ),
