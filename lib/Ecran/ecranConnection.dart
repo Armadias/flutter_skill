@@ -1,7 +1,6 @@
 //import 'dart:async';
 import 'dart:convert';
 
-import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/ecranInscription.dart';
@@ -85,7 +84,7 @@ Future userLogin() async{
     if (message["status"] == "1")
     {
       status = "Professeur";
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Loader(
           statusString : status,
@@ -98,7 +97,7 @@ Future userLogin() async{
     else
     {
      status = "Éleve";
-           Navigator.pushReplacement(
+           Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoaderCompetencesEleve(
           status : status,
@@ -128,7 +127,7 @@ Future userLogin() async{
             child: new Text("NON"),
             onPressed: () {
             Navigator.of(context).pop();
-            Navigator.push(
+            Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => new EcranInscription()),
                       );

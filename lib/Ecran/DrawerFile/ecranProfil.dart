@@ -35,6 +35,7 @@ class EcranProfilEtat extends State<EcranProfil>{
             statusString: widget.status,
             profil: widget.profil,
             isInListe: false,
+            isInCours: false,
             ),
           body: ListView(
             children: <Widget>[
