@@ -68,13 +68,7 @@ class LoaderCompetencesState extends State<LoaderCompetencesEleve>
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         ),
-                        Text(() 
-                      {
-                        if (widget.status == "Éleve")
-                          return "Récupération de vos professeurs";
-                        else
-                          return "Récupération des compétences de l'élève...";
-                      }()),
+                        Text("Récupération de vos cours"),
                     ],
                   ),
                 ),

@@ -26,23 +26,26 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
   @override 
   Widget build(BuildContext context)
   { 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Liste de vos cours',
-          style: kLabelStyle,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Liste de vos cours',
+            style: kLabelStyle,
+          ),
         ),
-      ),
-      drawer: CustomDrawer(
-        profil: widget.profil,
-        statusString: widget.status,
-        isInListe: true,
-        ),
-        body: Stack(
-          children: <Widget>[
-            colorGradient,
-            constructeurListeCours(),
-        ],
+        drawer: CustomDrawer(
+          profil: widget.profil,
+          statusString: widget.status,
+          isInListe: true,
+          ),
+          body: Stack(
+            children: <Widget>[
+              colorGradient,
+              constructeurListeCours(),
+          ],
+        )
       ) 
     );
   }   
@@ -78,6 +81,7 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
   Widget constructeurListeCompetences(int i)
   {
     return ListView.builder(
+        physics: ScrollPhysics() ,
         shrinkWrap: true,
         itemCount: widget.cours[i].comp.length,
         itemBuilder: (context, index) {

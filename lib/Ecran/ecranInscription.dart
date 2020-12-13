@@ -87,10 +87,6 @@ class EcranInscriptionEtat extends State<EcranInscription> {
                     );
                   }else{
                     Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                    MaterialPageRoute(builder: (context) => EcranInscription()),
-                    );
                   }
                   
                 },
