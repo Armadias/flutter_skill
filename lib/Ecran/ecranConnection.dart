@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
+import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
+import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/ecranInscription.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
@@ -73,37 +75,45 @@ Future userLogin() async{
   // Getting Server response into variable.
   var message = jsonDecode(response.body);
 
+  await pr.hide();
   // If the Response Message is Matched.
+  print(message);
  if(message != "-1")
   {
 
     String status;
     if (message["status"] == "1")
+    {
       status = "Professeur";
-    else status = "Éleve";
-      await pr.hide();
-    // Navigate to Profile Screen & Sending Email to Next Screen.
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => EcranProfil(
-                                                             status : status,
-                                                             profil: message,
-                                                            )
-                                                          )
+        MaterialPageRoute(builder: (context) => Loader(
+          statusString : status,
+          profil: message,
+          )
+        )
       );
+
+    }
+    else
+    {
+     status = "Éleve";
+           Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoaderCompetencesEleve(
+          status : status,
+          profil: message,
+          )
+        )
+      );
+    }
+    // Navigate to Profile Screen & Sending Email to Next Screen.
 
       
   }
   else
   {
     await pr.hide();
-    // If Email or Password did not Matched.
-    // Hiding the CircularProgressIndicator.
-    /*setState(() {
-      visible = false; 
-      });*/
- 
-    // Showing Alert Dialog with Response JSON Message.
     showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -311,54 +321,58 @@ Future userLogin() async{
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: Stack(children: <Widget>[
-        colorGradient,
-        Container(
-          height: double.infinity,
-          child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(
-              horizontal: 40.0,
-              vertical: 120.0,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, 
-              children: <Widget>[
-                Text(
-                  'Perfectatorminal',
-                  style: TextStyle(
-                    color :Colors.white,
-                    fontFamily: 'Kufam', 
-                    fontSize: 30.0, 
-                    fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child:Scaffold(
+        body: Stack(children: <Widget>[
+          colorGradient,
+          Container(
+            height: double.infinity,
+            child: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(
+                horizontal: 40.0,
+                vertical: 120.0,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center, 
+                children: <Widget>[
+                  Text(
+                    'SkillChecker',
+                    style: TextStyle(
+                      color :Colors.white,
+                      fontFamily: 'Kufam', 
+                      fontSize: 30.0, 
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height : 17.0),
-                Text(
-                  'Connexion',
-                  style: TextStyle(
-                    color :Colors.white,
-                    fontFamily: 'Kufam', 
-                    fontSize: 25.0, 
-                    fontWeight: FontWeight.bold,
+                  SizedBox(height : 17.0),
+                  Text(
+                    'Connexion',
+                    style: TextStyle(
+                      color :Colors.white,
+                      fontFamily: 'Kufam', 
+                      fontSize: 25.0, 
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.0),
-                constructeurEmail(),
-                SizedBox(height: 30.0),
-                constructeurMDP(),
-                constructeurMDPOublie(),
-                constructeurRappel(),
-                constructeurBouttonConnexion(),
-                SizedBox(height: 30.0),
-                constructeurMessage(),
-                constructeurBoutonCreeCompte(),
-              ],
+                  SizedBox(height: 10.0),
+                  constructeurEmail(),
+                  SizedBox(height: 30.0),
+                  constructeurMDP(),
+                  SizedBox(height : 50.0),
+                  //constructeurMDPOublie(),
+                  //constructeurRappel(),
+                  constructeurBouttonConnexion(),
+                  SizedBox(height: 30.0),
+                  constructeurMessage(),
+                  constructeurBoutonCreeCompte(),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
  }

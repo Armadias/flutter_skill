@@ -41,11 +41,11 @@ class EcranLogoEtat extends State<EcranLogo>
                         alignment: Alignment.center,
                         width: 190,
                         height: 190,
-                        child: Text("TITRE ICI",
+                        child: Text("SkillChecker",
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Kufam',
-                          fontSize: 30.0,
+                          fontSize: 25.0,
                           fontWeight: FontWeight.bold,
                         ),
                         ),
@@ -65,7 +65,7 @@ class EcranLogoEtat extends State<EcranLogo>
 
   void onStart() async{
     await Future.delayed(Duration(milliseconds: 3600));
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
           MaterialPageRoute(builder: (context) => EcranConnection()),
           );

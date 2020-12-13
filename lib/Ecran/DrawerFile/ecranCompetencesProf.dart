@@ -25,7 +25,7 @@ class EcranCompetences extends StatefulWidget {
 
 class EcranCompetencesEtat extends State<EcranCompetences> {
 
-  List<dynamic> message = List<dynamic>();
+  bool loading = false;
 
 
 Future valideComp(int competencesIdcompetences, int utilisateurId) async {
@@ -42,19 +42,22 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
   @override 
   Widget build(BuildContext context)
   { 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'cours de ' + widget.eleve,
-          style: kLabelStyle,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'cours de ' + widget.eleve,
+            style: kLabelStyle,
+          ),
         ),
-      ),
-        body: Stack(
-          children: <Widget>[
-            colorGradient,
-            constructeurListeCours(),
-        ],
-      ) 
+          body: Stack(
+            children: <Widget>[
+              colorGradient,
+              constructeurListeCours(),
+          ],
+        ) 
+      )
     );
   }   
 
@@ -89,6 +92,7 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
     Widget constructeurListeCompetences(int i)
   {
     return ListView.builder(
+        physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: widget.cours[i].comp.length,
         itemBuilder: (context, index) {

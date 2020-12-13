@@ -70,23 +70,22 @@ class DrawerEtat extends State<CustomDrawer>{
             ),
           ), 
         //Profil
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profil'),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                    EcranProfil(
-                                  profil: widget.profil,
-                                  status: widget.statusString,
-                                )
+        Card(
+          child: ListTile(
+            leading : Icon(Icons.account_circle),
+            title: Text('profil'),
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                  EcranProfil(
+                    profil: widget.profil,
+                    status: widget.statusString,
                   )
-                );
-                Navigator.pop(context);
-              },
-            ),
-          ),
+                )
+              );
+            }            
+          )
+        ),
         //Liste Eleve/ prof
         Visibility(
           visible: estEleve,
