@@ -44,8 +44,7 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
     String nomCours = coursController.text;
     String descrCompetence = descriptionController.text;
     String nomCompetence = nomCompetenceController.text;
-
-    print("AAAAAAAAAAA");
+    
     print(firstValue);
     var url = 'https://flagrant-amusements.000webhostapp.com/ajouteCompetence.php';
     var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
