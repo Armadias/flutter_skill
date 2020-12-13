@@ -39,7 +39,8 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
         drawer: CustomDrawer(
           profil: widget.profil,
           statusString: widget.status,
-          isInListe: true,
+          isInListe: false,
+          isInCours: true,
           ),
           body: Stack(
             children: <Widget>[

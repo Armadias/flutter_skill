@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
+import 'package:skill_check/Ecran/Loaders/LoaderListeProf.dart';
 
 class CustomDrawer extends StatefulWidget{
 
@@ -90,17 +91,24 @@ class DrawerEtat extends State<CustomDrawer>{
         Visibility(
           visible: estEleve,
           child : Card(
-            child: ListTile(
-              leading: Icon(Icons.list),
-              title: Text('Liste de vos Professeurs'),
-              onTap: (){
-                if (!widget.isInListe){
-                  Navigator.of(context).pop();
+            child : ListTile(
+              leading : Icon(Icons.list),
+              title: Text("liste de vos professeurs"),
+              onTap: () {
+                if(!widget.isInListe)
+                {
+                  Navigator.of(context).push(MaterialPageRoute
+                  (builder: (BuildContext context) =>
+                  LoaderProf(
+                    profil: widget.profil,
+                    statusString: widget.statusString,
+                  )));
+                  Navigator.pop(context);
                 }
                 else
                 Navigator.pop(context);
-                    },
-            ),
+              },
+              )
           ),
           replacement:
           Card(
@@ -155,7 +163,7 @@ class DrawerEtat extends State<CustomDrawer>{
         leading: Icon(Icons.book),
         title: Text('Vos Cours'),
         onTap: (){
-          if (!widget.isInListe){
+          if (!widget.isInCours){
           Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) =>
               LoaderCompetencesEleve(
@@ -183,3 +191,26 @@ class DrawerEtat extends State<CustomDrawer>{
     );
   }
 }
+
+/*Card(
+            child: ListTile(
+              leading: Icon(Icons.list),
+              title: Text('Liste de vos Professeurs'),
+              onTap: (){
+                if (!widget.isInListe){
+                  print("coucou");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                      LoaderProf(
+                        profil: widget.profil,
+                        statusString: widget.statusString,)
+                      )
+                  );
+                  Navigator.of(context).pop();
+                }
+                else
+                Navigator.pop(context);
+                    },
+            ),
+          ),*/
