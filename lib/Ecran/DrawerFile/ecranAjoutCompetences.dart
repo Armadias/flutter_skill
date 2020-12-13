@@ -50,7 +50,41 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
     var url = 'https://flagrant-amusements.000webhostapp.com/ajouteCompetence.php';
     var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
     var response = await http.post(url, body: json.encode(data));
-    //var message = jsonDecode(response.body);
+    print(response);
+    var message = jsonDecode(response.body);
+
+    if(message == '-1'){
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Erreur, la compétence doit déjà exister..."),
+          actions: <Widget>[
+            FlatButton(
+            child: Text("OK"),
+            onPressed: () { Navigator.of(context).pop(); },
+            ),
+          ],
+        );
+      },
+      );
+    }
+    else{
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("La compétence à été créée \nElle a aussi été ajoutée à tous les élèves du cours"),
+          actions: <Widget>[
+            FlatButton(
+            child: Text("OK"),
+            onPressed: () { Navigator.of(context).pop(); },
+            ),
+          ],
+        );
+      },
+      );  
+    }
 
     if(response.statusCode == 200){
     setState(() {
