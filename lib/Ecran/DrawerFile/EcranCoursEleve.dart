@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/Competences.dart';
 
@@ -116,6 +117,11 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
 
   Future sendData(int id , bool valide) async
   {
+      Flushbar(
+      title: "Envoi des données en cours...",
+      message: "ne fermez pas cette fenêtre",
+      duration: Duration(seconds: 1),
+    )..show(context);
     var url = 'https://flagrant-amusements.000webhostapp.com/validation.php';
  
   // Store all data with Param Name.
@@ -143,5 +149,12 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
       );
     },
     );
+
+        else
+    Flushbar(
+      title: "Donnée evoyée!",
+      message: "Merci d'avoir patienté",
+      duration: Duration(seconds: 2),
+    )..show(context);
   }
 }

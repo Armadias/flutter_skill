@@ -29,6 +29,7 @@ dependencies:
   progress_dialog: ^1.2.4
   flutter_staggered_animations: "^0.1.2"
   image_picker: ^0.6.7+15
+  flushbar: ^1.10.4
 
 dev_dependencies:
   flutter_test:

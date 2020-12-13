@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranListe.dart';
@@ -25,7 +26,9 @@ class EcranCompetences extends StatefulWidget {
 
 class EcranCompetencesEtat extends State<EcranCompetences> {
 
-  bool loading = false;
+  GlobalKey<ScaffoldState> _key = new GlobalKey<ScaffoldState>();
+
+  SnackBar snak;
 
 
 Future valideComp(int competencesIdcompetences, int utilisateurId) async {
@@ -42,12 +45,28 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
   @override 
   Widget build(BuildContext context)
   { 
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                      EcranListe(
+                        profil: widget.profil,
+                        statusString: widget.statusString,
+                        message: widget.listEleve
+                      )
+                    )
+                  );
+                },
+              );
+            },
+          ),
           title: Text(
-            'cours de ' + widget.eleve,
+            'Cours de ' + widget.eleve,
             style: kLabelStyle,
           ),
         ),
@@ -57,7 +76,7 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
               constructeurListeCours(),
           ],
         ) 
-      )
+      
     );
   }   
 
@@ -113,6 +132,7 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
                 setState(() {
                 });
                 sendData(widget.cours[i].comp[index].id, widget.cours[i].comp[index].validiteE);
+
             },
             title: new Text(
               widget.cours[i].comp[index].description,
@@ -128,6 +148,12 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
 
   Future sendData(int id , bool valide) async
   {
+
+    Flushbar(
+      title: "Envoi des données en cours...",
+      message: "ne fermez pas cette fenêtre",
+      duration: Duration(seconds: 1),
+    )..show(context);
     var url = 'https://flagrant-amusements.000webhostapp.com/validation.php';
  
   // Store all data with Param Name.
@@ -155,5 +181,11 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
       );
     },
     );
+    else
+    Flushbar(
+      title: "Donnée evoyée!",
+      message: "Merci d'avoir patienté",
+      duration: Duration(seconds: 2),
+    )..show(context);
   }
 }
