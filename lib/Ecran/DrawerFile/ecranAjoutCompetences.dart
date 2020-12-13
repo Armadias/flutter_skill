@@ -10,8 +10,9 @@ import 'package:skill_check/Utilitaires/drawer.dart';
 class EcranAjoutCompetences extends StatefulWidget {
   final Map<String, dynamic> profil;
   final String statusString;
+  final List<String> listCours;
 
-  EcranAjoutCompetences({Key key, @required  this.profil, this.statusString}) : super(key: key);
+  EcranAjoutCompetences({Key key, @required  this.profil, this.statusString, this.listCours}) : super(key: key);
 
   @override
   EcranAjoutCompetencesEtat createState() => EcranAjoutCompetencesEtat();
@@ -20,6 +21,16 @@ class EcranAjoutCompetences extends StatefulWidget {
 class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
 
   bool visible = false;
+
+  String firstValue;
+
+  @override
+  void initState() {
+    firstValue = widget.listCours.first;
+    super.initState();
+  }
+
+  List<String> dropList;
 
   final coursController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -34,10 +45,11 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
     String descrCompetence = descriptionController.text;
     String nomCompetence = nomCompetenceController.text;
 
+    print("AAAAAAAAAAA");
+    print(firstValue);
     var url = 'https://flagrant-amusements.000webhostapp.com/ajouteCompetence.php';
-    var data = {'nomCours': nomCours, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
+    var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
     var response = await http.post(url, body: json.encode(data));
-    print(response);
     //var message = jsonDecode(response.body);
 
     if(response.statusCode == 200){
@@ -50,38 +62,27 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
   bool rappel = false;
   
   Widget constructeurCours(){
-    return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                   children: <Widget>[
-                    Text(
-                      'Nom du Cours',
-                      style: kLabelStyle,
-                    ),
-                  SizedBox(height: 10.0),
-                  Container(alignment: Alignment.centerLeft,
-                  decoration: kBoxDecorationStyle,
-                  height: 60.0,
-                  child: TextField(
-                    controller:coursController,
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: Colors.white,
-                       fontFamily: 'Kufam',
-                        fontSize: 13.0),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(top: 18.0),
-                      prefixIcon: Icon(
-                        Icons.adjust, 
-                        color: Colors.white,
-                      ),
-                      hintText: 'Entrez le nom de cours ici',
-                      hintStyle: kHintTextStyle,
-                    ),
-                    ),
-                  ),
-                 ],
-                );
+
+      final dropdownMenuOptions = widget.listCours
+      .map((String item) =>
+      new DropdownMenuItem<String>(value : item, child : new Text(item , style: klistItem,))
+      ).toList();
+
+    return Container(
+      color: Colors.cyan[300],
+      child : new Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor : Colors.cyan[300]
+        ), 
+        child: DropdownButton<String>(
+          value : firstValue,
+          items: dropdownMenuOptions,
+          onChanged: (s) {
+            setState(() {
+              firstValue = s;
+            });
+          },
+        )));
   }
 
     Widget constructeurNomCompetence(){
@@ -135,7 +136,6 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     controller: descriptionController,
-                    //obscureText: true,
                     style: TextStyle(
                       color: Colors.white,
                        fontFamily: 'Kufam',
@@ -180,7 +180,7 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text('Liste de vos professeurs',
+        title: Text('Ajout de compétences',
         style: kLabelStyle,
         ),
       ),
@@ -190,7 +190,8 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
         isInCours: false,
         isInListe: false,
         ),
-      body: Stack(children: <Widget>[
+      body: Stack(
+        children: <Widget>[
         colorGradient,
         Container(
           height: double.infinity,

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:skill_check/Ecran/Loaders/LoaderAjoutCompetences.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
@@ -188,7 +189,7 @@ class DrawerEtat extends State<CustomDrawer>{
         onTap: (){
           Navigator.pushReplacement(
             context,
-              MaterialPageRoute(builder: (context) => EcranAjoutCompetences(
+              MaterialPageRoute(builder: (context) => LoaderAjoutCompetences(
                 statusString: widget.statusString,
                 profil: widget.profil,
               )
