@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranListe.dart';
 import 'package:skill_check/Utilitaires/Competences.dart';
 
@@ -13,23 +12,19 @@ import 'package:http/http.dart' as http;
 class EcranCompetences extends StatefulWidget {
   
   final String eleve;
+  final int idEleve;
   final List<dynamic> listEleve;
   final List<Cours> cours;
   final Map<String, dynamic> profil;
   final String statusString;
 
-  EcranCompetences({Key key, @required this.eleve, this.cours, this.profil, this.statusString, this.listEleve}) : super(key: key);
+  EcranCompetences({Key key, @required this.idEleve, this.eleve, this.cours, this.profil, this.statusString, this.listEleve}) : super(key: key);
 
   @override
   EcranCompetencesEtat createState() => EcranCompetencesEtat();
   }
 
 class EcranCompetencesEtat extends State<EcranCompetences> {
-
-  GlobalKey<ScaffoldState> _key = new GlobalKey<ScaffoldState>();
-
-  SnackBar snak;
-
 
 Future valideComp(int competencesIdcompetences, int utilisateurId) async {
   // SERVER LOGIN API URL
@@ -131,7 +126,7 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
                 widget.cours[i].comp[index].validiteP = false;
                 setState(() {
                 });
-                sendData(widget.cours[i].comp[index].id, widget.cours[i].comp[index].validiteE);
+                sendData(widget.cours[i].comp[index].id, widget.cours[i].comp[index].validiteP);
 
             },
             title: new Text(
@@ -158,9 +153,10 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
  
   // Store all data with Param Name.
 
-  print(valide);
 
-  var data = {'idComp': id, 'id' : int.parse(widget.profil["id"]), 'valide' : valide, 'status' : widget.profil["status"]};
+  var data = {'idComp': id, 'id' : widget.idEleve, 'valide' : valide, 'status' : widget.profil["status"]};
+
+  print(data);
  
   // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));

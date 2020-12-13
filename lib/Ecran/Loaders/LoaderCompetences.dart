@@ -156,6 +156,8 @@ var mess = jsonDecode(response.body);
   Navigator.of(context).pushReplacement(MaterialPageRoute(
     builder: (BuildContext context) =>
     EcranCompetences(
+
+      idEleve: widget.idEleve,
       eleve : widget.eleve,
       cours : coursList,
       profil : widget.profil,
