@@ -20,9 +20,12 @@ if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 } 
  
+    $utilisateurid = $obj['utilisateurid'];
+    
 	// Creating SQL command to fetch all records from Student_Data Table.
-	$sql = "SELECT * FROM Student_Data";
-	 
+	//$sql = "SELECT * FROM utilisateur_has_utilisateur WHERE utilisateur.id = '$id'";
+	$sql = "SELECT * FROM utilisateur, utilisateur_has_utilisateur WHERE utilisateur_has_utilisateur.utilisateur_id = $utilisateurid";
+	
 	$result = $conn->query($sql);
  
 if ($result->num_rows >0) {

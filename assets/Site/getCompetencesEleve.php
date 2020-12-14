@@ -5,11 +5,11 @@
  $id = $obj['id'];
  
  
-    $Query =" SELECT uhc.utilisateurId, uhc.competencesIdcompetences, c.nomCours, c.descriptionCours, comp.descriptionCompetence, uhc.valideEleve, uhc.valideProf 
-    FROM `cours` c, `utilisateur_has_competences` uhc, `competences` comp 
-    WHERE uhc.utilisateurId = '$id'
-    AND c.idCours = comp.cours_idcours 
-    AND uhc.competencesIdcompetences = comp.idcompetences";
+ $Query =" SELECT uhc.utilisateurId, uhc.competencesIdcompetences, c.nomCours, c.descriptionCours, comp.descriptionCompetence, uhc.valideEleve, uhc.valideProf, comp.nom 
+FROM `cours` c, `utilisateur_has_competences` uhc, `competences` comp 
+WHERE uhc.utilisateurId = '$id'
+AND c.idCours = comp.cours_idcours 
+AND uhc.competencesIdcompetences = comp.idcompetences";
 
 $result = mysqli_query($con,$Query);
  

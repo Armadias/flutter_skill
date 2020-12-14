@@ -26,7 +26,6 @@ if(isset($check)){
         echo json_encode('-1');
     }
     else{
-        echo json_encode('1');
    
         if(mysqli_query($con,$QueryInsert)){
         
@@ -65,6 +64,7 @@ if(isset($check)){
                 
             mysqli_query($con,$queryInsertEleve);
 		    }
+        echo json_encode('1');
         }
     }
 }

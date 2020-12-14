@@ -13,9 +13,9 @@
 
  $insertQuery = "UPDATE utilisateur SET image = '$image' WHERE id = '$id'";
 
-/*if(mysqli_query($con,$insertQuery))
+if(mysqli_query($con,$insertQuery))
     echo json_encode('1');
 else 
     echo json_encode('-1');
-*/
+
  ?>

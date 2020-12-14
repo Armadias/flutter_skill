@@ -7,9 +7,8 @@
  
  //Applying User Login query with email and password.
  //$loginQuery = "select professeur.*, eleve.* from professeur, eleve where email = '$email' and motDePasse = '$motDePasse' ";
- $Query =" SELECT DISTINCT c.nomCours 
-            FROM utilisateur u, utilisateur_has_cours uhc, cours c 
-            WHERE uhc.utilisateur_id = 8 AND c.idcours = uhc.cours_idcours 
+ $Query =" SELECT DISTINCT nomCours 
+            FROM cours
  ";
 
 $result = mysqli_query($con,$Query);

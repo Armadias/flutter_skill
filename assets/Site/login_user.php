@@ -11,13 +11,10 @@
  $nomPrenom = $obj['nomPrenom'];
  
  //Applying User Login query with email and password.
- //$loginQuery = "select professeur.*, eleve.* from professeur, eleve where email = '$email' and motDePasse = '$motDePasse' ";
  $loginQuery = "select * from utilisateur where email = '$email' and motDePasse = '$motDePasse'";
- //$loginQuery2 = "select * from professeur where email = '$email' and motDePasse = '$motDePasse' ";
  
  // Executing SQL Query.
  $check = mysqli_fetch_array(mysqli_query($con,$loginQuery));
- //$check2 = mysqli_fetch_array(mysqli_query($con,$loginQuery2));
  
 	if(isset($check)){
 		
@@ -27,7 +24,7 @@
 	 
 	 else{
 	 
-		echo json_encode(-1);
+		echo json_encode('-1');
 	 
      }
      

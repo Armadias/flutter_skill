@@ -95,6 +95,9 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
               widget.cours[index].nom,
               style: kLabelStyle,
             ),
+            subtitle: Text(
+              widget.cours[index].description,
+              style: klistItem,),
             children: <Widget>[
               Divider(thickness: 2),
               constructeurListeCompetences(index)
