@@ -353,9 +353,7 @@ class EcranConnectionEtat extends State<EcranConnection>{
     }
   }
   else
-  {
     popdial(context, "vous n'êtes pas connecté à internet!");
-  }
  
 }
 
