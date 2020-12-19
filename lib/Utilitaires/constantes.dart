@@ -69,17 +69,34 @@ final colorGradient = Container(
 progressdial(BuildContext context, String message)
 {
   ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-    pr.style(
-  message: 'Connection en cours...',
-  borderRadius: 20.0,
-  backgroundColor: Colors.white,
-  progressWidget: CircularProgressIndicator(),
-  elevation: 50.0,
-  insetAnimCurve: Curves.easeInOut,
-  messageTextStyle: TextStyle(
+  pr.style(
+    message: 'Connection en cours...',
+    borderRadius: 20.0,
+    backgroundColor: Colors.white,
+    progressWidget: CircularProgressIndicator(),
+    elevation: 50.0,
+    insetAnimCurve: Curves.easeInOut,
+    messageTextStyle: TextStyle(
      color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
   );
 
   return pr;
 }
 
+popdial(BuildContext context, String message)
+{
+  return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(message),
+            actions: <Widget>[
+              FlatButton(
+              child: Text("Ok"),
+              onPressed: () { Navigator.of(context).pop(); },
+              ),
+            ],
+          );
+        },
+      );
+}

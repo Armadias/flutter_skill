@@ -8,8 +8,6 @@
  // Getting Password from JSON $obj array and store into $password.
  $motDePasse = $obj['motDePasse'];
  
- $nomPrenom = $obj['nomPrenom'];
- 
  //Applying User Login query with email and password.
  $loginQuery = "select * from utilisateur where email = '$email' and motDePasse = '$motDePasse'";
  
