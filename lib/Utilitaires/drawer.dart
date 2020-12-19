@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderAjoutCompetences.dart';
@@ -7,6 +8,8 @@ import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListeProf.dart';
+import 'package:skill_check/Ecran/ecranConnection.dart';
+import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/liens.dart';
 
 class CustomDrawer extends StatefulWidget{
@@ -28,8 +31,10 @@ class DrawerEtat extends State<CustomDrawer>{
 
   @override
   Widget build(BuildContext context) {
+    connect();
     var random = new Random();
     String r = random.nextInt(100).toString();
+
 
     widget.profil["status"] == "0"? estEleve = true : estEleve = false;
     widget.profil["image"] == "-1"? aImage = false : aImage = true;
@@ -133,7 +138,7 @@ class DrawerEtat extends State<CustomDrawer>{
             ),
           ),
         ),
-        //Badges
+        //Badges pas complété
         Visibility(
           visible: false,
         child : Card(
@@ -197,5 +202,19 @@ class DrawerEtat extends State<CustomDrawer>{
         },
       ),
     );
+  }
+
+  Future connect() async
+  {
+    var conect = await Connectivity().checkConnectivity();
+
+    if (conect != ConnectivityResult.none)
+    {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => EcranConnection()
+        )
+      );  
+    }
   }
 }

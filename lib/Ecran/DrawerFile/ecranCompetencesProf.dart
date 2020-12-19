@@ -27,18 +27,11 @@ class EcranCompetences extends StatefulWidget {
 
 class EcranCompetencesEtat extends State<EcranCompetences> {
 
-Future valideComp(int competencesIdcompetences, int utilisateurId) async {
-  // SERVER LOGIN API URL
+/*Future valideComp(int competencesIdcompetences, int utilisateurId) async {
   var url = validecompprof;
- 
-  // Store all data with Param Name.
   var data = {'idComp': competencesIdcompetences, 'id' : utilisateurId};
- 
-  // Starting Web API Call.
   await http.post(url, body: json.encode(data));
-
-  
-}
+}*/
 
   @override 
   Widget build(BuildContext context)
@@ -159,7 +152,7 @@ Future valideComp(int competencesIdcompetences, int utilisateurId) async {
       message: "ne fermez pas cette fenêtre",
       duration: Duration(seconds: 1),
     )..show(context);
-    var url = 'https://flagrant-amusements.000webhostapp.com/validation.php';
+    var url = validation;
  
   // Store all data with Param Name.
 

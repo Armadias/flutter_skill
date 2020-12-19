@@ -1,6 +1,7 @@
 //import 'dart:async';
 import 'dart:convert';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
@@ -22,8 +23,6 @@ class EcranAjoutCompetences extends StatefulWidget {
 
 class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
 
-  bool visible = false;
-
   String firstValue;
 
   @override
@@ -39,96 +38,38 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
 	final nomCompetenceController = TextEditingController();
 
   Future ajoutCompetence() async {
-    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-    pr.style(
-  message: 'ajout de la compétence en cours...',
-  borderRadius: 20.0,
-  backgroundColor: Colors.white,
-  progressWidget: CircularProgressIndicator(),
-  elevation: 50.0,
-  insetAnimCurve: Curves.easeInOut,
-  messageTextStyle: TextStyle(
-     color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
-  );
-    setState(() {
-      visible = true;
-    });
 
-    String descrCompetence = descriptionController.text;
-    String nomCompetence = nomCompetenceController.text;
+    var conect = await Connectivity().checkConnectivity();
 
-    if (descrCompetence.isEmpty | nomCompetence.isEmpty)
-    {
-      showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Erreur, vos champs sont vides..."),
-          actions: <Widget>[
-            FlatButton(
-            child: Text("OK"),
-            onPressed: () { Navigator.of(context).pop(); },
-            ),
-          ],
-        );
-      },
-      );
+    if (conect != ConnectivityResult.none){
+      ProgressDialog pr = progressdial(context, 'ajout de la compétence en cours...');
+
+      String descrCompetence = descriptionController.text;
+      String nomCompetence = nomCompetenceController.text;
+
+      if (descrCompetence.isEmpty | nomCompetence.isEmpty)
+        popdial(context, "Erreur, vos champs sont vides...");
+      else{
+        await pr.show();
+        var url = ajoutcomp;
+        var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
+        print(data);
+        var response = await http.post(url, body: json.encode(data));
+
+        print(response);
+        var message = jsonDecode(response.body);
+
+        pr.hide();
+
+        if(message == '-1')
+          popdial(context, "Erreur, la compétence doit déjà exister...");
+        else
+          popdial(context, "La compétence à été créée \nElle a aussi été ajoutée à tous les élèves du cours");
+      }
     }
-    else{
-    await pr.show();
-    var url = ajoutcomp;
-    var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
-    print(data);
-    var response = await http.post(url, body: json.encode(data));
-
-    print(response);
-    var message = jsonDecode(response.body);
-
-    pr.hide();
-
-    if(message == '-1'){
-      showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Erreur, la compétence doit déjà exister..."),
-          actions: <Widget>[
-            FlatButton(
-            child: Text("OK"),
-            onPressed: () { Navigator.of(context).pop(); },
-            ),
-          ],
-        );
-      },
-      );
-    }
-    else{
-      showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("La compétence à été créée \nElle a aussi été ajoutée à tous les élèves du cours"),
-          actions: <Widget>[
-            FlatButton(
-            child: Text("OK"),
-            onPressed: () { Navigator.of(context).pop(); },
-            ),
-          ],
-        );
-      },
-      );  
-    }
-
-    if(response.statusCode == 200){
-    setState(() {
-      visible = false;
-    });
-    }
-
-    }
+    else
+      popdial(context, "vous n'êtes pas connecté à internet!");
   }
-
-  bool rappel = false;
   
   Widget constructeurCours(){
 
@@ -151,7 +92,9 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
               firstValue = s;
             });
           },
-        )));
+        )
+      )
+    );
   }
 
     Widget constructeurNomCompetence(){
@@ -299,30 +242,4 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
   );
  }
 
-}
-  
-class SlideRightRoute extends PageRouteBuilder {
-  final Widget page;
-  SlideRightRoute({this.page})
-      : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(-1, 0),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: child,
-              ),
-        );
 }
