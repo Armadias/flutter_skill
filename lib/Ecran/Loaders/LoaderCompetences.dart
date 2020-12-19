@@ -105,13 +105,8 @@ void initState()
 Future fetch() async
 {
   int eleve = widget.idEleve;
-  // SERVER LOGIN API URL
   var url = compelev;
-
-  // Store all data with Param Name.
   var data = {'id' : eleve};
-
-  // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
 
 var mess = jsonDecode(response.body);

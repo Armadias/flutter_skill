@@ -100,16 +100,11 @@ void initState()
 @protected
 Future fetch() async
 {
-  // SERVER LOGIN API URL
+
   var url = getcours;
-
-  // Store all data with Param Name.
   var data = {'id' : widget.profil["id"]};
-
-  // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
-
-var mess = jsonDecode(response.body);
+  var mess = jsonDecode(response.body);
 
     List<String> coursList = new List<String>();
   if (mess != -1) 

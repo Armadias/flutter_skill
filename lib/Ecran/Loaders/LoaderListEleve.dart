@@ -99,15 +99,9 @@ void initState()
 Future fetch() async
 {
   int id = int.parse(widget.profil["id"]);
-  // SERVER LOGIN API URL
   var url = listeuser;
-
-  // Store all data with Param Name.
   var data = {'id' : id};
-
-  // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
-
   var mess = jsonDecode(response.body);
   
   if (mess != -1)
