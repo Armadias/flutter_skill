@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -305,21 +306,14 @@ class ProfilModifierEtat extends State<ProfileModifier>
 
   Future uploaderImage() async
   {
-    if (_image!= null){
-    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-      pr.style(
-      message: 'Modifications en cours...',
-      borderRadius: 20.0,
-      backgroundColor: Colors.white,
-      progressWidget: CircularProgressIndicator(),
-      elevation: 50.0,
-      insetAnimCurve: Curves.easeInOut,
-      messageTextStyle: TextStyle(
-        color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600
-        )
-      );
+    var conect = await Connectivity().checkConnectivity();
+
+    // vérification de la connection du téléphone
+    if (conect != ConnectivityResult.none){
+      if (_image!= null){
+        ProgressDialog pr = progressdial(context, 'Modifications en cours...');
         await pr.show();
-        var url = 'https://flagrant-amusements.000webhostapp.com/imageUploader.php';
+        var url = imageupload;
 
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
@@ -329,121 +323,94 @@ class ProfilModifierEtat extends State<ProfileModifier>
         request.files.add(img);
 
         var response = await request.send();
+
         await pr.hide();
         if (response.statusCode == 200)
-        {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: new Text("Image chargée!"),
-                actions: <Widget>[
-                  FlatButton(
-                  child: Text("Ok"),
-                  onPressed: () { Navigator.of(context).pop(); },
-                  ),
-                ],
-              );
-            },
-          );
-        }
-        else showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: new Text("erreur de chargement d'image"),
-                actions: <Widget>[
-                  FlatButton(
-                  child: Text("Ok"),
-                  onPressed: () { Navigator.of(context).pop(); },
-                  ),
-                ],
-              );
-            },
-          );
+          popdial(context, "image chargée!");
+        else 
+          popdial(context, "erreur de chargement d'image");
+      }
+      else
+        popdial(context, "problème rencontré lors de la récupération de l'image dans votre dossier");
+    }
+    else
+      popdial(context, "vous n'êtes pas connecté à internet!");
   }
-}
   
   Future modifier() async
   {
-    String email = emailController.text;
-    String name = nameController.text;
+    var conect = await Connectivity().checkConnectivity();
 
-    if (email.isEmpty && name.isEmpty)
-      constructeurDialogue("Email et votre Nom et Prenom");
-    else if (email.isEmpty)
-      constructeurDialogue("Email");
-    else if (name.isEmpty)
-      constructeurDialogue("Nom et Prenom");
+    // vérification de la connection du téléphone
+    if (conect != ConnectivityResult.none){
+      String email = emailController.text;
+      String name = nameController.text;
 
-    else{
-      final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-      pr.style(
-      message: 'Modifications en cours...',
-      borderRadius: 20.0,
-      backgroundColor: Colors.white,
-      progressWidget: CircularProgressIndicator(),
-      elevation: 50.0,
-      insetAnimCurve: Curves.easeInOut,
-      messageTextStyle: TextStyle(
-        color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600
-        )
-      );
-    await pr.show();
-    var url = profilmodif;
+      if (email.isEmpty && name.isEmpty)
+        constructeurDialogue("Email et votre Nom et Prenom");
+      else if (email.isEmpty)
+        constructeurDialogue("Email");
+      else if (name.isEmpty)
+        constructeurDialogue("Nom et Prenom");
 
-    int id = int.parse(widget.profil['id']);
-    var data = {'email': email, 'nomPrenom' : name, 'id' : id};
-  
-    var response = await http.post(url, body: json.encode(data));
-  
-    // Getting Server response into variable.
-    var message;
-    message = jsonDecode(response.body);
+      else{
+        final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+        pr.style(
+        message: 'Modifications en cours...',
+        borderRadius: 20.0,
+        backgroundColor: Colors.white,
+        progressWidget: CircularProgressIndicator(),
+        elevation: 50.0,
+        insetAnimCurve: Curves.easeInOut,
+        messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600
+          )
+        );
+      await pr.show();
+      var url = profilmodif;
 
-    await pr.hide();
+      int id = int.parse(widget.profil['id']);
+      var data = {'email': email, 'nomPrenom' : name, 'id' : id};
+    
+      var response = await http.post(url, body: json.encode(data));
+    
+      // Getting Server response into variable.
+      var message;
+      message = jsonDecode(response.body);
 
-    if (message == "1")
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("cet Email est déjà existant"),
-            actions: <Widget>[
-              FlatButton(
-              child: Text("Ok"),
-              onPressed: () { Navigator.of(context).pop(); },
-              ),
-            ],
-          );
-        },
-      );
-    else if(message != "-1")
-      {
-        Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => EcranProfil(
-                                                             status : widget.status,
-                                                             profil: message,
-                                                             )
-                                                          )
-      );        
+      await pr.hide();
+
+      if (message == "1")
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: new Text("cet Email est déjà existant"),
+              actions: <Widget>[
+                FlatButton(
+                child: Text("Ok"),
+                onPressed: () { Navigator.of(context).pop(); },
+                ),
+              ],
+            );
+          },
+        );
+      else if(message != "-1")
+        {
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EcranProfil(
+                                                              status : widget.status,
+                                                              profil: message,
+                                                              )
+                                                            )
+        );        
+      }
+      else
+        popdial(context, "Une erreur est survenue lors de la communication.");
+      }
     }
     else
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("Une erreur est survenue lors de la communication."),
-            actions: <Widget>[
-              FlatButton(
-              child: Text("Ok"),
-              onPressed: () { Navigator.of(context).pop(); },
-              ),
-            ],
-          );
-        },
-      );
-    }
+      popdial(context, "vous n'êtes pas connecté à internet!");
   }
 }

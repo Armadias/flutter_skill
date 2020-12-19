@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -42,22 +43,19 @@ class ModifMdpEtat extends State<ModifMdp>
             children: <Widget>[
               colorGradient,
               ListView(
-            children: <Widget>[
-              SizedBox(height : 100),
-              constructeurMdpActuel(),
-              SizedBox(height : 25),
-              Divider(thickness: 2,),
-              SizedBox(height : 25),
-              constructeurMdPNouveau(),
-              SizedBox(height: 40,),
-              constructeurMdpConfirmation(),
-              SizedBox(height : 30),
-              bouttonModifierCompte(),
-            ],
-
-            
-          ),
-
+                children: <Widget>[
+                  SizedBox(height : 100),
+                  constructeurMdpActuel(),
+                  SizedBox(height : 25),
+                  Divider(thickness: 2),
+                  SizedBox(height : 25),
+                  constructeurMdPNouveau(),
+                  SizedBox(height: 40),
+                  constructeurMdpConfirmation(),
+                  SizedBox(height : 30),
+                  bouttonModifierCompte(),
+                ],           
+              ),
             ],
           )         
     );
@@ -95,7 +93,6 @@ class ModifMdpEtat extends State<ModifMdp>
                 ),
                 hintText: 'Entrez votre mot de passe actuel ici',
                 hintStyle: kHintTextStyle,
-                //errorText: valide ? "votre entrée est vide" : null
             ),
           ),
         ),
@@ -137,7 +134,6 @@ class ModifMdpEtat extends State<ModifMdp>
                 ),
                 hintText: 'Entrez votre nouveau mot de passe ici',
                 hintStyle: kHintTextStyle,
-                //errorText: valide ? "votre entrée est vide" : null
             ),
           ),
         ),
@@ -179,7 +175,6 @@ class ModifMdpEtat extends State<ModifMdp>
                 ),
                 hintText: 'Confirmez votre mot de passe ici',
                 hintStyle: kHintTextStyle,
-                //errorText: valide ? "votre entrée est vide" : null
             ),
           ),
         ),
@@ -213,135 +208,73 @@ class ModifMdpEtat extends State<ModifMdp>
     );
   }
 
-  void constructeurDialogue()
-  {
-    showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("vos champs sont vide, veuillez les remplir"),
-        actions: <Widget>[
-          FlatButton(
-           child: Text("Ok"),
-           onPressed: () { Navigator.of(context).pop(); },
-           ),
-        ],
-      );
-    },
-    );
-  }
+
   Future modifier() async
   {
-    String mdpActuel = mdpActuelControlleur.text;
-    String mdpNouveau = mdpNouveauControlleur.text;
-    String mdpConfirmation = mdpConfirmationControlleur.text;
 
-    if (mdpActuel.isEmpty | mdpNouveau.isEmpty | mdpConfirmation.isEmpty)
-      constructeurDialogue();
-    else if(widget.profil["motDePasse"] != mdpActuel)
-    {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("votre mot de passe actuel est erroné"),
-            actions: <Widget>[
-              FlatButton(
-              child: Text("Ok"),
-              onPressed: () { Navigator.of(context).pop(); },
-              ),
-            ],
-          );
-        },
-      );
-    }
-    else if(mdpNouveau != mdpConfirmation)
-    {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("votre nouveau mot de passe n'est pas confirmé"),
-            actions: <Widget>[
-              FlatButton(
-              child: Text("Ok"),
-              onPressed: () { Navigator.of(context).pop(); },
-              ),
-            ],
-          );
-        },
-      );
-    }
-    else{
-      final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-      pr.style(
-      message: 'Modifications en cours...',
-      borderRadius: 20.0,
-      backgroundColor: Colors.white,
-      progressWidget: CircularProgressIndicator(),
-      elevation: 50.0,
-      insetAnimCurve: Curves.easeInOut,
-      messageTextStyle: TextStyle(
-        color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600
-        )
-      );
-    await pr.show();
-    var url = mdpmodif;
+    var conect = await Connectivity().checkConnectivity();
 
-    int id = int.parse(widget.profil['id']);
-    var data = {'motDePasse': mdpNouveau, 'id' : id};
-  
-    var response = await http.post(url, body: json.encode(data));
-  
-    // Getting Server response into variable.
-    var message;
-    message = jsonDecode(response.body);
+    // vérification de la connection du téléphone
+    if (conect != ConnectivityResult.none){
+      String mdpActuel = mdpActuelControlleur.text;
+      String mdpNouveau = mdpNouveauControlleur.text;
+      String mdpConfirmation = mdpConfirmationControlleur.text;
 
-    await pr.hide();
+      if (mdpActuel.isEmpty | mdpNouveau.isEmpty | mdpConfirmation.isEmpty)
+        popdial(context, "vos champs sont vide, veuillez les remplir");
+      else if(widget.profil["motDePasse"] != mdpActuel)
+        popdial(context, "votre mot de passe actuel est erroné");
+      else if(mdpNouveau != mdpConfirmation)
+        popdial(context, "votre nouveau mot de passe n'est pas confirmé");
+      else{
+        ProgressDialog pr = progressdial(context, 'Modifications en cours...');
+        await pr.show();
+        var url = mdpmodif;
 
-    if(message != "-1")
-      {
-        showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("Mot de passe changé!"),
-            actions: <Widget>[
-              FlatButton(
-              child: Text("Ok"),
-              onPressed: () 
-              { 
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => EcranProfil(
-                                                             status : widget.status,
-                                                             profil: message,
+        int id = int.parse(widget.profil['id']);
+        var data = {'motDePasse': mdpNouveau, 'id' : id};
+      
+        var response = await http.post(url, body: json.encode(data));
+      
+        // Getting Server response into variable.
+        var message;
+        message = jsonDecode(response.body);
+
+        await pr.hide();
+
+        if(message != "-1")
+        {
+            showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Mot de passe changé!"),
+                actions: <Widget>[
+                  FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () 
+                  { 
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => 
+                      EcranProfil(
+                        status : widget.status,
+                        profil: message,
                       )
-                    )
-                  );      
-                },
-              ),
-            ],
-          );
-        },
-      );
-  
+                      )
+                    );      
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+      else
+        popdial(context, "Une erreur est survenue lors de la communication avec le serveur.");
+      }
     }
     else
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("Une erreur est survenue lors de la communication avec le serveur."),
-            actions: <Widget>[
-              FlatButton(
-              child: Text("Ok"),
-              onPressed: () { Navigator.of(context).pop(); },
-              ),
-            ],
-          );
-        },
-      );
-    }
+      popdial(context, "vous n'êtes pas connecté à internet!");
   }
 }

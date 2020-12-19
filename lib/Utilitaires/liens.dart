@@ -21,3 +21,5 @@ final validecompprof = 'https://flagrant-amusements.000webhostapp.com/valideComp
 final validation = 'https://flagrant-amusements.000webhostapp.com/validation.php';
 
 final netwImage = "https://flagrant-amusements.000webhostapp.com/image/";
+
+final imageupload = 'https://flagrant-amusements.000webhostapp.com/imageUploader.php';

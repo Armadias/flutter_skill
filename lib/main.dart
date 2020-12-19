@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App Projet',
+      title: 'SkillCHecker',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.cyan[700]), 
