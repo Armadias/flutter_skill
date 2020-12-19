@@ -1,6 +1,6 @@
-# skill_check
+# SkillChecker
 
-A new Flutter project.
+Cette application mobile connectée permet de 
 
 ## Getting Started
 
