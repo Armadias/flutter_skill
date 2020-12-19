@@ -27,12 +27,6 @@ class EcranCompetences extends StatefulWidget {
 
 class EcranCompetencesEtat extends State<EcranCompetences> {
 
-/*Future valideComp(int competencesIdcompetences, int utilisateurId) async {
-  var url = validecompprof;
-  var data = {'idComp': competencesIdcompetences, 'id' : utilisateurId};
-  await http.post(url, body: json.encode(data));
-}*/
-
   @override 
   Widget build(BuildContext context)
   { 
@@ -152,33 +146,14 @@ class EcranCompetencesEtat extends State<EcranCompetences> {
       message: "ne fermez pas cette fenêtre",
       duration: Duration(seconds: 1),
     )..show(context);
-    var url = validation;
- 
-  // Store all data with Param Name.
 
-
+  var url = validation;
   var data = {'idComp': id, 'id' : widget.idEleve, 'valide' : valide, 'status' : widget.profil["status"]};
-
- 
-  // Starting Web API Call.
   var response = await http.post(url, body: json.encode(data));
   var mess = jsonDecode(response.body);
 
   if (mess =='-1')
-        showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("ERREUR DE COMMUNICATION A LA BASE DE DONNEE"),
-        actions: <Widget>[
-          FlatButton(
-          child: Text("Ok"),
-          onPressed: () { Navigator.of(context).pop(); },
-          ),
-        ],
-      );
-    },
-    );
+        popdial(context, "ERREUR DE COMMUNICATION A LA BASE DE DONNEE");
     else
     Flushbar(
       title: "Donnée evoyée!",

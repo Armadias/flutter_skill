@@ -144,20 +144,7 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
   var mess = jsonDecode(response.body);
 
   if (mess =='-1')
-        showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: new Text("ERREUR DE COMMUNICATION A LA BASE DE DONNEE"),
-        actions: <Widget>[
-          FlatButton(
-          child: Text("Ok"),
-          onPressed: () { Navigator.of(context).pop(); },
-          ),
-        ],
-      );
-    },
-    );
+        popdial(context, "ERREUR D'ENVOI DES DONNEES");
 
         else
     Flushbar(
