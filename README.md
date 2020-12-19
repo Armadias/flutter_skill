@@ -1,6 +1,6 @@
 # SkillChecker
 
-Cette application mobile connectée permet de 
+Application pour le TP d'informatique master 1
 
 ## Getting Started
 
