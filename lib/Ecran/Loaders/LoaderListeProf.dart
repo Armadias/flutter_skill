@@ -6,6 +6,7 @@ import 'package:skill_check/Ecran/DrawerFile/ecranListeProf.dart';
 import 'dart:convert';
 
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
+import 'package:skill_check/Utilitaires/liens.dart';
 
 class LoaderProf extends StatefulWidget {
 
@@ -99,7 +100,7 @@ Future fetch() async
 {
   int id = int.parse(widget.profil["id"]);
   // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/getListeUserProf.php';
+  var url = listeprof;
 
   // Store all data with Param Name.
   var data = {'id' : id};

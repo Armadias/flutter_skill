@@ -8,6 +8,7 @@ import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:skill_check/Utilitaires/drawer.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:skill_check/Utilitaires/liens.dart';
 
 class EcranCoursEleve extends StatefulWidget {
 
@@ -130,7 +131,7 @@ class EcranCoursEleveEtat extends State<EcranCoursEleve>
       message: "ne fermez pas cette fenêtre",
       duration: Duration(seconds: 1),
     )..show(context);
-    var url = 'https://flagrant-amusements.000webhostapp.com/validation.php';
+    var url = validation;
  
   // Store all data with Param Name.
 

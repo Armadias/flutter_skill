@@ -7,6 +7,7 @@ import 'package:skill_check/Ecran/Loaders/LoaderCompetencesEleve.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Ecran/Loaders/LoaderListeProf.dart';
+import 'package:skill_check/Utilitaires/liens.dart';
 
 class CustomDrawer extends StatefulWidget{
 
@@ -66,7 +67,7 @@ class DrawerEtat extends State<CustomDrawer>{
                 ),
             currentAccountPicture: CircleAvatar(
               backgroundImage:  NetworkImage(
-              "https://flagrant-amusements.000webhostapp.com/image/" + widget.profil["image"] + "?v=" + r,
+              netwImage + widget.profil["image"] + "?v=" + r,
                 ),
               ),
             ),

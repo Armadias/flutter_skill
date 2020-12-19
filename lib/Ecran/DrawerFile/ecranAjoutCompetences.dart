@@ -6,6 +6,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:skill_check/Utilitaires/drawer.dart';
+import 'package:skill_check/Utilitaires/liens.dart';
 
 
 class EcranAjoutCompetences extends StatefulWidget {
@@ -75,7 +76,7 @@ class EcranAjoutCompetencesEtat extends State<EcranAjoutCompetences>{
     }
     else{
     await pr.show();
-    var url = 'https://flagrant-amusements.000webhostapp.com/ajouteCompetence.php';
+    var url = ajoutcomp;
     var data = {'nomCours': firstValue, 'descrCompetence': descrCompetence, 'nomCompetence': nomCompetence};
     print(data);
     var response = await http.post(url, body: json.encode(data));

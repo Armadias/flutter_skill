@@ -6,6 +6,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
+import 'package:skill_check/Utilitaires/liens.dart';
 
 class ModifMdp extends StatefulWidget
 {
@@ -285,7 +286,7 @@ class ModifMdpEtat extends State<ModifMdp>
         )
       );
     await pr.show();
-    var url = 'https://flagrant-amusements.000webhostapp.com/modifyerpass.php';
+    var url = mdpmodif;
 
     int id = int.parse(widget.profil['id']);
     var data = {'motDePasse': mdpNouveau, 'id' : id};

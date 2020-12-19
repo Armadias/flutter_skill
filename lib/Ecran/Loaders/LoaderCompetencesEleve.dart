@@ -8,6 +8,8 @@ import 'package:skill_check/Ecran/DrawerFile/EcranCoursEleve.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:skill_check/Utilitaires/liens.dart';
+
 class LoaderCompetencesEleve extends StatefulWidget {
 
   final Map<String, dynamic> profil;
@@ -96,7 +98,7 @@ Future fetch() async
 {
   int eleve = int.parse(widget.profil["id"]);
   // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/getCompetencesEleve.php';
+  var url = compelev;
 
   // Store all data with Param Name.
   var data = {'id' : eleve};

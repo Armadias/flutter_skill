@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'dart:math';
 
+import 'package:skill_check/Utilitaires/liens.dart';
+
 class EcranProfil extends StatefulWidget {
 
   final Map<String, dynamic> profil;
@@ -87,7 +89,7 @@ class EcranProfilEtat extends State<EcranProfil>{
                           child: CircleAvatar(
                             minRadius: 50,
                             backgroundImage: NetworkImage(
-                              "https://flagrant-amusements.000webhostapp.com/image/" + widget.profil["image"] + "?v=" + r,
+                              netwImage + widget.profil["image"] + "?v=" + r,
                             ),
                           ),
                         ), 

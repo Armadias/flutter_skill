@@ -5,6 +5,7 @@ import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Ecran/ecranConnection.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
+import 'package:skill_check/Utilitaires/liens.dart';
 
 class EcranInscription extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class EcranInscriptionEtat extends State<EcranInscription> {
   }
   else{
 
-    var url = 'https://flagrant-amusements.000webhostapp.com/register_user.php';
+    var url = register;
     var data = {'nomPrenom': nomPrenom, 'email': email, 'motDePasse': motDePasse};
     var response = await http.post(url, body: json.encode(data));
     var message = jsonDecode(response.body);

@@ -7,6 +7,7 @@ import 'package:skill_check/Utilitaires/Competences.dart';
 
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
+import 'package:skill_check/Utilitaires/liens.dart';
 
 
 class EcranCompetences extends StatefulWidget {
@@ -28,7 +29,7 @@ class EcranCompetencesEtat extends State<EcranCompetences> {
 
 Future valideComp(int competencesIdcompetences, int utilisateurId) async {
   // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/valideCompProf.php';
+  var url = validecompprof;
  
   // Store all data with Param Name.
   var data = {'idComp': competencesIdcompetences, 'id' : utilisateurId};

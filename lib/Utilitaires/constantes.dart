@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 final kHintTextStyle = TextStyle(
   color: Colors.white70,
@@ -63,4 +64,22 @@ final colorGradient = Container(
             ),
           ),
         ); 
+
+
+progressdial(BuildContext context, String message)
+{
+  ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
+    pr.style(
+  message: 'Connection en cours...',
+  borderRadius: 20.0,
+  backgroundColor: Colors.white,
+  progressWidget: CircularProgressIndicator(),
+  elevation: 50.0,
+  insetAnimCurve: Curves.easeInOut,
+  messageTextStyle: TextStyle(
+     color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
+  );
+
+  return pr;
+}
 

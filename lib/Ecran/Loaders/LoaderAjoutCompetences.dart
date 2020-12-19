@@ -5,6 +5,8 @@ import 'package:skill_check/Ecran/DrawerFile/ecranAjoutCompetences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:skill_check/Utilitaires/liens.dart';
+
 class LoaderAjoutCompetences extends StatefulWidget {
 
   final Map<String, dynamic> profil;
@@ -99,7 +101,7 @@ void initState()
 Future fetch() async
 {
   // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/getCours.php';
+  var url = getcours;
 
   // Store all data with Param Name.
   var data = {'id' : widget.profil["id"]};

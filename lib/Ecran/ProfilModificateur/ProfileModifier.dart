@@ -8,6 +8,7 @@ import 'package:skill_check/Ecran/DrawerFile/ecranProfil.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
+import 'package:skill_check/Utilitaires/liens.dart';
 
 class ProfileModifier extends StatefulWidget
 {
@@ -389,7 +390,7 @@ class ProfilModifierEtat extends State<ProfileModifier>
         )
       );
     await pr.show();
-    var url = 'https://flagrant-amusements.000webhostapp.com/modifyer.php';
+    var url = profilmodif;
 
     int id = int.parse(widget.profil['id']);
     var data = {'email': email, 'nomPrenom' : name, 'id' : id};

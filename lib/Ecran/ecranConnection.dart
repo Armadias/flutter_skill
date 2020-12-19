@@ -6,6 +6,7 @@ import 'package:skill_check/Ecran/Loaders/LoaderListEleve.dart';
 import 'package:skill_check/Ecran/ecranInscription.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_check/Utilitaires/constantes.dart';
+import 'package:skill_check/Utilitaires/liens.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:progress_dialog/progress_dialog.dart';
@@ -46,20 +47,12 @@ Future userLogin() async{
     );
   }
   else{
-    final ProgressDialog pr =  ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-    pr.style(
-  message: 'Connection en cours...',
-  borderRadius: 20.0,
-  backgroundColor: Colors.white,
-  progressWidget: CircularProgressIndicator(),
-  elevation: 50.0,
-  insetAnimCurve: Curves.easeInOut,
-  messageTextStyle: TextStyle(
-     color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600)
-  );
-  await pr.show();
+
+    final ProgressDialog pr = progressdial(context, 'Connection en cours...');
+    await pr.show();
   // SERVER LOGIN API URL
-  var url = 'https://flagrant-amusements.000webhostapp.com/login_user.php';
+  var url = login;
+
  
   // Store all data with Param Name.
   var data = {'email': email, 'motDePasse' : motDePasse, 'nomPrenom' : nomPrenom};
