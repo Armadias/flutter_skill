@@ -1,3 +1,3 @@
 # SkillChecker
 
-Application pour le TP d'informatique 708 master 1
+Application pour le TP d'informatique 706 master 1
